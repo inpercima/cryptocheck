@@ -1,0 +1,48 @@
+{
+  "general": {
+    "buildWebDir": "dist",
+    "github": {
+      "use": true,
+      "username": "inpercima"
+    },
+    "installDependencies": true,
+    "selectorPrefix": "cc",
+    "theme": "indigo-pink",
+    "title": "cryptocheck",
+    "useDocker": false,
+    "useYarn": true
+  },
+  "packageJson": {
+    "author": "Marcel Jänicke",
+    "contributors": [{
+      "name": "Marcel Jänicke",
+      "email": "inpercima@gmail.com"
+    }],
+    "description": "Determines profit and loss when buying cryptocurrencies at specific times.",
+    "homepage": "http://cryptocheck.inpercima.net",
+    "name": "cryptocheck",
+    "repository": "https://github.com/inpercima/cryptocheck"
+  },
+  "route": {
+    "default": "dashboard",
+    "features": {
+      "show": true
+    },
+    "login": {
+      "activate": false,
+      "name": "login",
+      "show": false
+    },
+    "notFound": {
+      "name": "not-found",
+      "redirect": false
+    }
+  },
+  "server": {
+    "backend": "js",
+    "htaccess": false,
+    "management": "",
+    "packagePath": "",
+    "serverAsApi": false
+  }
+}
