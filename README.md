@@ -1,10 +1,12 @@
 # cryptocheck
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
+[![dependencies Status](https://david-dm.org/inpercima/cryptocheck/status.svg)](https://david-dm.org/inpercima/cryptocheck)
+[![devDependencies Status](https://david-dm.org/inpercima/cryptocheck/dev-status.svg)](https://david-dm.org/inpercima/cryptocheck?type=dev)
 
 Determines profit and loss when buying cryptocurrencies at specific times.
 
-This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 1.0.1-SNAPSHOT.
+This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 1.0.1.
 
 ## Prerequisites
 
@@ -25,8 +27,8 @@ Some libraries could not be updated b/c of peer dependencies or knowing issues.
 | library    | current version | wanted version | reason |
 | ---------- | --------------- | -------------- | ------ |
 | zone.js    | 0.9.1           | 0.10.2         | @angular/core@8.2.14" has incorrect peer dependency "zone.js@~0.9.1" |
-| typescript | 3.5.3           | 3.7.2          | @angular-devkit/build-angular@0.803.19" has incorrect peer dependency "typescript@>=3.1 < 3.6 |
-| typescript | 3.5.3           | 3.7.2          | @angular-devkit/build-angular > @ngtools/webpack@8.3.19" has incorrect peer dependency "typescript@>=3.4 < 3.6 |
+| typescript | 3.5.3           | 3.7.2          | @angular-devkit/build-angular@0.803.20" has incorrect peer dependency "typescript@>=3.1 < 3.6 |
+| typescript | 3.5.3           | 3.7.2          | @angular-devkit/build-angular > @ngtools/webpack@8.3.20" has incorrect peer dependency "typescript@>=3.4 < 3.6 |
 | typescript | 3.5.3           | 3.7.2          | @angular/compiler-cli@8.2.14" has incorrect peer dependency "typescript@>=3.4 <3.6 |
 
 ## Getting started
