@@ -145,5 +145,8 @@
       }
     }
   },
-  "defaultProject": "cryptocheck"
+  "defaultProject": "cryptocheck",
+  "cli": {
+    "packageManager": "yarn"
+  }
 }

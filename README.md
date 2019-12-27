@@ -6,7 +6,7 @@
 
 Determines profit and loss when buying cryptocurrencies at specific times.
 
-This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 1.0.1.
+This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 1.1.0.
 
 ## Prerequisites
 
