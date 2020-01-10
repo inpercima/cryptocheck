@@ -11,3 +11,8 @@ body {
 .full-width {
   width: 100%;
 }
+
+/* styles for generated sources */
+.mat-card-header-text {
+  width: 100%;
+}

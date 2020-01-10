@@ -15,6 +15,11 @@ import { FeaturesModule } from './features/features.module';
 import { LoginModule } from './login/login.module';
 import { NotFoundModule } from './not-found/not-found.module';
 
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
+
 export function getToken() {
   return localStorage.getItem('access_token');
 }
