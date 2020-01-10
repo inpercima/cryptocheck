@@ -24,7 +24,7 @@
     "route": {
       "features": {
         "default": "dashboard",
-        "show": true
+        "show": false
       },
       "login": {
         "activate": false,

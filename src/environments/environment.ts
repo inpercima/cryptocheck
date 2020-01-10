@@ -10,7 +10,7 @@ export const environment = {
   defaultRoute: 'dashboard',
   production: false,
   redirectNotFound: false,
-  showFeatures: true,
+  showFeatures: false,
   showLogin: false,
   theme: 'indigo-pink',
 };
