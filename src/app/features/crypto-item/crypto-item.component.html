@@ -1,0 +1,17 @@
+<mat-divider></mat-divider>
+<div class="item" fxLayout="row" fxLayoutAlign="center">
+  <mat-form-field fxFlex="20">
+    <mat-label>Coin</mat-label>
+    <mat-select  [(ngModel)]="coin" (selectionChange)="changeItem()">
+      <mat-option value="BTC">BTC</mat-option>
+      <mat-option value="ETH">ETH</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="20" fxFlexOffset="5">
+    <input matInput placeholder="Amount" [(ngModel)]="amount" (change)="changeItem()">
+  </mat-form-field>
+  <mat-form-field fxFlex="20" fxFlexOffset="5">
+    <input matInput placeholder="Purchase price" [(ngModel)]="purchasePrice" (change)="changeItem()">
+  </mat-form-field>
+  <button fxFlex="20" fxFlexOffset="10" mat-raised-button color="primary" (click)="remove()" disabled>Remove</button>
+</div>

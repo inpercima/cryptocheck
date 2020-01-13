@@ -1,19 +1,38 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxFlex="60">
-    <mat-card *ngIf="!crypto">
+    <mat-card *ngIf="!cryptoPrice">
       <mat-card-content class="progress">
         <mat-progress-bar color="primary" mode="indeterminate" value="50" bufferValue="75"></mat-progress-bar>
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="crypto">
+    <mat-card *ngIf="cryptoPrice">
       <mat-card-header>
         <mat-card-title>
-          <div fxFlex>BTC/USD: {{ crypto.BTC.USD | currency:'USD':'symbol':'1.2-2' }}</div>
-          <div fxFlex>BTC/EUR: {{ crypto.BTC.EUR | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</div>
-          <div fxFlex>ETH/USD: {{ crypto.ETH.USD | currency:'USD':'symbol':'1.2-2' }}</div>
-          <div fxFlex>ETH/EUR: {{ crypto.ETH.EUR | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</div>
+          <div fxFlex>BTC/USD: {{ cryptoPrice.BTC.USD | currency:'USD':'symbol':'1.2-2' }}</div>
+          <div fxFlex>BTC/EUR: {{ cryptoPrice.BTC.EUR | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</div>
+          <div fxFlex>ETH/USD: {{ cryptoPrice.ETH.USD | currency:'USD':'symbol':'1.2-2' }}</div>
+          <div fxFlex>ETH/EUR: {{ cryptoPrice.ETH.EUR | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</div>
         </mat-card-title>
       </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <div id="top" fxLayout="row" fxLayoutAlign="center">
+          <mat-form-field fxFlex="20">
+            <mat-label>Calculation currency</mat-label>
+            <mat-select [(ngModel)]="currency">
+              <mat-option value="USD">USD ($)</mat-option>
+              <mat-option value="EUR">EUR (€)</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxFlex="40" fxFlexOffset="10" class="mat-title">
+            Total profit/loss:
+            <span *ngIf="currency === 'USD'">{{ profitLoss() | currency:'USD':'symbol':'1.2-2' }}</span>
+            <span *ngIf="currency === 'EUR'">{{ profitLoss() | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</span>
+          </div>
+          <button fxFlex="20" fxFlexOffset="10" mat-raised-button color="primary" (click)="addItem()">Add check</button>
+        </div>
+        <cc-crypto-item *ngFor="let item of cryptoItems" [item]="item" (updateItem)="updateItem($event)"></cc-crypto-item>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
