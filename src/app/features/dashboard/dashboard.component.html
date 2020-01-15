@@ -31,7 +31,7 @@
           </div>
           <button fxFlex="20" fxFlexOffset="10" mat-raised-button color="primary" (click)="addItem()">Add check</button>
         </div>
-        <cc-crypto-item *ngFor="let item of cryptoItems" [item]="item" (updateItem)="updateItem($event)"></cc-crypto-item>
+        <cc-crypto-item *ngFor="let item of cryptoItems" [item]="item" (updateItem)="updateItem($event)" (removeItem)="removeItem($event)"></cc-crypto-item>
       </mat-card-content>
     </mat-card>
   </div>
