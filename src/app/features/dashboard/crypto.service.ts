@@ -6,6 +6,12 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class CryptoService {
 
+  public static TREND_NORMAL = 'normal';
+
+  public static TREND_UP = 'up';
+
+  public static TREND_DOWN = 'down';
+
   cryptoPrices: any;
 
   constructor(private http: HttpClient) { }
@@ -24,10 +30,11 @@ export class CryptoService {
   }
 
   createPrice(res: any, coin: string, currency: string): any {
-    let trend = 'normal';
-    const value =  res[coin][currency];
+    let trend = CryptoService.TREND_NORMAL;
+    const value = res[coin][currency];
     if (this.cryptoPrices) {
-      trend = value > this.cryptoPrices[coin][currency] ? 'up' : (value < this.cryptoPrices[coin][currency] ? 'down' : trend);
+      trend = value > this.cryptoPrices[coin][currency] ? CryptoService.TREND_UP :
+        (value < this.cryptoPrices[coin][currency] ? CryptoService.TREND_DOWN : trend);
     }
     return { coin, currency, value, trend } as any;
   }
