@@ -6,11 +6,31 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class CryptoService {
 
+  cryptoPrices: any;
+
   constructor(private http: HttpClient) { }
 
-  public price(): Observable<any> {
+  price(): Observable<any> {
     return this.http.get<any>('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD,EUR').pipe(map(response => {
-      return response;
+      const prices = {
+        BTCUSD: this.createPrice(response, 'BTC', 'USD'),
+        BTCEUR: this.createPrice(response, 'BTC', 'EUR'),
+        ETHUSD: this.createPrice(response, 'ETH', 'USD'),
+        ETHEUR: this.createPrice(response, 'ETH', 'EUR'),
+      };
+      this.cryptoPrices = response;
+      return prices;
     }));
   }
+
+  createPrice(res: any, coin: string, currency: string): any {
+    let trend = 'normal';
+    const value =  res[coin][currency];
+    if (this.cryptoPrices) {
+      trend = value > this.cryptoPrices[coin][currency] ? 'up' : (value < this.cryptoPrices[coin][currency] ? 'down' : trend);
+    }
+    return { coin, currency, value, trend } as any;
+  }
+
+
 }
