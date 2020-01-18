@@ -11,18 +11,20 @@ import { CryptoItem } from '../crypto-item/crypto-item.model';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  cryptoPrice: any;
+  cryptoPrices: any;
 
-  cryptoItems: Array<CryptoItem> = [];
+  cryptoItems: CryptoItem[] = [];
 
   subscription: Subscription;
 
   currency = 'USD';
 
+  trend2: string;
+
   constructor(private cryptoService: CryptoService) { }
 
   ngOnInit(): void {
-    this.subscription = interval(1000).subscribe(() => this.updatePrice());
+    this.subscription = interval(2500).subscribe(() => this.updatePrice());
   }
 
   ngOnDestroy() {
@@ -30,12 +32,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   updatePrice() {
-    this.cryptoService.price().subscribe(cryptoPrice => this.cryptoPrice = cryptoPrice);
+    this.cryptoService.price().subscribe(cryptoPrices => this.cryptoPrices = cryptoPrices);
   }
 
   profitLoss(): number {
     return this.cryptoItems.reduce((acc, item) => {
-      return acc + (this.cryptoPrice[item.coin][this.currency] * item.amount) - (item.amount * item.purchasePrice);
+      return acc + (this.cryptoPrices[item.coin + this.currency].value * item.amount) - (item.amount * item.purchasePrice);
     }, 0);
   }
 

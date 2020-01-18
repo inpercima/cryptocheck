@@ -13,11 +13,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FeaturesRoutingModule } from './features-routing.module';
 import { CryptoService } from './dashboard/crypto.service';
 import { CryptoItemComponent } from './crypto-item/crypto-item.component';
+import { CryptoPriceComponent } from './crypto-price/crypto-price.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     CryptoItemComponent,
+    CryptoPriceComponent,
   ],
   imports: [
     CommonModule,

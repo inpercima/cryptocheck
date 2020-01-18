@@ -1,17 +1,17 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxFlex="60">
-    <mat-card *ngIf="!cryptoPrice">
+    <mat-card *ngIf="!cryptoPrices">
       <mat-card-content class="progress">
         <mat-progress-bar color="primary" mode="indeterminate" value="50" bufferValue="75"></mat-progress-bar>
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="cryptoPrice">
+    <mat-card *ngIf="cryptoPrices">
       <mat-card-header>
         <mat-card-title>
-          <div fxFlex>BTC/USD: {{ cryptoPrice.BTC.USD | currency:'USD':'symbol':'1.2-2' }}</div>
-          <div fxFlex>BTC/EUR: {{ cryptoPrice.BTC.EUR | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</div>
-          <div fxFlex>ETH/USD: {{ cryptoPrice.ETH.USD | currency:'USD':'symbol':'1.2-2' }}</div>
-          <div fxFlex>ETH/EUR: {{ cryptoPrice.ETH.EUR | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</div>
+          <cc-crypto-price fxFlex [price]="cryptoPrices.BTCUSD" [trend]=cryptoPrices.BTCUSD.trend></cc-crypto-price>
+          <cc-crypto-price fxFlex [price]="cryptoPrices.BTCEUR" [trend]=cryptoPrices.BTCEUR.trend></cc-crypto-price>
+          <cc-crypto-price fxFlex [price]="cryptoPrices.ETHUSD" [trend]=cryptoPrices.ETHUSD.trend></cc-crypto-price>
+          <cc-crypto-price fxFlex [price]="cryptoPrices.ETHEUR" [trend]=cryptoPrices.ETHEUR.trend></cc-crypto-price>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
