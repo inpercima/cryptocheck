@@ -6,7 +6,7 @@
 
 Determines profit and loss when buying cryptocurrencies at specific times.
 
-This app is online under [http://cryptocheck.inpercima.net](http://cryptocheck.inpercima.net).
+This app is online under [cryptocheck.inpercima.net](http://cryptocheck.inpercima.net).
 
 This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 1.1.0.
 
