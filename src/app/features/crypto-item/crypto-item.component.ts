@@ -14,6 +14,7 @@ export class CryptoItemComponent implements OnInit {
 
   @Input() item: CryptoItem;
   @Output() updateItem = new EventEmitter<CryptoItem>();
+  @Output() removeItem = new EventEmitter<CryptoItem>();
 
   constructor() { }
 
@@ -31,7 +32,7 @@ export class CryptoItemComponent implements OnInit {
   }
 
   remove() {
-    // TODO
+    this.removeItem.emit(this.item);
   }
 
 }
