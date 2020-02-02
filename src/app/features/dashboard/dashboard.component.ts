@@ -19,8 +19,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   currency = 'USD';
 
-  trend2: string;
-
   constructor(private cryptoService: CryptoService) { }
 
   ngOnInit(): void {
