@@ -4,7 +4,7 @@ import { CryptoItem } from './crypto-item.model';
 @Component({
   selector: 'cc-crypto-item',
   templateUrl: './crypto-item.component.html',
-  styleUrls: ['./crypto-item.component.css']
+  styleUrls: ['./crypto-item.component.css'],
 })
 export class CryptoItemComponent implements OnInit {
 

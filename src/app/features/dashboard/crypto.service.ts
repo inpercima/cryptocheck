@@ -39,5 +39,4 @@ export class CryptoService {
     return { coin, currency, value, trend } as any;
   }
 
-
 }
