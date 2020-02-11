@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   removeItem(item: CryptoItem) {
-    this.cryptoItems = this.cryptoItems.filter(el => { return el.id != item.id });
+    this.cryptoItems = this.cryptoItems.filter(el => el.id !== item.id);
   }
 
 }
