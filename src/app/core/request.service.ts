@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RequestService {
 
   public url(url: string, parameters?: string): string {

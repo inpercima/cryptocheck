@@ -7,7 +7,9 @@ import { map } from 'rxjs/operators';
 
 import { RequestService } from './request.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
 
   // store the URL so we can redirect after logging in

@@ -33,8 +33,5 @@ import { CryptoPriceComponent } from './crypto-price/crypto-price.component';
     MatProgressBarModule,
     MatSelectModule,
   ],
-  providers: [
-    CryptoService,
-  ]
 })
 export class FeaturesModule { }
