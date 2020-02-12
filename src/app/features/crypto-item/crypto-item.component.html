@@ -1,5 +1,5 @@
 <mat-divider></mat-divider>
-<div class="item" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center">
+<div *ngIf="item" class="item" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center">
   <mat-form-field fxFlex="20">
     <mat-label>Coin</mat-label>
     <mat-select  [(ngModel)]="coin" (selectionChange)="changeItem()">
@@ -12,6 +12,8 @@
   </mat-form-field>
   <mat-form-field fxFlex="20" fxFlexOffset.gt-xs="5">
     <input matInput placeholder="Purchase price" [(ngModel)]="purchasePrice" (change)="changeItem()">
+    <mat-hint *ngIf="currency === 'USD'" [ngStyle]="conditionalColor()">{{ profitLoss() | currency:'USD':'symbol':'1.2-2' }}</mat-hint>
+    <mat-hint *ngIf="currency === 'EUR'" [ngStyle]="conditionalColor()">{{ profitLoss() | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</mat-hint>
   </mat-form-field>
   <button fxFlex="20" fxFlexOffset.gt-xs="10" mat-raised-button color="primary" (click)="remove()">Remove</button>
 </div>
