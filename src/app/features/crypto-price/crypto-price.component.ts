@@ -27,7 +27,7 @@ import { CryptoService } from '../dashboard/crypto.service';
 export class CryptoPriceComponent implements OnInit {
 
   @Input()
-  price: number;
+  price: any;
 
   @Input()
   trend: string;
