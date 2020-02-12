@@ -3,16 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Constants } from '../../core/constants';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoService {
-
-  public static TREND_NORMAL = 'normal';
-
-  public static TREND_UP = 'up';
-
-  public static TREND_DOWN = 'down';
 
   cryptoPrices: any;
 
@@ -32,11 +28,11 @@ export class CryptoService {
   }
 
   createPrice(res: any, coin: string, currency: string): any {
-    let trend = CryptoService.TREND_NORMAL;
+    let trend = Constants.TREND_NORMAL;
     const value = res[coin][currency];
     if (this.cryptoPrices) {
-      trend = value > this.cryptoPrices[coin][currency] ? CryptoService.TREND_UP :
-        (value < this.cryptoPrices[coin][currency] ? CryptoService.TREND_DOWN : trend);
+      trend = value > this.cryptoPrices[coin][currency] ? Constants.TREND_UP :
+        (value < this.cryptoPrices[coin][currency] ? Constants.TREND_DOWN : trend);
     }
     return { coin, currency, value, trend } as any;
   }

@@ -2,23 +2,23 @@ import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { interval } from 'rxjs';
 
-import { CryptoService } from '../dashboard/crypto.service';
+import { Constants } from 'src/app/core/constants';
 
 @Component({
   selector: 'cc-crypto-price',
   templateUrl: './crypto-price.component.html',
   animations: [
     trigger('trend', [
-      state(CryptoService.TREND_UP, style({
+      state(Constants.TREND_UP, style({
         backgroundColor: 'green'
       })),
-      state(CryptoService.TREND_NORMAL, style({
+      state(Constants.TREND_NORMAL, style({
         backgroundColor: 'white'
       })),
-      state(CryptoService.TREND_DOWN, style({
+      state(Constants.TREND_DOWN, style({
         backgroundColor: 'red'
       })),
-      transition(`* => ${CryptoService.TREND_NORMAL}`, [
+      transition(`* => ${Constants.TREND_NORMAL}`, [
         animate('1s')
       ]),
     ]),
@@ -35,7 +35,7 @@ export class CryptoPriceComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    interval(2500).subscribe(() => this.trend = this.trend !== CryptoService.TREND_NORMAL ? CryptoService.TREND_NORMAL : this.trend);
+    interval(2500).subscribe(() => this.trend = this.trend !== Constants.TREND_NORMAL ? Constants.TREND_NORMAL : this.trend);
   }
 
   locale(currency: string) {
