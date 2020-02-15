@@ -18,9 +18,9 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Node, npm or yarn
 
-* `node 12.14.1` or higher in combination with
+* `node 12.16.0` or higher in combination with
   * `npm 6.13.4` or higher or
-  * `yarn 1.21.1` or higher, used in this repository
+  * `yarn 1.22.0` or higher, used in this repository
 
 ## Dependency check
 
