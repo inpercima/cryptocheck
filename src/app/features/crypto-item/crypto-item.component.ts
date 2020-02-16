@@ -53,8 +53,8 @@ export class CryptoItemComponent implements OnInit, OnDestroy {
     this.removeItem.emit(this.item);
   }
 
-  profitLoss(): number {
-    return (this.cryptoPrices[this.item.coin + this.currency].value * this.item.amount) - (this.item.amount * this.item.purchasePrice);
+  profitLoss() {
+    return this.cryptoService.profitLoss(this.item, this.cryptoPrices, this.currency);
   }
 
   conditionalColor() {

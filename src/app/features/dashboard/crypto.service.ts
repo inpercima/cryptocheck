@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CryptoItem } from '../crypto-item/crypto-item.model';
 
 import { Constants } from '../../core/constants';
 
@@ -35,6 +36,10 @@ export class CryptoService {
         (value < this.cryptoPrices[coin][currency] ? Constants.TREND_DOWN : trend);
     }
     return { coin, currency, value, trend } as any;
+  }
+
+  profitLoss(item: CryptoItem, cryptoPrice: any, currency: string) {
+    return (cryptoPrice[item.coin + currency].value * item.amount) - (item.amount * item.purchasePrice);
   }
 
 }
