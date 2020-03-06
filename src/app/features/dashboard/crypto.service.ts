@@ -46,4 +46,8 @@ export class CryptoService {
   profitLoss(item: CryptoItem, currency: string): number {
     return (this.prices[item.coin + currency].value * item.amount) - (item.amount * item.purchasePrice);
   }
+
+  locale(currency: string) {
+    return currency === 'USD' ? '' : 'de-DE';
+  }
 }

@@ -30,7 +30,7 @@ export class CryptoPriceComponent implements OnInit {
   @Input() price: number;
   @Input() trend: string;
 
-  constructor(private cryptoService: CryptoService) { }
+  constructor() { }
 
   ngOnInit() {
     interval(2500).subscribe(() => this.trend = this.trend !== Constants.TREND_NORMAL ? Constants.TREND_NORMAL : this.trend);
