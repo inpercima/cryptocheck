@@ -12,7 +12,7 @@
   </mat-form-field>
   <mat-form-field fxFlex="20" fxFlexOffset.gt-xs="5">
     <input matInput placeholder="Purchase price" [(ngModel)]="purchasePrice" (change)="changeItem()">
-    <mat-hint [ngStyle]="conditionalColor()">{{ profitLoss() | currency:currency:'symbol':'1.2-2':cryptoService.locale(currency) }}</mat-hint>
+    <mat-hint [ngClass]="conditionalColor()">{{ profitLoss() | currency:currency:'symbol':'1.2-2':cryptoService.locale(currency) }}</mat-hint>
   </mat-form-field>
   <button fxFlex="20" fxFlexOffset.gt-xs="10" mat-raised-button color="primary" (click)="remove()">Remove</button>
 </div>

@@ -44,7 +44,7 @@ export class CryptoItemComponent implements OnInit {
   }
 
   conditionalColor() {
-    return this.profitLoss() < 0 ? { 'color': 'red' } : this.profitLoss() > 0 ? { 'color': 'green' } : { 'color': 'black' };
+    return this.profitLoss() < 0 ? 'trendDown' : this.profitLoss() > 0 ? 'trendUp' : 'trendNormal';
   }
 
 }
