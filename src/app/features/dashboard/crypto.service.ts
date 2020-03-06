@@ -15,6 +15,7 @@ import { Constants } from '../../core/constants';
 export class CryptoService {
 
   cryptoPrices: any;
+  prices: any;
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +28,7 @@ export class CryptoService {
         ETHEUR: this.createPrice(response, 'ETH', 'EUR', 'de-DE'),
       };
       this.cryptoPrices = response;
+      this.prices = prices;
       return prices;
     }));
   }
@@ -41,7 +43,7 @@ export class CryptoService {
     return {coin, currency, value, trend, locale} as CryptoPrice;
   }
 
-  profitLoss(item: CryptoItem, cryptoPrices: any, currency: string): number {
-    return (cryptoPrices[item.coin + currency].value * item.amount) - (item.amount * item.purchasePrice);
+  profitLoss(item: CryptoItem, currency: string): number {
+    return (this.prices[item.coin + currency].value * item.amount) - (item.amount * item.purchasePrice);
   }
 }

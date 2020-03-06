@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   profitLoss(): number {
     return this.cryptoItems.reduce((acc, item) => {
-      return acc + this.cryptoService.profitLoss(item, this.cryptoPrices, this.currency);
+      return acc + this.cryptoService.profitLoss(item, this.currency);
     }, 0);
   }
 
