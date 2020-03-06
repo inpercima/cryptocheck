@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { CryptoService } from '../dashboard/crypto.service';
 import { CryptoItem } from './crypto-item.model';
 
 @Component({
@@ -12,11 +14,13 @@ export class CryptoItemComponent implements OnInit {
   amount: number;
   purchasePrice: number;
 
+  @Input() currency;
   @Input() item: CryptoItem;
+
   @Output() updateItem = new EventEmitter<CryptoItem>();
   @Output() removeItem = new EventEmitter<CryptoItem>();
 
-  constructor() { }
+  constructor(private cryptoService: CryptoService) { }
 
   ngOnInit() {
     this.coin = this.item.coin;
@@ -33,6 +37,14 @@ export class CryptoItemComponent implements OnInit {
 
   remove() {
     this.removeItem.emit(this.item);
+  }
+
+  profitLoss() {
+    return this.cryptoService.profitLoss(this.item, this.currency);
+  }
+
+  conditionalColor() {
+    return this.profitLoss() < 0 ? 'trendDown' : this.profitLoss() > 0 ? 'trendUp' : 'trendNormal';
   }
 
 }

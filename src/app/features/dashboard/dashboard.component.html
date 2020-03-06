@@ -26,12 +26,11 @@
           </mat-form-field>
           <div fxFlex="40" fxFlexOffset.gt-xs="10" class="mat-title">
             Total profit/loss:
-            <span *ngIf="currency === 'USD'">{{ profitLoss() | currency:'USD':'symbol':'1.2-2' }}</span>
-            <span *ngIf="currency === 'EUR'">{{ profitLoss() | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</span>
+            <span>{{ profitLoss() | currency:currency:'symbol':'1.2-2':cryptoService.locale(currency) }}</span>
           </div>
           <button fxFlex="20" fxFlexOffset.gt-xs="10" mat-raised-button color="primary" (click)="addItem()">Add check</button>
         </div>
-        <cc-crypto-item *ngFor="let item of cryptoItems" [item]="item" (updateItem)="updateItem($event)" (removeItem)="removeItem($event)"></cc-crypto-item>
+        <cc-crypto-item *ngFor="let item of cryptoItems" [item]="item" (updateItem)="updateItem($event)" (removeItem)="removeItem($event)" [currency]="currency"></cc-crypto-item>
       </mat-card-content>
     </mat-card>
   </div>

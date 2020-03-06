@@ -7,5 +7,4 @@ export interface CryptoItem {
   amount: number;
 
   purchasePrice: number;
-
 }

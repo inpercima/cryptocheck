@@ -1,3 +1,15 @@
 .item {
   padding: 20px 0;
 }
+
+.trendUp {
+  color: green !important;
+}
+
+.trendDown {
+  color: red !important;
+}
+
+.trendNormal {
+  color: black !important;
+}
