@@ -1,5 +1,5 @@
 <mat-divider></mat-divider>
-<div *ngIf="item" class="item" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center">
+<div class="item" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center">
   <mat-form-field fxFlex="20">
     <mat-label>Coin</mat-label>
     <mat-select  [(ngModel)]="coin" (selectionChange)="changeItem()">
