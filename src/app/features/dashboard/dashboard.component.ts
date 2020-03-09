@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   currency = 'USD';
 
-  constructor(private cryptoService: CryptoService) { }
+  constructor(public cryptoService: CryptoService) { }
 
   ngOnInit(): void {
     this.subscription = interval(2500).subscribe(() => this.updatePrice());

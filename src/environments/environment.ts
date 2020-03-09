@@ -3,15 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  activateLogin: false,
   api: './',
   apiSuffix: '',
   appname: 'cryptocheck',
-  defaultRoute: 'dashboard',
   production: false,
-  redirectNotFound: false,
-  showFeatures: false,
-  showLogin: false,
   theme: 'indigo-pink',
 };
 

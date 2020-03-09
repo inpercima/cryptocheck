@@ -1,53 +1,32 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import localeDe from '@angular/common/locales/de';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AppRoutingPipe } from './app-routing.pipe';
 import { FeaturesModule } from './features/features.module';
-import { LoginModule } from './login/login.module';
-import { NotFoundModule } from './not-found/not-found.module';
-
-import { registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de';
 
 registerLocaleData(localeDe);
 
-export function getToken() {
-  return localStorage.getItem('access_token');
-}
-
 @NgModule({
-  bootstrap: [
-    AppComponent,
-  ],
   declarations: [
-    AppComponent,
-    AppRoutingPipe,
+    AppComponent
   ],
   imports: [
-    AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    FeaturesModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: getToken,
-        whitelistedDomains: ['localhost'],
-      }
-    }),
-    LoginModule,
     MatTabsModule,
     MatToolbarModule,
-    NotFoundModule,
     OverlayModule,
+    FeaturesModule,
   ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

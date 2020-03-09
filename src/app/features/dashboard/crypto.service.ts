@@ -40,7 +40,7 @@ export class CryptoService {
       trend = value > this.cryptoPrices[coin][currency] ? Constants.TREND_UP :
         (value < this.cryptoPrices[coin][currency] ? Constants.TREND_DOWN : trend);
     }
-    return {coin, currency, value, trend, locale} as CryptoPrice;
+    return { coin, currency, value, trend, locale } as CryptoPrice;
   }
 
   profitLoss(item: CryptoItem, currency: string): number {
