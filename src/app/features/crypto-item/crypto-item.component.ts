@@ -20,7 +20,7 @@ export class CryptoItemComponent implements OnInit {
   @Output() updateItem = new EventEmitter<CryptoItem>();
   @Output() removeItem = new EventEmitter<CryptoItem>();
 
-  constructor(private cryptoService: CryptoService) { }
+  constructor(public cryptoService: CryptoService) { }
 
   ngOnInit() {
     this.coin = this.item.coin;

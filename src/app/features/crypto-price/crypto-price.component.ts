@@ -27,7 +27,7 @@ import { Constants } from 'src/app/core/constants';
 })
 export class CryptoPriceComponent implements OnInit {
 
-  @Input() price: number;
+  @Input() price: any;
   @Input() trend: string;
 
   constructor() { }

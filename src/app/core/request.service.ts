@@ -13,5 +13,4 @@ export class RequestService {
     }
     return `${environment.api}${url}${environment.apiSuffix}${parameters}`;
   }
-
 }

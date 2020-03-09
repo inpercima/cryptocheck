@@ -10,8 +10,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FeaturesRoutingModule } from './features-routing.module';
-import { CryptoService } from './dashboard/crypto.service';
 import { CryptoItemComponent } from './crypto-item/crypto-item.component';
 import { CryptoPriceComponent } from './crypto-price/crypto-price.component';
 
@@ -23,7 +21,6 @@ import { CryptoPriceComponent } from './crypto-price/crypto-price.component';
   ],
   imports: [
     CommonModule,
-    FeaturesRoutingModule,
     FlexLayoutModule,
     FormsModule,
     MatButtonModule,
@@ -33,5 +30,8 @@ import { CryptoPriceComponent } from './crypto-price/crypto-price.component';
     MatProgressBarModule,
     MatSelectModule,
   ],
+  exports: [
+    DashboardComponent,
+  ]
 })
 export class FeaturesModule { }

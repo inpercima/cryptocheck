@@ -8,17 +8,17 @@ Determines profit and loss when buying cryptocurrencies at specific times.
 
 This app is online under [cryptocheck.inpercima.net](http://cryptocheck.inpercima.net).
 
-This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 1.1.0.
+This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 2.0.0-SNAPSHOT.
 
 ## Prerequisites
 
 ### Angular CLI
 
-* `angular-cli 9.0.1` or higher
+* `angular-cli 9.0.5` or higher
 
 ### Node, npm or yarn
 
-* `node 12.16.0` or higher in combination with
+* `node 12.16.1` or higher in combination with
   * `npm 6.13.4` or higher or
   * `yarn 1.22.0` or higher, used in this repository
 
@@ -28,10 +28,7 @@ Some libraries could not be updated b/c of peer dependencies or knowing issues.
 
 | library    | current version | wanted version | reason |
 | ---------- | --------------- | -------------- | ------ |
-| zone.js    | 0.9.1           | 0.10.2         | @angular/core@8.2.14" has incorrect peer dependency "zone.js@~0.9.1" |
-| typescript | 3.5.3           | 3.7.5          | @angular-devkit/build-angular@0.803.23" has incorrect peer dependency "typescript@>=3.1 < 3.6 |
-| typescript | 3.5.3           | 3.7.5          | @angular-devkit/build-angular > @ngtools/webpack@8.3.23" has incorrect peer dependency "typescript@>=3.4 < 3.6 |
-| typescript | 3.5.3           | 3.7.5          | @angular/compiler-cli@8.2.14" has incorrect peer dependency "typescript@>=3.4 <3.6 |
+| tslint     | 5.20.1          | 6.0.0          | "codelyzer@5.2.1" has incorrect peer dependency "tslint@^5.0.0" |
 
 ## Getting started
 
@@ -109,30 +106,17 @@ ng e2e
 
 ### General
 
-All options have to bet set in the environment files but some of them do not need to be changed.
+All options have to been set in the environment files but some of them do not need to be changed.
 All defaults refer to the development environment file (`environment.dev.ts`).
 Change for prodMode the option `production` to `true` and for mockMode the option `api` to `http://localhost:3000/`.
 
 ### Table of contents
 
-* [activateLogin](#activateLogin)
 * [api](#api)
 * [apiSuffix](#apiSuffix)
 * [appname](#appname)
-* [defaultRoute](#defaultRoute)
 * [production](#production)
-* [redirectNotFound](#redirectNotFound)
-* [showFeatures](#showFeatures)
-* [showLogin](#showLogin)
 * [theme](#theme)
-
-### `activateLogin`
-
-Defines whether a login will be used or not.
-
-* default: `true`
-* type: `boolean`
-* values: `true`/`false`
 
 ### `api`
 
@@ -155,40 +139,9 @@ Applicationwide title of the app, displayed in title and toolbar.
 * default: `cryptocheck`
 * type: `string`
 
-### `defaultRoute`
-
-The main route and the redirect route after login if no route is stored.
-
-* default: `dashboard`
-* type: `string`
-
 ### `production`
 
 Defines whether the app is in production or not.
-
-* default: `false`
-* type: `boolean`
-* values: `true`/`false`
-
-### `redirectNotFound`
-
-Defines whether the 404 route will redirect to the default route or not.
-
-* default: `false`
-* type: `boolean`
-* values: `true`/`false`
-
-### `showFeatures`
-
-Defines whether feature routes will be displayed or not.
-
-* default: `true`
-* type: `boolean`
-* values: `true`/`false`
-
-### `showLogin`
-
-Defines whether login route will be displayed or not.
 
 * default: `false`
 * type: `boolean`
