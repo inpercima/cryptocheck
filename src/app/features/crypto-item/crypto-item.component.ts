@@ -14,7 +14,7 @@ export class CryptoItemComponent implements OnInit {
   amount: number;
   purchasePrice: number;
 
-  @Input() currency;
+  @Input() currency: string;
   @Input() item: CryptoItem;
 
   @Output() updateItem = new EventEmitter<CryptoItem>();

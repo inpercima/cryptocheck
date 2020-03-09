@@ -1,6 +1,9 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CryptoPriceComponent } from './crypto-price.component';
+import { CryptoPrice } from './crypto-price.model';
 
 describe('CryptoPriceComponent', () => {
   let component: CryptoPriceComponent;
@@ -8,7 +11,11 @@ describe('CryptoPriceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CryptoPriceComponent ]
+      declarations: [ CryptoPriceComponent ],
+      imports: [
+        BrowserAnimationsModule,
+        HttpClientTestingModule,
+      ],
     })
     .compileComponents();
   }));
@@ -16,6 +23,7 @@ describe('CryptoPriceComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CryptoPriceComponent);
     component = fixture.componentInstance;
+    component.price = { coin: 'ETH', currency: 'EUR', value: 230.05, trend: 'NORMAL', locale: 'de-DE' } as CryptoPrice;
     fixture.detectChanges();
   });
 

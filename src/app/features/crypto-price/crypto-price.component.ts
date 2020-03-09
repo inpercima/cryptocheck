@@ -3,6 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 import { interval } from 'rxjs';
 
+import { CryptoPrice } from './crypto-price.model';
 import { Constants } from 'src/app/core/constants';
 
 @Component({
@@ -27,7 +28,7 @@ import { Constants } from 'src/app/core/constants';
 })
 export class CryptoPriceComponent implements OnInit {
 
-  @Input() price: any;
+  @Input() price: CryptoPrice;
   @Input() trend: string;
 
   constructor() { }
