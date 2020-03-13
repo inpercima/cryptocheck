@@ -30,6 +30,10 @@
           </div>
           <button fxFlex="20" fxFlexOffset.gt-xs="10" mat-raised-button color="primary" (click)="addItem()">Add check</button>
         </div>
+        <div fxLayout="column" fxLayout.gt-xs="row">
+          <button fxFlex mat-raised-button color="primary" (click)="storageService.save(cryptoItems)">Save to local storage</button>
+          <button fxFlex mat-raised-button color="primary" (click)="storageService.remove()">Remove from local storage</button>
+        </div>
         <cc-crypto-item *ngFor="let item of cryptoItems" [item]="item" (updateItem)="updateItem($event)" (removeItem)="removeItem($event)" [currency]="currency"></cc-crypto-item>
       </mat-card-content>
     </mat-card>
