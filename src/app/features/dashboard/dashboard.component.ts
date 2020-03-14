@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 
 import { CryptoService } from './crypto.service';
+import { StorageService } from './storage.service';
 import { CryptoItem } from '../crypto-item/crypto-item.model';
 
 @Component({
@@ -19,10 +20,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   currency = 'USD';
 
-  constructor(public cryptoService: CryptoService) { }
+  constructor(public cryptoService: CryptoService, public storageService: StorageService) { }
 
   ngOnInit(): void {
     this.subscription = interval(2500).subscribe(() => this.updatePrice());
+    this.cryptoItems = this.storageService.read();
   }
 
   ngOnDestroy() {
