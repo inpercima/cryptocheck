@@ -14,13 +14,13 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Angular CLI
 
-* `angular-cli 9.0.6` or higher
+* `angular-cli 9.1.0` or higher
 
 ### Node, npm or yarn
 
 * `node 12.16.1` or higher in combination with
   * `npm 6.13.4` or higher or
-  * `yarn 1.22.0` or higher, used in this repository
+  * `yarn 1.22.4` or higher, used in this repository
 
 ## Dependency check
 
@@ -28,11 +28,6 @@ Some libraries could not be updated b/c of peer dependencies or knowing issues.
 
 | library    | current version | wanted version | reason |
 | ---------- | --------------- | -------------- | ------ |
-| tslint     | 5.20.1          | 6.0.0          | "codelyzer@5.2.1" has incorrect peer dependency "tslint@^5.0.0" |
-| typescript | 3.7.5           | 3.8.3          | " > @angular-devkit/build-angular@0.900.6" has incorrect peer dependency "typescript@>=3.6 < 3.8". |
-| typescript | 3.7.5           | 3.8.3          | "@angular-devkit/build-angular > @ngtools/webpack@9.0.6" has incorrect peer dependency "typescript@>=3.6 < 3.8". |
-| typescript | 3.7.5           | 3.8.3          | " > @angular/compiler-cli@9.0.6" has incorrect peer dependency "typescript@>=3.6 <3.8". |
-| typescript | 3.7.5           | 3.8.3          | " > codelyzer@5.2.1" has incorrect peer dependency "tslint@^5.0.0". |
 
 ## Getting started
 
@@ -53,7 +48,7 @@ cp src/environments/environment.ts src/environments/environment.mock.ts
 cp src/environments/environment.ts src/environments/environment.prod.ts
 ```
 
-**Note**: These files will not be under version control and listed in .gitignore.
+**Note**: These files will not be under version control but listed in .gitignore.
 
 ## Usage
 
