@@ -32,7 +32,7 @@
       "notFound": {
         "enabled": false,
         "name": "",
-        "redirect": false
+        "redirect": true
       }
     },
     "theme": "indigo-pink",
@@ -45,7 +45,8 @@
     "name": "cryptocheck",
     "title": "cryptocheck",
     "useDocker": false,
-    "useMITLicense": true
+    "useMITLicense": true,
+    "useMock": false
   },
   "server": {
     "backend": "js",

@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 
 import { CryptoItem } from '../crypto-item/crypto-item.model';
 import { CryptoPrice } from '../crypto-price/crypto-price.model';
-
 import { Constants } from '../../core/constants';
 
 @Injectable({

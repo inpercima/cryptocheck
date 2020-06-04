@@ -1,8 +1,8 @@
 import { OverlayModule } from '@angular/cdk/overlay';
-import { NgModule } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
+import { NgModule } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,7 +24,7 @@ registerLocaleData(localeDe);
     MatTabsModule,
     MatToolbarModule,
     OverlayModule,
-    FeaturesModule,
+    FeaturesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

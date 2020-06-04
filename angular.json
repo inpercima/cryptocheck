@@ -74,20 +74,6 @@
                   "maximumWarning": "6kb"
                 }
               ]
-            },
-            "mock": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.mock.ts"
-                }
-              ],
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ]
             }
           }
         },
@@ -102,9 +88,6 @@
             },
             "dev": {
               "browserTarget": "cryptocheck:build:dev"
-            },
-            "mock": {
-              "browserTarget": "cryptocheck:build:mock"
             }
           }
         },
