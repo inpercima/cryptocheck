@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Synchronize account data</h1>
+<div mat-dialog-content>
+  <p *ngIf="!loading; else loader">You synchronized <strong>{{ info }}</strong> from bitpanda.</p>
+  <ng-template #loader>
+    <mat-spinner color="accent"></mat-spinner>
+    <p>Please wait while the account data is being synchronized.</p>
+  </ng-template>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary" [disabled]="loading">Ok</button>
+</div>

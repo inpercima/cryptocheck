@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FeaturesRoutingModule } from './features/features-routing.module';
 import { environment } from '../environments/environment';
+import { SyncDialogService } from './core/sync-dialog.service';
 
 @Component({
   selector: 'cc-root',
@@ -28,11 +29,14 @@ export class AppComponent {
    */
   @HostBinding('class') class = `${environment.theme}-theme`;
 
-  public constructor(private titleService: Title, public overlayContainer: OverlayContainer) {
+  public constructor(private titleService: Title, public overlayContainer: OverlayContainer, private syncDialogService: SyncDialogService) {
     this.appname = environment.appname;
-    this.routes = AppRoutingModule.ROUTES;
-    this.routes = this.routes.concat(FeaturesRoutingModule.ROUTES);
+    this.routes = AppRoutingModule.ROUTES.concat(FeaturesRoutingModule.ROUTES);
     this.titleService.setTitle(this.appname);
     this.overlayContainer.getContainerElement().classList.add(`${environment.theme}-theme`);
+  }
+
+  syncAccountData(): void {
+    this.syncDialogService.openDialog();
   }
 }
