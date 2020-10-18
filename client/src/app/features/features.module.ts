@@ -5,12 +5,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { FeaturesRoutingModule } from './features-routing.module';
+import { CoinPriceComponent } from './coin-price/coin-price.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MaterialModule } from '../shared/material/material.module';
 
 @NgModule({
   declarations: [
+    CoinPriceComponent,
     DashboardComponent,
     SettingsComponent,
   ],

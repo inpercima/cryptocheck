@@ -1,1 +1,34 @@
-<p>dashboard works!</p>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="90" fxFlex.sm="80" fxFlex.gt-sm="60">
+    <mat-card *ngIf="!settings">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>settings</mat-icon>
+        </div>
+        <mat-card-title>No settings set</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        There are currently no settings yet available. Please update your settings under <a routerLink="/settings">settings</a>.
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="settings && !prices">
+      <mat-card-content>
+        <mat-progress-bar color="primary" mode="indeterminate" value="50" bufferValue="75"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="settings && prices">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>info</mat-icon>
+        </div>
+        <mat-card-title>Overview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <cc-coin-price fxFlex [price]="prices.FAV1" [trend]=prices.FAV1.trend></cc-coin-price>
+        <cc-coin-price fxFlex [price]="prices.FAV2" [trend]=prices.FAV2.trend></cc-coin-price>
+        <cc-coin-price fxFlex [price]="prices.FAV3" [trend]=prices.FAV3.trend></cc-coin-price>
+        <cc-coin-price fxFlex [price]="prices.FAV4" [trend]=prices.FAV4.trend></cc-coin-price>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
