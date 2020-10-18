@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppRoutingPipe } from './app-routing.pipe';
 import { FeaturesModule } from './features/features.module';
 import { MaterialModule } from './shared/material/material.module';
+import { SyncDialogComponent } from './shared/sync-dialog/sync-dialog.component';
 
 registerLocaleData(localeDe);
 
@@ -18,6 +19,7 @@ registerLocaleData(localeDe);
   declarations: [
     AppComponent,
     AppRoutingPipe,
+    SyncDialogComponent,
   ],
   imports: [
     BrowserAnimationsModule,
