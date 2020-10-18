@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+
 import { SyncDialogComponent } from '../shared/sync-dialog/sync-dialog.component';
 import { environment } from 'src/environments/environment';
 

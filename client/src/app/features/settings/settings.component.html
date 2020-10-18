@@ -18,8 +18,8 @@
           </mat-form-field>
           <mat-form-field fxFlex>
             <mat-select placeholder="Currency" formControlName="currency" required>
-              <mat-option *ngFor="let currency of settingsService.currencies" [value]="currency">
-                {{ currency }}
+              <mat-option *ngFor="let currency of settingsService.currencies" [value]="currency.key">
+                {{ currency.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>

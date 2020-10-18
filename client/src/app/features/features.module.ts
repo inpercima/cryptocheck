@@ -6,11 +6,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../shared/material/material.module';
 import { FeaturesRoutingModule } from './features-routing.module';
+import { CoinPriceComponent } from './coin-price/coin-price.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
+    CoinPriceComponent,
     DashboardComponent,
     SettingsComponent,
   ],
