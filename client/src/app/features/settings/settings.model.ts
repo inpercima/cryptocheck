@@ -11,4 +11,6 @@ export interface Settings {
   fav3: string;
 
   fav4: string;
+
+  investment: number;
 }

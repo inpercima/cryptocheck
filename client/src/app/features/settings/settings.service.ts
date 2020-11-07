@@ -19,10 +19,6 @@ interface Item {
 })
 export class SettingsService {
 
-  coins: string[] = ['ADA', 'ATOM', 'BAT', 'BEST', 'BCH', 'BCI5', 'BCI10', 'BCI25', 'BTC', 'CHZ', 'COMP', 'DASH', 'DOGE', 'DOT', 'ETC', 'ETH',
-    'EOS', 'KMD', 'LINK', 'LSK', 'LTC', 'MIOTA', 'MKR', 'NEO', 'OMG', 'ONT', 'PAN', 'QTUM', 'REP', 'SNX', 'TRX', 'USDC', 'USDT', 'UNI', 'VET',
-    'WAVES', 'XAG', 'XAU', 'XEM', 'XLM', 'XPD', 'XPT', 'XRP', 'XTZ', 'YFI', 'ZEC', 'ZRX'];
-
   currencies: Item[] = [
     { key: 'USD', name: '$ USD' },
     { key: 'EUR', name: 'EUR €' },

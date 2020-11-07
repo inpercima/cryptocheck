@@ -4,18 +4,23 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CoinPrice } from '../features/coin-price/coin-price.model';
 import { Settings } from '../features/settings/settings.model';
+import { environment } from 'src/environments/environment';
+import { CoinPrice } from '../features/coin-price/coin-price.model';
 import { Constants } from './constants';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CoinService {
+export class AssetService {
 
-  coinPrices: any;
+  assetPrices: any;
 
-  constructor(private http: HttpClient) { }
+  assets: string[] = [];
+
+  constructor(private http: HttpClient) {
+    this.getAssets().subscribe(response => this.assets = response);
+   }
 
   getPrices(settings: Settings): Observable<any> {
     const ccmpFavs = `${settings.fav1},${settings.fav2},${settings.fav3},${settings.fav4}`;
@@ -28,7 +33,12 @@ export class CoinService {
         FAV3: this.createPrice(response, settings.fav3, settings.currency),
         FAV4: this.createPrice(response, settings.fav4, settings.currency),
       };
-      this.coinPrices = response;
+
+      this.assets.forEach(asset => {
+        prices[asset] = this.createPrice(response, asset, settings.currency);
+      });
+
+      this.assetPrices = response;
       return prices;
     }));
   }
@@ -37,14 +47,18 @@ export class CoinService {
     let trend = Constants.TREND_NORMAL;
     const value = res[coin][currency];
     const locale = this.locale(currency);
-    if (this.coinPrices) {
-      trend = value > this.coinPrices[coin][currency] ? Constants.TREND_UP :
-        (value < this.coinPrices[coin][currency] ? Constants.TREND_DOWN : trend);
+    if (this.assetPrices) {
+      trend = value > this.assetPrices[coin][currency] ? Constants.TREND_UP :
+        (value < this.assetPrices[coin][currency] ? Constants.TREND_DOWN : trend);
     }
     return { coin, value, trend, currency, locale } as CoinPrice;
   }
 
   locale(currency: string): string {
     return currency === 'USD' ? '' : 'de-DE';
+  }
+
+  getAssets(): Observable<string[]> {
+    return this.http.get<string[]>(environment.api + 'asset');
   }
 }

@@ -90,7 +90,6 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
             "browserTarget": "cryptocheck:build",
-            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

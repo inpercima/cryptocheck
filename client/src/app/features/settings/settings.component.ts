@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SettingsService } from './settings.service';
+import { AssetService } from 'src/app/core/asset.service';
 
 @Component({
   selector: 'cc-settings',
@@ -11,9 +12,12 @@ export class SettingsComponent implements OnInit {
 
   settingsForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, public settingsService: SettingsService) { }
+  assets: string[];
+
+  constructor(private formBuilder: FormBuilder, public assetService: AssetService, public settingsService: SettingsService) { }
 
   ngOnInit(): void {
+    this.assetService.getAssets().subscribe(response => this.assets = response);
     this.settingsService.get().subscribe(settings => {
       this.settingsForm = this.formBuilder.group({
         currency: [settings.currency, [Validators.required]],
@@ -22,6 +26,7 @@ export class SettingsComponent implements OnInit {
         fav2: [settings.fav2, [Validators.required]],
         fav3: [settings.fav3, [Validators.required]],
         fav4: [settings.fav4, [Validators.required]],
+        investment: [settings.investment],
       });
     });
   }

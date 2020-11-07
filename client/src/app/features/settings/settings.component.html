@@ -23,32 +23,35 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Investment transfer" formControlName="investment">
+          </mat-form-field>
         </div>
         <div fxLayout="row wrap" fxLayoutGap="20px">
           <mat-form-field fxFlex>
             <mat-select placeholder="Ticker favorite 1" formControlName="fav1" required>
-              <mat-option *ngFor="let coin of settingsService.coins" [value]="coin">
-                {{ coin }}
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field fxFlex>
             <mat-select placeholder="Ticker favorite 2" formControlName="fav2" required>
-              <mat-option *ngFor="let coin of settingsService.coins" [value]="coin">
-                {{ coin }}</mat-option>
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field fxFlex>
             <mat-select placeholder="Ticker favorite 3" formControlName="fav3" required>
-              <mat-option *ngFor="let coin of settingsService.coins" [value]="coin">
-                {{ coin }}
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field fxFlex>
             <mat-select placeholder="Ticker favorite 4" formControlName="fav4" required>
-              <mat-option *ngFor="let coin of settingsService.coins" [value]="coin">
-                {{ coin }}
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}
               </mat-option>
             </mat-select>
           </mat-form-field>
