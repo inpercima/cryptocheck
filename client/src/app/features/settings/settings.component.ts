@@ -26,7 +26,6 @@ export class SettingsComponent implements OnInit {
         fav2: [settings.fav2, [Validators.required]],
         fav3: [settings.fav3, [Validators.required]],
         fav4: [settings.fav4, [Validators.required]],
-        investment: [settings.investment],
       });
     });
   }

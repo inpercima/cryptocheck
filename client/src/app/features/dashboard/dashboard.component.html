@@ -44,11 +44,11 @@
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Bitpanda Investment:</div>
-            <div>{{ transformCurrency(fiatWallet.investment) }}</div>
+            <div>{{ transformCurrency(fiatWallet.investment.internal) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>External Investment:</div>
-            <div>{{ transformCurrency(settings.investment) }}</div>
+            <div>{{ transformCurrency(fiatWallet.investment.external) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Total Investment:</div>
@@ -68,8 +68,11 @@
             {{ cryptoWallet.coins | number:'1.2-8':assetService.locale(settings.currency) }} {{  cryptoWallet.name }}
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
-            <div fxFlex>Bitpanda Investment:</div>
-            <div>{{ transformCurrency(cryptoWallet.fiat) }}</div>
+            <div fxFlex>
+              <span *ngIf="cryptoWallet.external == 0">Bitpanda</span>
+              Investment:
+            </div>
+            <div>{{ transformCurrency(getInvestment(cryptoWallet)) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Current Value:</div>

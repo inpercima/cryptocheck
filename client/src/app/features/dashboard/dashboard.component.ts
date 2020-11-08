@@ -47,7 +47,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   totalInvestment(): number {
-    return this.fiatWallet.investment + this.settings.investment;
+    return this.fiatWallet.investment.internal + this.fiatWallet.investment.external;
+  }
+
+  getInvestment(crypto: any): number {
+    return crypto.external ? crypto.external : crypto.fiat;
   }
 
   transformCurrency(value: number): string {
@@ -59,6 +63,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   calculateCurrentProfitLoss(crypto: any): string {
-    return this.transformCurrency(this.calculateCurrentValue(crypto) - crypto.fiat);
+    return this.transformCurrency(this.calculateCurrentValue(crypto) - this.getInvestment(crypto));
   }
 }

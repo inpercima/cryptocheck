@@ -30,11 +30,11 @@ class SettingsService {
     $stmtQuery->execute();
     // $stmt->rowCount() funktioniert nicht auf mysql bzw. ist nicht garantiert
     if ($stmtQuery->fetchColumn() == 0) {
-      $columns = 'currency, ticker, fav1, fav2, fav3, fav4, investment';
-      $values = ':currency, :ticker, :fav1, :fav2, :fav3, :fav4, :investment';
+      $columns = 'currency, ticker, fav1, fav2, fav3, fav4';
+      $values = ':currency, :ticker, :fav1, :fav2, :fav3, :fav4';
       $stmt = $pdo->prepare("INSERT INTO settings ({$columns}) VALUES ({$values})");
     } else {
-      $columns = 'currency = :currency, ticker = :ticker, fav1 = :fav1, fav2 = :fav2, fav3 = :fav3, fav4 = :fav4, investment = :investment';
+      $columns = 'currency = :currency, ticker = :ticker, fav1 = :fav1, fav2 = :fav2, fav3 = :fav3, fav4 = :fav4';
       $stmt = $pdo->prepare("UPDATE settings SET {$columns}");
     }
 
@@ -44,7 +44,6 @@ class SettingsService {
     $stmt->bindParam(':fav2', $data->fav2);
     $stmt->bindParam(':fav3', $data->fav3);
     $stmt->bindParam(':fav4', $data->fav4);
-    $stmt->bindParam(':investment', $data->investment);
     return $stmt->execute();
   }
 }

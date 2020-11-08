@@ -16,31 +16,42 @@ class TransactionService {
     $pdo = $mysqlService->connect();
 
     $stmt = $pdo->prepare("
-      SELECT COALESCE(SUM(`amount_fiat` + `fee`), 0) AS `investment`
-      FROM `transaction_test`
-      JOIN `asset` ON `transaction_test`.`asset_id` = `asset`.`id`
-      WHERE `asset`.`name` = (SELECT `currency` FROM `settings`)");
+    SELECT ROUND(
+      (SELECT COALESCE(SUM(`amount_fiat` + `fee`), 0)
+        FROM `transaction`
+        JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
+        WHERE `asset`.`name` = (SELECT `currency` FROM `settings`)
+        AND `transaction_id` IS NOT NULL
+      ), 2) AS `internal`,
+      ROUND(
+        (SELECT COALESCE(SUM(`amount_fiat`), 0)
+          FROM `transaction`
+          WHERE `type` = 'buy'
+          AND `transaction_id` IS NULL
+        ), 2) AS `external`");
     $stmt->execute();
-    $investment = $stmt->fetchColumn();
+    $investment = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $stmt = $pdo->prepare("
       SELECT ROUND(
         (SELECT ROUND(
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction_test`
-            JOIN `asset` ON `transaction_test`.`asset_id` = `asset`.`id`
+            FROM `transaction`
+            JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
             WHERE `asset`.`name` = (SELECT `currency` FROM `settings`)
           )
         , 2))
         -
         (SELECT ROUND(
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction_test`
+            FROM `transaction`
             WHERE `type` = 'buy'
+            AND `transaction_id` IS NOT NULL
           ) -
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction_test`
+            FROM `transaction`
             WHERE `type` = 'sell'
+            AND `transaction_id` IS NOT NULL
           )
         , 2))
       , 2) AS `fiatWallet`");
@@ -64,9 +75,9 @@ class TransactionService {
 
     $stmt = $pdo->prepare("
       SELECT DISTINCT `asset`.`id`, `asset`.`name`
-      FROM `transaction_test`
-      JOIN `asset`ON `transaction_test`.`asset_id` = `asset`.`id`
-      WHERE `transaction_test`.`asset_id` > 0");
+      FROM `transaction`
+      JOIN `asset`ON `transaction`.`asset_id` = `asset`.`id`
+      WHERE `transaction`.`asset_id` > 0");
     $stmt->execute();
     $coins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -76,22 +87,36 @@ class TransactionService {
       $stmt = $pdo->prepare("
         SELECT ROUND(
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction_test`
-            WHERE `type` IN ('buy', 'transfer', 'deposit') AND ref_id IS NULL AND `asset_id` = :assetId
+            FROM `transaction`
+            WHERE `type` IN ('buy', 'transfer', 'deposit')
+            AND ref_id IS NULL AND `asset_id` = :assetId
+            AND `transaction_id` IS NOT NULL
           ) -
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction_test`
-            WHERE `type` IN ('withdrawal') AND `asset_id` = :assetId
+            FROM `transaction`
+            WHERE `type` IN ('withdrawal')
+            AND `asset_id` = :assetId
           )
         , 2) AS `fiat`,
         ROUND(
+          (SELECT COALESCE(SUM(`amount_fiat`), 0)
+            FROM `transaction`
+            WHERE `type` IN ('buy')
+            AND `asset_id` = :assetId
+            AND `transaction_id` IS NULL
+          )
+        , 2) AS `investment_external`,
+        ROUND(
           (SELECT COALESCE(SUM(`amount_coin`), 0)
-            FROM `transaction_test`
-            WHERE `type` IN ('buy', 'transfer', 'deposit') AND ref_id IS NULL AND `asset_id` = :assetId
+            FROM `transaction`
+            WHERE `type` IN ('buy', 'transfer', 'deposit')
+            AND ref_id IS NULL AND `asset_id` = :assetId
+            AND `transaction_id` IS NOT NULL
           ) -
           (SELECT COALESCE(SUM(`fee`), 0)
-            FROM `transaction_test`
-            WHERE `type` IN ('withdrawal') AND `asset_id` = :assetId
+            FROM `transaction`
+            WHERE `type` IN ('withdrawal')
+            AND `asset_id` = :assetId
           )
         , 8) AS `coin`");
       $stmt->bindParam(':assetId', $value['id']);
@@ -100,6 +125,7 @@ class TransactionService {
       if ($crypto['coin'] > 0) {
         array_push($cryptos, (object) [
           'fiat' => $crypto['fiat'],
+          'external' => $crypto['investment_external'],
           'coins' => $crypto['coin'],
           'name' => $value['name']
         ]);

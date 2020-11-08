@@ -24,7 +24,7 @@ class SynchronizeService {
     $pdo = $mysqlService->connect();
 
     foreach ($reversedTransactions as $key => $value) {
-      $stmtQuery = $pdo->prepare("SELECT COUNT(*) FROM transaction_test WHERE transaction_id = :transaction_id");
+      $stmtQuery = $pdo->prepare("SELECT COUNT(*) FROM `transaction` WHERE transaction_id = :transaction_id");
       $stmtQuery->bindParam(':transaction_id', $value->transaction_id);
       $stmtQuery->execute();
       // $stmt->rowCount() funktioniert nicht auf mysql bzw. ist nicht garantiert
@@ -32,7 +32,7 @@ class SynchronizeService {
         $ref_id = NULL;
         $columns = 'asset_id, date, price, amount_fiat, amount_coin, fee, type, transaction_id, ref_id';
         $values = ':asset_id, :date, :price, :amount_fiat, :amount_coin, :fee, :type, :transaction_id, :ref_id';
-        $stmt = $pdo->prepare("INSERT INTO transaction_test ({$columns}) VALUES ({$values})");
+        $stmt = $pdo->prepare("INSERT INTO `transaction` ({$columns}) VALUES ({$values})");
         $stmt->bindParam(':asset_id', $value->asset_id);
         $stmt->bindParam(':date', $value->date);
         $stmt->bindParam(':price', $value->price);
@@ -45,7 +45,7 @@ class SynchronizeService {
         $stmt->execute();
 
         if ($value->type == 'sell') {
-          $stmtQuery = $pdo->prepare("UPDATE transaction_test SET `ref_id` = :refId  WHERE `type` = 'buy' AND asset_id = :assetId AND amount_coin = :amount_coin");
+          $stmtQuery = $pdo->prepare("UPDATE `transaction` SET `ref_id` = :refId  WHERE `type` = 'buy' AND asset_id = :assetId AND amount_coin = :amount_coin");
           $stmtQuery->bindParam(':refId', $pdo->lastInsertId());
           $stmtQuery->bindParam(':amount_coin', $value->amount_coin);
           $stmtQuery->bindParam(':assetId', $value->asset_id);

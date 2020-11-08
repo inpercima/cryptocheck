@@ -32,10 +32,10 @@ export class SettingsService {
   constructor(private http: HttpClient) { }
 
   get(): Observable<Settings> {
-    return this.http.get<Settings>(environment.api + 'settings').pipe(map(response => response));
+    return this.http.get<Settings>(environment.api + 'settings');
   }
 
   save(settings: any): Observable<boolean> {
-    return this.http.post<boolean>(environment.api + 'settings', settings).pipe(map(response => response));
+    return this.http.post<boolean>(environment.api + 'settings', settings);
   }
 }
