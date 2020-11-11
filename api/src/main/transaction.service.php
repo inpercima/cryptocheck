@@ -89,7 +89,7 @@ class TransactionService {
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
             FROM `transaction`
             WHERE `type` IN ('buy', 'transfer', 'deposit')
-            AND ref_id IS NULL AND `asset_id` = :assetId
+            AND ref_transaction_id IS NULL AND `asset_id` = :assetId
             AND `transaction_id` IS NOT NULL
           ) -
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
@@ -110,7 +110,7 @@ class TransactionService {
           (SELECT COALESCE(SUM(`amount_coin`), 0)
             FROM `transaction`
             WHERE `type` IN ('buy', 'transfer', 'deposit')
-            AND ref_id IS NULL AND `asset_id` = :assetId
+            AND ref_transaction_id IS NULL AND `asset_id` = :assetId
             AND `transaction_id` IS NOT NULL
           ) -
           (SELECT COALESCE(SUM(`fee`), 0)

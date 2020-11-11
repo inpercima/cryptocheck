@@ -12,10 +12,12 @@ class SynchronizeService {
 
   function saveAll() {
     $walletsService = new WalletsService();
-    $this->save(json_decode($walletsService->getPreparedTransactions()));
+    $totalCount = $this->save(json_decode($walletsService->getPreparedTransactions()));
 
     $fiatwalletsService = new FiatwalletsService();
-    $this->save(json_decode($fiatwalletsService->getPreparedTransactions()));
+    $totalCount += $this->save(json_decode($fiatwalletsService->getPreparedTransactions()));
+
+    return json_encode($totalCount);
   }
 
   function save($transactions) {
@@ -23,15 +25,15 @@ class SynchronizeService {
     $mysqlService = new MysqlService();
     $pdo = $mysqlService->connect();
 
+    $count = 0;
     foreach ($reversedTransactions as $key => $value) {
       $stmtQuery = $pdo->prepare("SELECT COUNT(*) FROM `transaction` WHERE transaction_id = :transaction_id");
       $stmtQuery->bindParam(':transaction_id', $value->transaction_id);
       $stmtQuery->execute();
       // $stmt->rowCount() funktioniert nicht auf mysql bzw. ist nicht garantiert
       if ($stmtQuery->fetchColumn() == 0) {
-        $ref_id = NULL;
-        $columns = 'asset_id, date, price, amount_fiat, amount_coin, fee, type, transaction_id, ref_id';
-        $values = ':asset_id, :date, :price, :amount_fiat, :amount_coin, :fee, :type, :transaction_id, :ref_id';
+        $columns = 'asset_id, date, price, amount_fiat, amount_coin, fee, type, transaction_id, trade_id';
+        $values = ':asset_id, :date, :price, :amount_fiat, :amount_coin, :fee, :type, :transaction_id, :trade_id';
         $stmt = $pdo->prepare("INSERT INTO `transaction` ({$columns}) VALUES ({$values})");
         $stmt->bindParam(':asset_id', $value->asset_id);
         $stmt->bindParam(':date', $value->date);
@@ -41,20 +43,26 @@ class SynchronizeService {
         $stmt->bindParam(':fee', $value->fee);
         $stmt->bindParam(':type', $value->type);
         $stmt->bindParam(':transaction_id', $value->transaction_id);
-        $stmt->bindParam(':ref_id', $ref_id);
+        $stmt->bindParam(':trade_id', $value->trade_id);
         $stmt->execute();
+        $count += 1;
 
         if ($value->type == 'sell') {
-          $stmtQuery = $pdo->prepare("UPDATE `transaction` SET `ref_id` = :refId  WHERE `type` = 'buy' AND asset_id = :assetId AND amount_coin = :amount_coin");
-          $stmtQuery->bindParam(':refId', $pdo->lastInsertId());
+          $stmtQuery = $pdo->prepare("UPDATE `transaction` SET `ref_transaction_id` = :ref_transaction_id WHERE `type` = 'buy' AND asset_id = :asset_id AND amount_coin = :amount_coin");
+          $stmtQuery->bindParam(':ref_transaction_id', $value->transaction_id);
+          $stmtQuery->bindParam(':asset_id', $value->asset_id);
           $stmtQuery->bindParam(':amount_coin', $value->amount_coin);
-          $stmtQuery->bindParam(':assetId', $value->asset_id);
           $stmtQuery->execute();
         }
-
+        if ($value->type == 'withdrawal') {
+          $stmtQuery = $pdo->prepare("UPDATE `transaction` SET `ref_trade_id` = :ref_trade_id WHERE `transaction_id` = :transaction_id");
+          $stmtQuery->bindParam(':ref_trade_id', $value->ref_trade_id);
+          $stmtQuery->bindParam(':transaction_id', $value->transaction_id);
+          $stmtQuery->execute();
+        }
       }
     }
-    return '';
+    return $count;
   }
 }
 ?>

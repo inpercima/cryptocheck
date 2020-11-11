@@ -44,7 +44,8 @@ class FiatwalletsService {
           'fee' => floatVal($attributes->fee),
           'date' => substr($attributes->time->date_iso8601, 0, 10),
           'price' => 0,
-          'transaction_id' => $value->id
+          'transaction_id' => $value->id,
+          'trade_id' => NULL
         ]);
       }
     }
