@@ -1,0 +1,4 @@
+{
+  "/transaction\\?type=fiat": "/fiattransactions",
+  "/transaction\\?type=crypto": "/cryptotransactions"
+}

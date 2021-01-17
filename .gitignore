@@ -1,6 +1,7 @@
 # begin project specific
 
 environment.dev.ts
+environment.mock.ts
 environment.prod.ts
 config.php
 

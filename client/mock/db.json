@@ -1,0 +1,97 @@
+{
+  "asset": [
+    "AAVE",
+    "ADA",
+    "ATOM",
+    "BAND",
+    "BAT",
+    "BCH",
+    "BEST",
+    "BTC",
+    "CHZ",
+    "COMP",
+    "DASH",
+    "DOGE",
+    "DOT",
+    "EOS",
+    "ETC",
+    "ETH",
+    "FIL",
+    "KMD",
+    "KNC",
+    "LINK",
+    "LSK",
+    "LTC",
+    "MIOTA",
+    "MKR",
+    "NEO",
+    "OMG",
+    "ONT",
+    "PAN",
+    "QTUM",
+    "REN",
+    "REP",
+    "SNX",
+    "TRX",
+    "UMA",
+    "UNI",
+    "USDC",
+    "USDT",
+    "VET",
+    "WAVES",
+    "XEM",
+    "XLM",
+    "XRP",
+    "XTZ",
+    "YFI",
+    "ZEC",
+    "ZRX"
+  ],
+  "settings": {
+    "currency": "EUR",
+    "ticker": "BPDA",
+    "fav1": "LINK",
+    "fav2": "ETH",
+    "fav3": "BTC",
+    "fav4": "DOT"
+  },
+  "fiattransactions": {
+    "investment": {
+      "internal": 10000,
+      "external": 0
+    },
+    "value": 0
+  },
+  "cryptotransactions": [
+    {
+      "fiat": 1000,
+      "external": 0,
+      "coins": 0.03313908,
+      "name": "BTC"
+    },
+    {
+      "fiat": 3000,
+      "external": 0,
+      "coins": 2.85625161,
+      "name": "ETH"
+    },
+    {
+      "fiat": 3000,
+      "external": 0,
+      "coins": 12602.8527792,
+      "name": "XRP"
+    },
+    {
+      "fiat": 2000,
+      "external": 0,
+      "coins": 107.14251904,
+      "name": "LINK"
+    },
+    {
+      "fiat": 1000,
+      "external": 0,
+      "coins": 69.79149886,
+      "name": "DOT"
+    }
+  ]
+}
