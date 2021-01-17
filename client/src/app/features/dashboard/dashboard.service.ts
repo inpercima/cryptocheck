@@ -20,4 +20,8 @@ export class DashboardService {
   getCrypto(): Observable<any> {
     return this.http.get<any>(environment.api + 'transaction?type=crypto').pipe(map(response => response));
   }
+
+  getProfitLoss(): Observable<any> {
+    return this.http.get<any>(environment.api + 'querys');
+  }
 }

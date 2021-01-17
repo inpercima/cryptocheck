@@ -88,7 +88,7 @@ class TransactionService {
         SELECT ROUND(
           (SELECT COALESCE(SUM(`amount_fiat`), 0)
             FROM `transaction`
-            WHERE `type` IN ('buy', 'transfer', 'deposit')
+            WHERE `type` IN ('buy', 'transfer')
             AND ref_transaction_id IS NULL AND `asset_id` = :assetId
             AND `transaction_id` IS NOT NULL
           ) -

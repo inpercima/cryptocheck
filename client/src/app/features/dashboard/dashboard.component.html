@@ -21,13 +21,30 @@
         <div mat-card-avatar>
           <mat-icon>info</mat-icon>
         </div>
-        <mat-card-title>Overview</mat-card-title>
+        <mat-card-title>Price favorites</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <cc-coin-price fxFlex [price]="prices.FAV1" [trend]=prices.FAV1.trend></cc-coin-price>
-        <cc-coin-price fxFlex [price]="prices.FAV2" [trend]=prices.FAV2.trend></cc-coin-price>
-        <cc-coin-price fxFlex [price]="prices.FAV3" [trend]=prices.FAV3.trend></cc-coin-price>
-        <cc-coin-price fxFlex [price]="prices.FAV4" [trend]=prices.FAV4.trend></cc-coin-price>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <cc-coin-price fxFlex [price]="prices.FAV1" [trend]=prices.FAV1.trend></cc-coin-price>
+          <cc-coin-price fxFlex [price]="prices.FAV2" [trend]=prices.FAV2.trend></cc-coin-price>
+          <cc-coin-price fxFlex [price]="prices.FAV3" [trend]=prices.FAV3.trend></cc-coin-price>
+          <cc-coin-price fxFlex [price]="prices.FAV4" [trend]=prices.FAV4.trend></cc-coin-price>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>info</mat-icon>
+        </div>
+        <mat-card-title>Profit/Loss</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <span fxFlex style="text-align: center" class="mat-h1">Wallets:<br>{{ transformCurrency(profitLossWallets) }}</span>
+          <span fxFlex style="text-align: center" class="mat-h1">Sales:<br>{{ transformCurrency(profitLossSales) }}</span>
+          <span fxFlex style="text-align: center" class="mat-h1">Sales minus fee:<br>{{ transformCurrency(profitLossSalesFee) }}</span>
+        </div>
       </mat-card-content>
     </mat-card>
     <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="space-between">
@@ -80,7 +97,7 @@
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Current Profit/Loss:</div>
-            <div>{{ calculateCurrentProfitLoss(cryptoWallet) }}</div>
+            <div>{{ transformCurrency(calculateCurrentProfitLoss(cryptoWallet)) }}</div>
           </div>
         </mat-card-content>
       </mat-card>

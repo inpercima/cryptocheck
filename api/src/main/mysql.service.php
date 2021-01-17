@@ -13,7 +13,7 @@ class MysqlService {
    */
   function connect() {
     try {
-      $pdo = new PDO('mysql:host='.CONFIG::DB_HOST.';dbname='.CONFIG::DB_NAME.';charset=utf8', CONFIG::DB_USER, CONFIG::DB_PASS);
+      $pdo = new PDO('mysql:host='.Config::DB_HOST.';dbname='.Config::DB_NAME.';charset=utf8', Config::DB_USER, Config::DB_PASS);
     } catch (PDOException $e) {
       echo 'Error: ' . $e->getMessage();
       exit();

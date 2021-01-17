@@ -25,6 +25,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
+  profitLossSales = 0;
+  profitLossSalesFee = 0;
+  profitLossWallets = 0;
+
+  curv = 0;
+
   constructor(public assetService: AssetService, private dashboardService: DashboardService, private settingsService: SettingsService) { }
 
   ngOnInit(): void {
@@ -36,6 +42,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
     this.dashboardService.getFiat().subscribe(fiatWallet => this.fiatWallet = fiatWallet);
     this.dashboardService.getCrypto().subscribe(cryptoWallets => this.cryptoWallets = cryptoWallets);
+    this.dashboardService.getProfitLoss().subscribe(profitLoss => {
+      this.profitLossSales = profitLoss.sales;
+      this.profitLossSalesFee = profitLoss.salesMinusFee;
+    });
   }
 
   ngOnDestroy(): void {
@@ -43,7 +53,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   updatePrices(): void {
-    this.assetService.getPrices(this.settings).subscribe(prices => this.prices = prices);
+    this.assetService.getPrices(this.settings).subscribe(prices => {
+      this.prices = prices;
+      this.profitLossWallets = 0;
+      this.cryptoWallets.forEach(value => {
+        this.profitLossWallets += this.calculateCurrentProfitLoss(value);
+      });
+    });
   }
 
   totalInvestment(): number {
@@ -62,7 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return this.prices[crypto.name].value * crypto.coins;
   }
 
-  calculateCurrentProfitLoss(crypto: any): string {
-    return this.transformCurrency(this.calculateCurrentValue(crypto) - this.getInvestment(crypto));
+  calculateCurrentProfitLoss(crypto: any): number {
+    return this.calculateCurrentValue(crypto) - this.getInvestment(crypto);
   }
 }
