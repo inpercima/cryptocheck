@@ -23,7 +23,7 @@
         </div>
         <mat-card-title>Overview</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
+      <mat-card-content fxLayout="row" fxLayout.lt-md="column">
         <cc-coin-price fxFlex [price]="prices.FAV1" [trend]=prices.FAV1.trend></cc-coin-price>
         <cc-coin-price fxFlex [price]="prices.FAV2" [trend]=prices.FAV2.trend></cc-coin-price>
         <cc-coin-price fxFlex [price]="prices.FAV3" [trend]=prices.FAV3.trend></cc-coin-price>
