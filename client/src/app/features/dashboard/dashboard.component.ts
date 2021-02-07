@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getInvestment(crypto: any): number {
-    return crypto.external ? crypto.external : crypto.fiat;
+    return crypto.external + crypto.fiat;
   }
 
   transformCurrency(value: number): string {
