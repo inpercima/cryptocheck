@@ -35,7 +35,7 @@ class FiatwalletsService {
     $transactions = [];
     foreach ($response->data as $key => $value) {
       $attributes = $value->attributes;
-      if ($attributes->type == 'deposit' && $attributes->status == 'finished') {
+      if (($attributes->type == 'deposit' || $attributes->type == 'withdrawal') && $attributes->status == 'finished') {
         array_push($transactions, (object) [
           'type' => $attributes->type,
           'asset_id' => -1,

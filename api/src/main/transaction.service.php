@@ -17,44 +17,58 @@ class TransactionService {
 
     $stmt = $pdo->prepare("
     SELECT ROUND(
-      (SELECT COALESCE(SUM(`amount_fiat` + `fee`), 0)
-        FROM `transaction`
-        JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
-        WHERE `asset`.`name` = (SELECT `currency` FROM `settings`)
-        AND `transaction_id` IS NOT NULL
-      ), 2) AS `internal`,
-      ROUND(
+      (SELECT ROUND(
+        (SELECT COALESCE(SUM(`amount_fiat` + `fee`), 0)
+          FROM `transaction`
+          JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
+          WHERE `asset`.`name` = (SELECT `currency` FROM `settings`) AND `type` = 'deposit'
+        ), 2))
+      -
+      (SELECT ROUND(
         (SELECT COALESCE(SUM(`amount_fiat`), 0)
           FROM `transaction`
-          WHERE `type` = 'buy'
-          AND `transaction_id` IS NULL
-        ), 2) AS `external`");
+          JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
+          WHERE `asset`.`name` = (SELECT `currency` FROM `settings`) AND `type` = 'withdrawal'
+        ), 2))
+      , 2) AS `internal`,
+        ROUND(
+          (SELECT COALESCE(SUM(`amount_fiat`), 0)
+            FROM `transaction`
+            WHERE `type` = 'buy'
+            AND `transaction_id` IS NULL
+          ), 2) AS `external`");
     $stmt->execute();
     $investment = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $stmt = $pdo->prepare("
-      SELECT ROUND(
-        (SELECT ROUND(
-          (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction`
-            JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
-            WHERE `asset`.`name` = (SELECT `currency` FROM `settings`)
-          )
-        , 2))
-        -
-        (SELECT ROUND(
-          (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction`
-            WHERE `type` = 'buy'
-            AND `transaction_id` IS NOT NULL
-          ) -
-          (SELECT COALESCE(SUM(`amount_fiat`), 0)
-            FROM `transaction`
-            WHERE `type` = 'sell'
-            AND `transaction_id` IS NOT NULL
-          )
-        , 2))
-      , 2) AS `fiatWallet`");
+    SELECT ROUND(
+      (SELECT ROUND(
+      (SELECT COALESCE(SUM(`amount_fiat`), 0)
+        FROM `transaction`
+        JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
+        WHERE `asset`.`name` = (SELECT `currency` FROM `settings`) AND `type` = 'deposit'
+      ), 2))
+    -
+    (SELECT ROUND(
+      (SELECT COALESCE(SUM(`amount_fiat`), 0)
+        FROM `transaction`
+        JOIN `asset` ON `transaction`.`asset_id` = `asset`.`id`
+        WHERE `asset`.`name` = (SELECT `currency` FROM `settings`) AND `type` = 'withdrawal'
+      ), 2))
+      -
+      (SELECT ROUND(
+        (SELECT COALESCE(SUM(`amount_fiat`), 0)
+          FROM `transaction`
+          WHERE `type` = 'buy'
+          AND `transaction_id` IS NOT NULL
+        ) -
+        (SELECT COALESCE(SUM(`amount_fiat`), 0)
+          FROM `transaction`
+          WHERE `type` = 'sell'
+          AND `transaction_id` IS NOT NULL
+        )
+      , 2))
+    , 2) AS `fiatWallet`");
     $stmt->execute();
     $value = $stmt->fetchColumn();
 
