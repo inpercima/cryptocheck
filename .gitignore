@@ -2,9 +2,13 @@
 
 environment.dev.ts
 environment.prod.ts
+config.dev.php
+config.prod.php
 
 # ignore all in '.vscode' b/c some vsc config files contain user specific content
 .vscode/*
+
+.classpath
 
 # end project specific
 
@@ -36,7 +40,6 @@ testem.log
 typings/
 
 # e2e
-e2e/*.js
 e2e/*.map
 
 # System Files
@@ -101,7 +104,7 @@ local.properties
 
 # Uncomment this line if you wish to ignore the project description file.
 # Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
+.project
 
 ### Eclipse Patch ###
 # Spring Boot Tooling
@@ -249,6 +252,9 @@ jspm_packages/
 # Optional eslint cache
 .eslintcache
 
+# Optional stylelint cache
+.stylelintcache
+
 # Microbundle cache
 .rpt2_cache/
 .rts2_cache_cjs/
@@ -267,9 +273,11 @@ jspm_packages/
 # dotenv environment variables file
 .env
 .env.test
+.env*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
+.parcel-cache
 
 # Next.js build output
 .next
@@ -277,6 +285,13 @@ jspm_packages/
 # Nuxt.js build / generate output
 .nuxt
 dist
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# rollup.js default build output
 
 # Gatsby files
 .cache/
@@ -301,5 +316,8 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# Temporary folders
+temp/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,angular,eclipse,intellij+all

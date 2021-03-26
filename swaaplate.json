@@ -4,6 +4,18 @@
     "ghUser": "inpercima",
     "installDependencies": true,
     "language": "en",
+    "modules": {
+      "enabled": true,
+      "features": {
+        "defaultRoute": "dashboard",
+        "name": "features"
+      },
+      "notFound": {
+        "enabled": false,
+        "name": ""
+      },
+      "routing": true
+    },
     "packageJson": {
       "contributors": [{
         "name": "Marcel Jänicke",
@@ -16,43 +28,30 @@
       "repository": "https://github.com/inpercima/cryptocheck"
     },
     "prefix": "cc",
-    "routing": {
-      "enabled": false,
-      "features": {
-        "default": "",
-        "name": "",
-        "show": false
-      },
-      "login": {
-        "activate": false,
-        "enabled": false,
-        "name": "",
-        "show": false
-      },
-      "notFound": {
-        "enabled": false,
-        "name": "",
-        "redirect": true
-      }
-    },
     "theme": "indigo-pink",
     "useGoogleFonts": true,
     "useYarn": true
   },
   "general": {
     "author": "Marcel Jänicke",
-    "description": "Determines profit and loss when buying cryptocurrencies at specific times.",
+    "description": "Simple additional app for bitanda to see further details such as profit/loss.",
+    "modRewriteIndex": true,
     "name": "cryptocheck",
     "title": "cryptocheck",
     "useDocker": false,
     "useMITLicense": true,
-    "useMock": false
+    "useMock": false,
+    "useSecurity": false
   },
   "server": {
-    "backend": "js",
-    "htaccess": false,
-    "management": "",
-    "packagePath": "",
-    "serverAsApi": false
+    "backend": "php",
+    "javaKt": {
+      "management": "",
+      "packagePath": ""
+    },
+    "php": {
+      "modRewritePhpExtension": true,
+      "serverAsApi": true
+    }
   }
 }
