@@ -11,6 +11,7 @@ class Config {
   const DB_HOST = '';
   const DB_NAME = '';
   const DB_PASS = '';
+  const DB_PREFIX = '';
   const DB_USER = '';
 }
 ?>
