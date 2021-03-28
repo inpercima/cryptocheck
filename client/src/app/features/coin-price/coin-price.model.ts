@@ -1,4 +1,3 @@
-
 export interface CoinPrice {
 
   coin: string;

@@ -15,9 +15,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   prices: any;
 
-  settings: Settings;
+  settings!: Settings;
 
-  subscription: Subscription;
+  subscription!: Subscription;
 
   constructor(private coinService: CoinService, private settingsService: SettingsService) { }
 

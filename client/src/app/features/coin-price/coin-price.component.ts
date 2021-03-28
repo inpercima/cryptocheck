@@ -28,8 +28,8 @@ import { CoinPrice } from './coin-price.model';
 })
 export class CoinPriceComponent implements OnInit {
 
-  @Input() price: CoinPrice;
-  @Input() trend: string;
+  @Input() price!: CoinPrice;
+  @Input() trend!: string;
 
   constructor() { }
 
