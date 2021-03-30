@@ -28,5 +28,18 @@ class CoreService {
     $params = $this->getParams();
     return $params[$param];
   }
+
+  /**
+   * Create a context for getting data.
+   */
+  function createContext($headerApiKey = 'X-API-KEY') {
+    return stream_context_create(array(
+      'http' => array(
+        'header' => array(
+          $headerApiKey . ': ' . Config::API_KEY
+        )
+      )
+    ));
+  }
 }
 ?>

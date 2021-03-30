@@ -4,7 +4,7 @@ import { Subscription, timer } from 'rxjs';
 
 import { Settings } from '../settings/settings.model';
 import { SettingsService } from '../settings/settings.service';
-import { CoinService } from 'src/app/core/coin.service';
+import { AssetService } from 'src/app/core/asset.service';
 
 @Component({
   selector: 'cc-dashboard',
@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  constructor(private coinService: CoinService, private settingsService: SettingsService) { }
+  constructor(private assetService: AssetService, private settingsService: SettingsService) { }
 
   ngOnInit(): void {
     this.settingsService.get().subscribe(settings => {
@@ -34,6 +34,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   updatePrices(): void {
-    this.coinService.getPrices(this.settings).subscribe(prices => this.prices = prices);
+    this.assetService.getPrices(this.settings).subscribe(prices => this.prices = prices);
   }
 }

@@ -4,11 +4,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { timer } from 'rxjs';
 
 import { Constants } from 'src/app/core/constants';
-import { CoinPrice } from './coin-price.model';
+import { AssetPrice } from './asset-price.model';
 
 @Component({
-  selector: 'cc-coin-price',
-  templateUrl: './coin-price.component.html',
+  selector: 'cc-asset-price',
+  templateUrl: './asset-price.component.html',
   animations: [
     trigger('trend', [
       state(Constants.TREND_UP, style({
@@ -26,9 +26,9 @@ import { CoinPrice } from './coin-price.model';
     ]),
   ],
 })
-export class CoinPriceComponent implements OnInit {
+export class AssetPriceComponent implements OnInit {
 
-  @Input() price!: CoinPrice;
+  @Input() price!: AssetPrice;
   @Input() trend!: string;
 
   constructor() { }

@@ -1,6 +1,6 @@
-export interface CoinPrice {
+export interface AssetPrice {
 
-  coin: string;
+  asset: string;
 
   value: number;
 
