@@ -15,9 +15,9 @@ import { environment } from 'src/environments/environment';
 })
 export class AssetService {
 
-  assets: string[] = [];
+  assetPrices: any;
 
-  assetPrice: any;
+  assets: string[] = [];
 
   constructor(private http: HttpClient) {
     this.getAssets().subscribe(response => this.assets = response);
@@ -32,13 +32,18 @@ export class AssetService {
     const ccmpApi = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${ccmpFavs}&tsyms=${settings.currency}`;
     const tickerApi = settings.ticker === 'CCMP' ? ccmpApi : 'https://api.bitpanda.com/v1/ticker';
     return this.http.get<any>(tickerApi).pipe(map(response => {
-      const prices = {
+      const prices: any = {
         FAV1: this.createPrice(response, settings.fav1, settings.currency),
         FAV2: this.createPrice(response, settings.fav2, settings.currency),
         FAV3: this.createPrice(response, settings.fav3, settings.currency),
         FAV4: this.createPrice(response, settings.fav4, settings.currency),
       };
-      this.assetPrice = response;
+
+      this.assets.forEach(asset => {
+        prices[asset] = this.createPrice(response, asset, settings.currency);
+      });
+
+      this.assetPrices = response;
       return prices;
     }));
   }
@@ -47,9 +52,9 @@ export class AssetService {
     let trend = Constants.TREND_NORMAL;
     const value = res[asset][currency];
     const locale = this.locale(currency);
-    if (this.assetPrice) {
-      trend = value > this.assetPrice[asset][currency] ? Constants.TREND_UP :
-        (value < this.assetPrice[asset][currency] ? Constants.TREND_DOWN : trend);
+    if (this.assetPrices) {
+      trend = value > this.assetPrices[asset][currency] ? Constants.TREND_UP :
+        (value < this.assetPrices[asset][currency] ? Constants.TREND_DOWN : trend);
     }
     return { asset, value, trend, currency, locale } as AssetPrice;
   }

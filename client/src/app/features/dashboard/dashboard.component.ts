@@ -56,8 +56,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return new CurrencyPipe(this.assetService.locale(currency)).transform(value, currency, 'symbol') ?? '';
   }
 
-  calculateCurrentValue(crypto: any): number {
-    return this.prices[crypto.name].value * crypto.coins;
+  calculateCurrentValue(asset: any): number {
+    return this.prices[asset.symbol].value * asset.balance;
   }
 
   calculateCurrentProfitLoss(crypto: any): string {

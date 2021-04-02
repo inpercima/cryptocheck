@@ -16,7 +16,7 @@ class AssetService {
    * Get information of the assets.
    */
   function getAssets() {
-    return json_encode(array_column($this->mysqlService->findAll('`name`', 'asset', '`id` > 0 ORDER BY `name` ASC'), 'name'));
+    return json_encode(array_column($this->mysqlService->findAll('`name`', 'crypto', '`id` > 0 ORDER BY `name` ASC'), 'name'));
   }
 }
 ?>
