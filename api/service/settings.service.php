@@ -30,10 +30,10 @@ class SettingsService {
     if ($this->mysqlService->count('*', 'settings') == 0) {
       $columns = 'currency, ticker, fav1, fav2, fav3, fav4';
       $values = ':currency, :ticker, :fav1, :fav2, :fav3, :fav4';
-      $stmt = $this->mysqlService->insert('settings', $columns, $values, $args);
+      $this->mysqlService->insert('settings', $columns, $values, $args);
     } else {
       $columns = 'currency = :currency, ticker = :ticker, fav1 = :fav1, fav2 = :fav2, fav3 = :fav3, fav4 = :fav4';
-      $stmt = $this->mysqlService->update('settings', $columns, '`id` = 1', $args);
+      $this->mysqlService->update('settings', $columns, '`id` = 1', $args);
     }
   }
 }

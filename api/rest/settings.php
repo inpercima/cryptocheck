@@ -13,7 +13,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     echo $settingsService->getAll();
     break;
   case 'POST':
-    echo $settingsService->saveAll(json_decode(file_get_contents('php://input')));
+    echo $settingsService->saveAll($coreService->getInput());
     break;
   default:
     break;

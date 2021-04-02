@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { Settings } from '../features/settings/settings.model';
 import { AssetPrice } from '../features/asset-price/asset-price.model';
+import { Asset } from './asset.model';
 import { Constants } from './constants';
 import { environment } from 'src/environments/environment';
 
@@ -55,5 +56,13 @@ export class AssetService {
 
   locale(currency: string): string {
     return currency === 'USD' ? '' : 'de-DE';
+  }
+
+  getFiatWallets(): Observable<Asset[]> {
+    return this.http.get<Asset[]>(environment.api + 'fiatwallet.php/used').pipe(map(response => response));
+  }
+
+  getCryptoWallets(): Observable<Asset[]> {
+    return this.http.get<Asset[]>(environment.api + 'wallet.php/used').pipe(map(response => response));
   }
 }

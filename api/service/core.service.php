@@ -32,7 +32,7 @@ class CoreService {
   /**
    * Create a context for getting data.
    */
-  function createContext($headerApiKey = 'X-API-KEY') {
+  public function createContext($headerApiKey = 'X-API-KEY') {
     return stream_context_create(array(
       'http' => array(
         'header' => array(
@@ -40,6 +40,19 @@ class CoreService {
         )
       )
     ));
+  }
+
+  public function getInput() {
+    return json_decode(file_get_contents('php://input'));
+  }
+
+  public function pathInfo($path = null) {
+    $result = null;
+    if (isset($_SERVER['PATH_INFO'])) {
+      $pathInfo = substr($_SERVER['PATH_INFO'], 1);
+      $result = !isset($path) ? $pathInfo : ($pathInfo == $path ? true : false);
+    }
+    return $result;
   }
 }
 ?>
