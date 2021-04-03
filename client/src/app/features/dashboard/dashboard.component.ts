@@ -31,7 +31,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const intervalValue = settings.ticker === 'CCMP' ? 2500 : 10000;
       this.subscription = timer(0, intervalValue).subscribe(() => this.updatePrices());
       this.assetService.getFiatWallets().subscribe(fiatWallets => this.fiatWallets = fiatWallets);
-      this.assetService.getCryptoWallets().subscribe(cryptoWallets => this.cryptoWallets = cryptoWallets);
+      this.assetService.getCryptoWallets().subscribe(cryptoWallets => {
+        this.cryptoWallets = cryptoWallets;
+      });
     });
   }
 
@@ -60,7 +62,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return this.prices[asset.symbol].value * asset.balance;
   }
 
-  calculateCurrentProfitLoss(crypto: any): string {
-    return this.transformCurrency(this.calculateCurrentValue(crypto) -  - this.getInvestment(crypto));
+  calculateCurrentProfitLoss(asset: any): string {
+    return this.transformCurrency(this.calculateCurrentValue(asset) -  - this.getInvestment(crypto));
   }
 }

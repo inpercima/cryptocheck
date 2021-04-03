@@ -32,7 +32,7 @@ export class AssetService {
     const ccmpApi = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${ccmpFavs}&tsyms=${settings.currency}`;
     const tickerApi = settings.ticker === 'CCMP' ? ccmpApi : 'https://api.bitpanda.com/v1/ticker';
     return this.http.get<any>(tickerApi).pipe(map(response => {
-      const prices: any = {
+      const prices: { [key: string]: any } = {
         FAV1: this.createPrice(response, settings.fav1, settings.currency),
         FAV2: this.createPrice(response, settings.fav2, settings.currency),
         FAV3: this.createPrice(response, settings.fav3, settings.currency),
