@@ -27,6 +27,7 @@ class WalletService {
       $attributes = $value->attributes;
       if ($attributes->balance > 0) {
         array_push($wallets, (object) [
+          'id' => $attributes->cryptocoin_id,
           'symbol' => $attributes->cryptocoin_symbol,
           'balance' => $attributes->balance,
           'name' => $attributes->name
@@ -70,16 +71,14 @@ class WalletService {
         // eines der Typen buy, sell, deposit, withdrawal, transfer, refund, ico
         'type' => $type,
         // die ID des Asset-Typs (bspw. BTC = 1)
-        'asset_id' => intVal($attributes->cryptocoin_id),
-        // Typ des Wallets, bei Crypto immer CRYPTO
-        'asset_type' => 'CRYPTO',
+        'type_asset_id' => intVal($attributes->cryptocoin_id),
         // Betrag
         // amount_eur (sell, buy, deposit, transfer as reward for BEST) OR best_fee_collection->attributes->bfc_market_value_eur (withdrawal)
-        'amount_fiat' => $type == 'withdrawal' ? $bfc->attributes->bfc_market_value_eur : floatVal($attributes->amount_eur),
+        'amount' => $type == 'withdrawal' ? $bfc->attributes->bfc_market_value_eur : floatVal($attributes->amount_eur),
         // Anzahl der gehandelten assets
         // 0 (withdrawal) OR amount_asset (sell, buy, deposit, transfer as reward for BEST)
-        'amount_asset' => $type == 'withdrawal' ? 0 : floatVal($attributes->amount),
-        // mögliche Gebühr bspw. bei einer sofortigen Einzahlung
+        'number' => $type == 'withdrawal' ? 0 : floatVal($attributes->amount),
+        // mögliche Gebühr bspw. bei einer Einzahlung
         // 0 (sell, buy, transfer as reward for BEST) OR fee (deposit as assets, withdrawal as fiat)
         'fee' => $type == 'deposit' || $type == 'withdrawal' ? floatVal($attributes->fee) : 0,
         // Datum

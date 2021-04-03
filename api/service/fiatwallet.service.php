@@ -27,6 +27,7 @@ class FiatwalletService {
       $attributes = $value->attributes;
       if ($attributes->balance > 0) {
         array_push($wallets, (object) [
+          'id' => $attributes->fiat_id,
           'symbol' => $attributes->fiat_symbol,
           'balance' => $attributes->balance,
           'name' => $attributes->name
@@ -68,26 +69,17 @@ class FiatwalletService {
           // eines der Typen deposit, withdrawal, transfer, refund
           'type' => $attributes->type,
           // die ID des Fialt-Typs (bspw. EUR = 1)
-          'asset_id' => $attributes->fiat_id,
-          // Typ des Wallets, bei Fiat immer FIAT
-          'asset_type' => 'FIAT',
+          'type_fiat_id' => $attributes->fiat_id,
           // Betrag
-          'amount_fiat' => floatVal($attributes->amount),
-          // Anzahl der gehandelten assets, bei Fiat immer 0
-          'amount_asset' => 0,
+          'amount' => floatVal($attributes->amount),
           // mögliche Gebühr bspw. bei einer sofortigen Einzahlung
           'fee' => floatVal($attributes->fee),
           // Datum
           'date' => substr($attributes->time->date_iso8601, 0, 10),
           // eines der Typen pending, processing, finished, canceled
           'status' => $attributes->status,
-          // Preis zu dem ein Asset gehandelt wurde, bei Fiat immer o
-          'price' => 0,
           // eindeutige Nummer der Transaktion
           'transaction_id' => $value->id
-          // ref_transaction_id, wird nicht gefüllt und ist default NULL
-          // trade_id, wird nicht gefüllt und ist default NULL
-          // ref_trade_id, wird nicht gefüllt und ist default NULL
         ]);
       }
     }

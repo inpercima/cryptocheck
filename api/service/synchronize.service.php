@@ -15,16 +15,37 @@ class SynchronizeService {
   }
 
   function synchronize() {
-    $walletService = new WalletService();
-    $totalCount = $this->save(json_decode($walletService->getPreparedTransactions()));
-
     $fiatwalletService = new FiatwalletService();
-    $totalCount += $this->save(json_decode($fiatwalletService->getPreparedTransactions()));
+    $totalCount = $this->saveFiat(json_decode($fiatwalletService->getPreparedTransactions()));
+
+    $walletService = new WalletService();
+    $totalCount += $this->saveAsset(json_decode($walletService->getPreparedTransactions()));
 
     return json_encode($totalCount);
   }
 
-  function save($transactions) {
+  function saveFiat($transactions) {
+    // Im Gegensatz zu Assets wäre hier keine Drehung notwendig, damit aber die Reihenfolgen passen, wird es auch hier gedreht.
+    $reversedTransactions = array_reverse($transactions);
+
+    $count = 0;
+    foreach ($reversedTransactions as $key => $value) {
+      $countArgs = ['transaction_id' => $value->transaction_id];
+      if ($this->mysqlService->count('*', 'transaction_fiat', '`transaction_id` = :transaction_id', $countArgs) == 0) {
+        $columns = 'type_fiat_id, date, amount, fee, type, status, transaction_id';
+        $values = ':type_fiat_id, :date, :amount, :fee, :type, :status, :transaction_id';
+        $insertArgs = [
+          'type_fiat_id' => $value->type_fiat_id, 'date' => $value->date, 'amount' => $value->amount,
+          'fee' => $value->fee, 'type' => $value->type, 'status' => $value->status, 'transaction_id' => $value->transaction_id
+        ];
+        $count += $this->mysqlService->insert('transaction_fiat', $columns, $values, $insertArgs);
+      }
+    }
+    return $count;
+  }
+
+
+  function saveAsset($transactions) {
     // Die Listen der Transaktionen beginnen immer mit der letzten Transaktion (0 letzte, 1 vorletzte usw.).
     // Aus logischer Sicht ist das auch passend, denn dann kommt nach einem Kauf (id 1), der Verkauf (id 0).
     // Da aber der erste Eintrag auch bedeutet, dass dieser als erstes verarbeitet wird, ist dann erst ein Verkauf
@@ -42,27 +63,25 @@ class SynchronizeService {
     $count = 0;
     foreach ($reversedTransactions as $key => $value) {
       $countArgs = ['transaction_id' => $value->transaction_id];
-      if ($this->mysqlService->count('*', 'transaction', '`transaction_id` = :transaction_id', $countArgs) == 0) {
-        $columns = 'asset_id, asset_type, date, price, amount_fiat, amount_asset, fee, type, status, transaction_id, trade_id, ref_trade_id';
-        $values = ':asset_id, :asset_type, :date, :price, :amount_fiat, :amount_asset, :fee, :type, :status, :transaction_id, :trade_id, :ref_trade_id';
+      if ($this->mysqlService->count('*', 'transaction_asset', '`transaction_id` = :transaction_id', $countArgs) == 0) {
+        $columns = 'type_asset_id, date, price, amount, number, fee, type, status, transaction_id, trade_id, ref_trade_id';
+        $values = ':type_asset_id, :date, :price, :amount, :number, :fee, :type, :status, :transaction_id, :trade_id, :ref_trade_id';
         $insertArgs = [
-          'asset_id' => $value->asset_id, 'asset_type' => $value->asset_type, 'date' => $value->date, 'price' => $value->price,
-          'amount_fiat' => $value->amount_fiat, 'amount_asset' => $value->amount_asset,
+          'type_asset_id' => $value->type_asset_id, 'date' => $value->date, 'price' => $value->price,
+          'amount' => $value->amount, 'number' => $value->number,
           'fee' => $value->fee, 'type' => $value->type, 'status' => $value->status,
           'transaction_id' => $value->transaction_id, 'trade_id' => $value->trade_id, 'ref_trade_id' => $value->ref_trade_id
         ];
-        $this->mysqlService->insert('transaction', $columns, $values, $insertArgs);
-
-        $count += 1;
+        $count += $this->mysqlService->insert('transaction_asset', $columns, $values, $insertArgs);
 
         // Wie oben erläutert, wird durch die Drehung erst ein Kauf gespeichert, erst danach wird ein Verkauf verarbeitet.
         // Besteht ein Kauf mit gleicher Wallet-ID und gleicher Anzahl zum Verkauf, dann referenziert der Kauf auf den Verkauf.
         if ($value->type == 'sell') {
-          $whereSell = "`type` = 'buy' AND `asset_id` = :asset_id AND `amount_asset` = :amount_asset";
+          $whereSell = "`type` = 'buy' AND `type_asset_id` = :type_asset_id AND `number` = :number";
           $updateSellArgs = [
-            'ref_transaction_id' => $value->transaction_id, 'asset_id' => $value->asset_id, 'amount_asset' => $value->amount_asset
+            'ref_transaction_id' => $value->transaction_id, 'type_asset_id' => $value->type_asset_id, 'number' => $value->number
           ];
-          $this->mysqlService->update('transaction', "`ref_transaction_id` = :ref_transaction_id", $whereSell, $updateSellArgs);
+          $this->mysqlService->update('transaction_asset', "`ref_transaction_id` = :ref_transaction_id", $whereSell, $updateSellArgs);
         }
       }
     }
