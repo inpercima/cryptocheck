@@ -12,6 +12,8 @@ if ($coreService->pathInfo('transactions')) {
   echo $walletService->getTransactions();
 } else if ($coreService->pathInfo('used')) {
   echo $walletService->getPreparedWallets();
+} else if ($coreService->pathInfo('investments')) {
+  echo $walletService->getInvestments($coreService->getParam('cryptoIds'));
 } else {
   echo $walletService->getWallets();
 }

@@ -47,6 +47,14 @@ class MysqlService {
     return $this->run("SELECT {$columns} FROM `{$prefix}{$table}`", $where, $args);
   }
 
+  function queryOne($sql, $args = null) {
+    return $this->run($sql, null, $args)->fetch(PDO::FETCH_ASSOC);
+  }
+
+  function queryAll($sql, $args = null) {
+    return $this->run($sql, null, $args)->fetchAll(PDO::FETCH_ASSOC);
+  }
+
   function buildQuery($query, $where) {
     if (isset($where)) {
       $query .= ' WHERE ' . $where;

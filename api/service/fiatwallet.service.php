@@ -1,15 +1,19 @@
 <?php
 require_once 'core.service.php';
+require_once 'mysql.service.php';
 
 class FiatwalletService {
 
   private $coreService;
+
+  private $mysqlService;
 
   /**
    * constructor
    */
   function __construct() {
     $this->coreService = new CoreService();
+    $this->mysqlService = new MysqlService();
   }
 
   /**
@@ -34,7 +38,7 @@ class FiatwalletService {
         ]);
       }
     }
-    return json_encode($wallets);
+    return json_encode($wallets, JSON_NUMERIC_CHECK);
   }
 
   /**
@@ -83,7 +87,41 @@ class FiatwalletService {
         ]);
       }
     }
-    return json_encode($transactions);
+    return json_encode($transactions, JSON_NUMERIC_CHECK);
+  }
+
+  function getInvestments() {
+    $investments = [];
+    $result = $this->mysqlService->queryOne("
+    SELECT
+      ROUND(
+        (SELECT
+          ROUND(
+            (SELECT COALESCE(SUM(`amount` + `fee`), 0)
+              FROM `transaction_fiat`
+              JOIN `type_fiat` ON `transaction_fiat`.`type_fiat_id` = `type_fiat`.`id`
+              WHERE `type_fiat`.`name` = (SELECT `currency` FROM `settings`)
+              AND `status` = 'finished'
+              AND `type` = 'deposit'
+            ), 2
+          )
+        )
+        -
+        (SELECT
+          ROUND(
+            (SELECT COALESCE(SUM(`amount`), 0)
+              FROM `transaction_fiat`
+              JOIN `type_fiat` ON `transaction_fiat`.`type_fiat_id` = `type_fiat`.`id`
+              WHERE `type_fiat`.`name` = (SELECT `currency` FROM `settings`)
+              AND `status` = 'finished'
+              AND `type` = 'withdrawal'
+            ), 2
+          )
+        ), 2
+      )
+    AS `investment`");
+    $investments[1] = $result['investment'];
+    return json_encode($investments, JSON_NUMERIC_CHECK);
   }
 }
 ?>

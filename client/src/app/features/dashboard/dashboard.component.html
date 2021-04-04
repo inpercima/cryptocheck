@@ -67,18 +67,18 @@
           <div class="mat-h1" style="text-align: right;">
             {{ cryptoWallet.balance | number:'1.2-8':assetService.locale(settings.currency) }} {{ cryptoWallet.symbol }}
           </div>
-          <!-- <div fxLayout="row" fxLayoutAlign="end">
-            <div fxFlex>Bitpanda Investment:</div>
-            <div>{{ transformCurrency(cryptoWallet.fiat) }}</div>
-          </div> -->
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>{{ cryptoWallet.external === 0 ? 'Bitpanda' : '' }} Investment:</div>
+            <div>{{ transformCurrency(determineInvestment(cryptoWallet)) }}</div>
+          </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Current Value:</div>
             <div>{{ transformCurrency(calculateCurrentValue(cryptoWallet)) }}</div>
           </div>
-          <!-- <div fxLayout="row" fxLayoutAlign="end">
-            <div fxFlex>Current Profit/Loss:</div>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>Virtual Profit/Loss:</div>
             <div>{{ calculateCurrentProfitLoss(cryptoWallet) }}</div>
-          </div> -->
+          </div>
         </mat-card-content>
       </mat-card>
     </div>

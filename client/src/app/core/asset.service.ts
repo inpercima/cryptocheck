@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -21,7 +21,7 @@ export class AssetService {
 
   constructor(private http: HttpClient) {
     this.getAssets().subscribe(response => this.assets = response);
-   }
+  }
 
   getAssets(): Observable<string[]> {
     return this.http.get<string[]>(environment.api + 'asset');
@@ -64,10 +64,19 @@ export class AssetService {
   }
 
   getFiatWallets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(environment.api + 'fiatwallet.php/used').pipe(map(response => response));
+    return this.http.get<Asset[]>(environment.api + 'fiatwallet.php/used');
   }
 
   getCryptoWallets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(environment.api + 'wallet.php/used').pipe(map(response => response));
+    return this.http.get<Asset[]>(environment.api + 'wallet.php/used');
+  }
+
+  getFiatInvestment(): Observable<any[]> {
+    return this.http.get<any[]>(environment.api + 'fiatwallet.php/investments');
+  }
+
+  getCryptoInvestment(cryptoIds: number[]): Observable<any[]> {
+    const params = new HttpParams();
+    return this.http.get<any[]>(environment.api + 'wallet.php/investments', { params: params.append('cryptoIds', cryptoIds.join(', ')) });
   }
 }

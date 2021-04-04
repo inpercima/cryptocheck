@@ -7,4 +7,8 @@ export interface Asset {
   balance: number;
 
   name: string;
+
+  internal: number;
+
+  external: number;
 }

@@ -12,6 +12,8 @@ if ($coreService->pathInfo('transactions')) {
   echo $fiatwalletService->getTransactions();
 } else if ($coreService->pathInfo('used')) {
   echo $fiatwalletService->getPreparedWallets();
+} else if ($coreService->pathInfo('investments')) {
+  echo $fiatwalletService->getInvestments();
 } else {
   echo $fiatwalletService->getWallets();
 }

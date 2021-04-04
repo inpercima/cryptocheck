@@ -1,15 +1,19 @@
 <?php
 require_once 'core.service.php';
+require_once 'mysql.service.php';
 
 class WalletService {
 
   private $coreService;
+
+  private $mysqlService;
 
   /**
    * constructor
    */
   function __construct() {
     $this->coreService = new CoreService();
+    $this->mysqlService = new MysqlService();
   }
 
   /**
@@ -34,7 +38,7 @@ class WalletService {
         ]);
       }
     }
-    return json_encode($wallets);
+    return json_encode($wallets, JSON_NUMERIC_CHECK);
   }
 
   /**
@@ -97,7 +101,31 @@ class WalletService {
         'ref_trade_id' => $type == 'withdrawal' ? $attributes->best_fee_collection->attributes->related_trade->id : NULL
       ]);
     }
-    return json_encode($transactions);
+    return json_encode($transactions, JSON_NUMERIC_CHECK);
+  }
+
+  function getInvestments($crypoIds) {
+    $investments = [];
+    foreach (explode(',', $crypoIds) as $key => $value) {
+      $result = $this->mysqlService->queryOne("
+      SELECT
+        ROUND(
+          (SELECT COALESCE(SUM(`amount`), 0)
+            FROM `transaction_asset`
+            WHERE `type_asset_id` = :type_asset_id AND `type` IN ('buy', 'transfer')
+            AND `transaction_id` IS NOT NULL
+            AND `ref_transaction_id` IS NULL
+          ), 2
+        ) AS `internal`,
+        ROUND(
+          (SELECT COALESCE(SUM(`amount`), 0)
+            FROM `transaction_external`
+            WHERE `type_asset_id` = :type_asset_id AND `type` IN ('buy')
+          ), 2
+        ) AS `external`", ['type_asset_id' => $value]);
+      $investments[trim($value)] = $result;
+    }
+    return json_encode($investments, JSON_NUMERIC_CHECK);
   }
 }
 ?>

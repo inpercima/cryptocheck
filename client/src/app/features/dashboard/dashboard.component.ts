@@ -30,9 +30,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.settings = settings;
       const intervalValue = settings.ticker === 'CCMP' ? 2500 : 10000;
       this.subscription = timer(0, intervalValue).subscribe(() => this.updatePrices());
-      this.assetService.getFiatWallets().subscribe(fiatWallets => this.fiatWallets = fiatWallets);
+      this.assetService.getFiatWallets().subscribe(fiatWallets => {
+        this.assetService.getFiatInvestment().subscribe(fiatInvestments => {
+          fiatWallets.forEach((value, index) => {
+            fiatWallets[index].internal = fiatInvestments[value.id];
+          });
+          this.fiatWallets = fiatWallets;
+        });
+      });
       this.assetService.getCryptoWallets().subscribe(cryptoWallets => {
-        this.cryptoWallets = cryptoWallets;
+        this.assetService.getCryptoInvestment(cryptoWallets.map(elem => elem.id)).subscribe(cryptoInvestments => {
+          cryptoWallets.forEach((value, index) => {
+            cryptoWallets[index].internal = cryptoInvestments[value.id].internal;
+            cryptoWallets[index].external = cryptoInvestments[value.id].external;
+          });
+          this.cryptoWallets = cryptoWallets;
+        });
       });
     });
   }
@@ -45,14 +58,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.assetService.getPrices(this.settings).subscribe(prices => this.prices = prices);
   }
 
-  // totalInvestment(): number {
-  //   return this.fiatWallet.investment.internal + this.fiatWallet.investment.external;
-  // }
-
-  getInvestment(crypto: any): number {
-    return crypto.external ? crypto.external : crypto.fiat;
-  }
-
   transformCurrency(value: number): string {
     const currency = this.settings.currency;
     return new CurrencyPipe(this.assetService.locale(currency)).transform(value, currency, 'symbol') ?? '';
@@ -62,7 +67,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return this.prices[asset.symbol].value * asset.balance;
   }
 
+  determineInvestment(asset: any): number {
+    return asset.internal + asset.external;
+  }
+
   calculateCurrentProfitLoss(asset: any): string {
-    return this.transformCurrency(this.calculateCurrentValue(asset) -  - this.getInvestment(crypto));
+    return this.transformCurrency(this.calculateCurrentValue(asset) - asset.internal - asset.external);
   }
 }
