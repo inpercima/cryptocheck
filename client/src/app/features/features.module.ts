@@ -4,23 +4,25 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FeaturesRoutingModule } from './features-routing.module';
 import { AssetPriceComponent } from './asset-price/asset-price.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SettingsComponent } from './settings/settings.component';
+import { ExternalImportComponent } from './external-import/external-import.component';
+import { FeaturesRoutingModule } from './features-routing.module';
 import { MaterialModule } from '../shared/material/material.module';
+import { ProfitLossComponent } from './profit-loss/profit-loss.component';
+import { SettingsComponent } from './settings/settings.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { TradeManagerComponent } from './trade-manager/trade-manager.component';
-import { ExternalImportComponent } from './external-import/external-import.component';
 
 @NgModule({
   declarations: [
     AssetPriceComponent,
     DashboardComponent,
+    ExternalImportComponent,
+    ProfitLossComponent,
     SettingsComponent,
     StatisticsComponent,
     TradeManagerComponent,
-    ExternalImportComponent,
   ],
   imports: [
     CommonModule,
