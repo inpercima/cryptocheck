@@ -24,6 +24,7 @@ cp config/config.default.php config/config.prod.php
 * [DB_HOST](#DBHOST)
 * [DB_NAME](#DBNAME)
 * [DB_PASS](#DBPASS)
+* [DB_PREFIX](#DBPREFIX)
 * [DB_USER](#DBUSER)
 
 ### `API_KEY`
@@ -50,6 +51,13 @@ Defines the name of the using mysql db.
 ### `DB_PASS`
 
 Defines the password of the using mysql db.
+
+* default: EMPTY
+* type: `string`
+
+### `DB_PREFIX`
+
+Defines the prefix of tables.
 
 * default: EMPTY
 * type: `string`
