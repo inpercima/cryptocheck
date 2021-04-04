@@ -115,7 +115,11 @@ class FiatwalletService {
           )
         ), 2
       ) AS `internal`,
-      ROUND(0, 2
+      ROUND(
+        (SELECT COALESCE(SUM(`amount`), 0)
+          FROM `transaction_external`
+          WHERE `type` IN ('buy')
+        ), 2
       ) AS `external`");
     $investments[1] = $result;
     return json_encode($investments, JSON_NUMERIC_CHECK);
