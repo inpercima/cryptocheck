@@ -33,7 +33,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.assetService.getFiatWallets().subscribe(fiatWallets => {
         this.assetService.getFiatInvestment().subscribe(fiatInvestments => {
           fiatWallets.forEach((value, index) => {
-            fiatWallets[index].internal = fiatInvestments[value.id];
+            fiatWallets[index].internal = fiatInvestments[value.id].internal;
+            fiatWallets[index].external = fiatInvestments[value.id].external;
           });
           this.fiatWallets = fiatWallets;
         });

@@ -42,18 +42,18 @@
           <div class="mat-h1" style="text-align: right;">
             {{ transformCurrency(fiatWallet.balance) }}
           </div>
-          <!-- <div fxLayout="row" fxLayoutAlign="end">
+          <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Bitpanda Investment:</div>
-            <div>{{ transformCurrency(fiatWallet.investment.internal) }}</div>
+            <div>{{ transformCurrency(fiatWallet.internal) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>External Investment:</div>
-            <div>{{ transformCurrency(fiatWallet.investment.external) }}</div>
+            <div>{{ transformCurrency(fiatWallet.external) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Total Investment:</div>
-            <div>{{ transformCurrency(totalInvestment()) }}</div>
-          </div> -->
+            <div>{{ transformCurrency(determineInvestment(fiatWallet)) }}</div>
+          </div>
         </mat-card-content>
       </mat-card>
       <mat-card fxFlex="49" *ngFor="let cryptoWallet of cryptoWallets">

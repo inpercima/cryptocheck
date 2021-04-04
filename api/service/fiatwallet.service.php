@@ -96,31 +96,28 @@ class FiatwalletService {
     SELECT
       ROUND(
         (SELECT
-          ROUND(
-            (SELECT COALESCE(SUM(`amount` + `fee`), 0)
-              FROM `transaction_fiat`
-              JOIN `type_fiat` ON `transaction_fiat`.`type_fiat_id` = `type_fiat`.`id`
-              WHERE `type_fiat`.`name` = (SELECT `currency` FROM `settings`)
-              AND `status` = 'finished'
-              AND `type` = 'deposit'
-            ), 2
+          (SELECT COALESCE(SUM(`amount` + `fee`), 0)
+            FROM `transaction_fiat`
+            JOIN `type_fiat` ON `transaction_fiat`.`type_fiat_id` = `type_fiat`.`id`
+            WHERE `type_fiat`.`name` = (SELECT `currency` FROM `settings`)
+            AND `status` = 'finished'
+            AND `type` = 'deposit'
           )
         )
         -
         (SELECT
-          ROUND(
-            (SELECT COALESCE(SUM(`amount`), 0)
-              FROM `transaction_fiat`
-              JOIN `type_fiat` ON `transaction_fiat`.`type_fiat_id` = `type_fiat`.`id`
-              WHERE `type_fiat`.`name` = (SELECT `currency` FROM `settings`)
-              AND `status` = 'finished'
-              AND `type` = 'withdrawal'
-            ), 2
+          (SELECT COALESCE(SUM(`amount`), 0)
+            FROM `transaction_fiat`
+            JOIN `type_fiat` ON `transaction_fiat`.`type_fiat_id` = `type_fiat`.`id`
+            WHERE `type_fiat`.`name` = (SELECT `currency` FROM `settings`)
+            AND `status` = 'finished'
+            AND `type` = 'withdrawal'
           )
         ), 2
-      )
-    AS `investment`");
-    $investments[1] = $result['investment'];
+      ) AS `internal`,
+      ROUND(0, 2
+      ) AS `external`");
+    $investments[1] = $result;
     return json_encode($investments, JSON_NUMERIC_CHECK);
   }
 }
