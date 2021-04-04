@@ -1,0 +1,86 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="60" fxLayout="column">
+    <mat-card *ngIf="!settings">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>settings</mat-icon>
+        </div>
+        <mat-card-title>No settings set</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        There are currently no settings yet available. Please update your settings under <a routerLink="/settings">settings</a>.
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="settings && !prices">
+      <mat-card-content>
+        <mat-progress-bar color="primary" mode="indeterminate" value="50"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="settings && prices">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>info</mat-icon>
+        </div>
+        <mat-card-title>Overview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="row" fxLayout.lt-md="column">
+        <cc-asset-price fxFlex [price]="prices.FAV1" [trend]=prices.FAV1.trend></cc-asset-price>
+        <cc-asset-price fxFlex [price]="prices.FAV2" [trend]=prices.FAV2.trend></cc-asset-price>
+        <cc-asset-price fxFlex [price]="prices.FAV3" [trend]=prices.FAV3.trend></cc-asset-price>
+        <cc-asset-price fxFlex [price]="prices.FAV4" [trend]=prices.FAV4.trend></cc-asset-price>
+      </mat-card-content>
+    </mat-card>
+    <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="space-between">
+      <mat-card fxFlex="49" *ngFor="let fiatWallet of fiatWallets">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon>payment</mat-icon>
+          </div>
+          <mat-card-title>{{ fiatWallet.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="mat-h1" style="text-align: right;">
+            {{ transformCurrency(fiatWallet.balance) }}
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>Bitpanda Investment:</div>
+            <div>{{ transformCurrency(fiatWallet.internal) }}</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>External Investment:</div>
+            <div>{{ transformCurrency(fiatWallet.external) }}</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>Total Investment:</div>
+            <div>{{ transformCurrency(determineInvestment(fiatWallet)) }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex="49" *ngFor="let cryptoWallet of cryptoWallets">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon>payment</mat-icon>
+          </div>
+          <mat-card-title>{{ cryptoWallet.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="mat-h1" style="text-align: right;">
+            {{ cryptoWallet.balance | number:'1.2-8':assetService.locale(settings.currency) }} {{ cryptoWallet.symbol }}
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>{{ cryptoWallet.external === 0 ? 'Bitpanda' : '' }} Investment:</div>
+            <div>{{ transformCurrency(determineInvestment(cryptoWallet)) }}</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>Current Value:</div>
+            <div>{{ transformCurrency(calculateCurrentValue(cryptoWallet)) }}</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <div fxFlex>Virtual Profit/Loss:</div>
+            <div>{{ calculateCurrentProfitLoss(cryptoWallet) }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

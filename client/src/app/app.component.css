@@ -1,0 +1,74 @@
+body {
+  font-family: Roboto, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  margin: 0;
+  overflow-y: scroll;
+}
+
+/* mat-toolbar */
+.mat-toolbar .mat-icon-button .mat-icon {
+  position: relative;
+  top: -2px;
+}
+
+.mat-toolbar .mat-icon-button {
+  height: 32px;
+  line-height: 32px;
+  width: 32px;
+}
+
+/* mat-card */
+.mat-card {
+  margin-top: 20px;
+  padding: 0 !important;
+}
+
+.mat-card-header {
+  background-color: rgba(0, 0, 0, 0.18);
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 16px;
+  padding: 16px 16px 0 16px;
+}
+
+.mat-card-avatar:not(.header-image) {
+  width: 24px !important;
+  margin-top: -1px;
+}
+
+.mat-card-content {
+  padding: 16px;
+}
+
+.mat-card .mat-card-actions {
+  padding: 0 16px;
+}
+
+.mat-card .mat-card-actions + div {
+  height: 30px;
+}
+
+.mat-card .mat-card-actions + div .mat-error {
+  font-size: 75%;
+  text-align: center;
+}
+
+/* mat-dialog */
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+.mat-dialog-title {
+  background-color: rgba(0, 0, 0, 0.18);
+  border-radius: 4px 4px 0 0;
+  margin: 0 0 8px !important;
+  padding: 8px 16px;
+}
+
+.mat-dialog-content {
+  margin: 0 !important;
+  padding: 0 16px !important;
+}
+
+.mat-dialog-actions {
+  margin-bottom: 0 !important;
+  padding: 8px 16px !important;
+}

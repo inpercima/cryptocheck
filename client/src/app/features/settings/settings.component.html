@@ -1,0 +1,62 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <mat-card fxFlex="60" *ngIf="form">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon>settings</mat-icon>
+      </div>
+      <mat-card-title>Settings</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" novalidate>
+        <div fxLayout="row wrap" fxLayoutGap="20px">
+          <mat-form-field fxFlex>
+            <mat-select placeholder="Ticker API" formControlName="ticker" required>
+              <mat-option *ngFor="let ticker of settingsService.tickers" [value]="ticker.key">
+                {{ ticker.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-select placeholder="Currency" formControlName="currency" required>
+              <mat-option *ngFor="let currency of settingsService.currencies" [value]="currency.key">
+                {{ currency.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="20px">
+          <mat-form-field fxFlex>
+            <mat-select placeholder="Ticker favorite 1" formControlName="fav1" required>
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-select placeholder="Ticker favorite 2" formControlName="fav2" required>
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-select placeholder="Ticker favorite 3" formControlName="fav3" required>
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-select placeholder="Ticker favorite 4" formControlName="fav4" required>
+              <mat-option *ngFor="let asset of assets" [value]="asset">
+                {{ asset }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <button fxFlex type="submit" color="primary" mat-raised-button [disabled]="!form.valid" (click)="save()">Save</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
