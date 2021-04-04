@@ -30,7 +30,6 @@ registerLocaleData(localeDe);
     AppRoutingModule,
     FeaturesModule,
   ],
-  providers: [],
   bootstrap: [
     AppComponent,
   ],

@@ -9,12 +9,18 @@ import { AssetPriceComponent } from './asset-price/asset-price.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MaterialModule } from '../shared/material/material.module';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { TradeManagerComponent } from './trade-manager/trade-manager.component';
+import { ExternalImportComponent } from './external-import/external-import.component';
 
 @NgModule({
   declarations: [
     AssetPriceComponent,
     DashboardComponent,
     SettingsComponent,
+    StatisticsComponent,
+    TradeManagerComponent,
+    ExternalImportComponent,
   ],
   imports: [
     CommonModule,
