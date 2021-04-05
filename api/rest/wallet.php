@@ -14,6 +14,10 @@ if ($coreService->pathInfo('transactions')) {
   echo $walletService->getPreparedWallets();
 } else if ($coreService->pathInfo('investments')) {
   echo $walletService->getInvestments($coreService->getParam('cryptoIds'));
+} else if ($coreService->pathInfo('profitloss/trades')) {
+  echo $walletService->getProfitLossPerTrade();
+} else if ($coreService->pathInfo('profitloss/trades/month')) {
+  echo $walletService->getProfitLossPerTradeCurrentMonth();
 } else {
   echo $walletService->getWallets();
 }
