@@ -21,6 +21,8 @@ class SynchronizeService {
     $walletService = new WalletService();
     $totalCount += $this->saveAsset(json_decode($walletService->getPreparedTransactions()));
 
+    $this->checkTrades(json_decode($walletService->getUncheckedTransactions()));
+
     return json_encode($totalCount);
   }
 
@@ -86,6 +88,41 @@ class SynchronizeService {
       }
     }
     return $count;
+  }
+
+  function getNumbers($asset) {
+    return $asset->number;
+  }
+
+  function getIds($asset) {
+    return $asset->transactionId;
+  }
+
+  function checkTrades($transactions) {
+    $buyList = [];
+    $buy = (object) [
+      'name' => $value->name,
+      'number' => $value->number,
+      'transactionId' => $value->transaction_id,
+    ];
+    foreach ($transactions as $key => $value) {
+      if ($value->type == 'buy' && (empty($buyList) || (!empty($buyList) && $buyList[0]->name == $value->name))) {
+        array_push($buyList, $buy);
+      } else if ($value->type == 'sell' && $buyList[0]->name == $value->name) {
+        $numbers = array_map(array($this, 'getNumbers'), $buyList);
+        // number_format to avoid round problems
+        if (number_format($value->number, 8) - number_format(array_sum($numbers), 8) == 0) {
+          $ids = "'" . implode("','", array_map(array($this, 'getIds'), $buyList)) . "'";
+          $whereBuy = "`transaction_id` IN (" . $ids . ")";
+          $updateBuyArgs = ['ref_transaction_id' => $value->transaction_id];
+          $this->mysqlService->update('transaction_asset', "`ref_transaction_id` = :ref_transaction_id", $whereBuy, $updateBuyArgs);
+        }
+        $buyList = [];
+      } else {
+        $buyList = [];
+        array_push($buyList, $buy);
+      }
+    }
   }
 }
 ?>

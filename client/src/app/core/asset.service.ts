@@ -79,4 +79,8 @@ export class AssetService {
     const params = new HttpParams();
     return this.http.get<any[]>(environment.api + 'wallet.php/investments', { params: params.append('cryptoIds', cryptoIds.join(', ')) });
   }
+
+  getUncheckedTransactions(): Observable<any[]> {
+    return this.http.get<any[]>(environment.api + 'wallet.php/transactions/unchecked');
+  }
 }

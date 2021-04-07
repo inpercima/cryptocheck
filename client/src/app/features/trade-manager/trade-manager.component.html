@@ -1,1 +1,131 @@
-<p>trade-manager works!</p>
+<style>
+.example-list {
+  border: solid 1px #ccc;
+  min-height: 60px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+
+.example-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+</style>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="60" fxLayout="column">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>account_balance</mat-icon>
+        </div>
+        <mat-card-title>Manage transactions to match trades</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        There are different ways of buying and selling.
+        The simplest variant is a quantity X of the asset Y is bought at time Z.
+        Later the same amount X of asset Y is sold again. But there can also be multiple purchases and one sale, one purchase and multiple sales, and also multiple purchases and multiple sales. Not everything can be assigned automatically.
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>calculate</mat-icon>
+        </div>
+        <mat-card-title>Information about combined transactions</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-chip-list>
+          <mat-chip [ngStyle]="{'background-color': getBackgroundColor('type')}">Type: {{ type }}</mat-chip>
+          <mat-chip [ngStyle]="{'background-color': getBackgroundColor('asset')}">Asset: {{ asset.toString() }}</mat-chip>
+          <mat-chip [ngStyle]="{'background-color': getBackgroundColor('number')}">Number: {{ number }}</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+    </mat-card>
+    <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="space-between">
+      <mat-card fxFlex="49">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon>paid</mat-icon>
+          </div>
+          <mat-card-title>Unchecked transactions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content
+          cdkDropList
+          #buySellList="cdkDropList"
+          [cdkDropListData]="buySells"
+          [cdkDropListConnectedTo]="[matchList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let item of buySells" cdkDrag>
+            <mat-chip-list>
+              <mat-chip color="primary" selected>{{ item.type }}</mat-chip>
+              <mat-chip color="primary" selected>{{ item.name }}</mat-chip>
+              <mat-chip color="accent" selected>{{ item.number }}</mat-chip>
+              <mat-chip>{{ item.amount }}</mat-chip>
+              <mat-chip>{{ item.date | date:'shortDate' }}</mat-chip>
+            </mat-chip-list>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex="49">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon>paid</mat-icon>
+          </div>
+          <mat-card-title>Combined transactions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content cdkDropList
+          #matchList="cdkDropList"
+          [cdkDropListData]="matches"
+          [cdkDropListConnectedTo]="[buySellList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let item of matches" cdkDrag>
+            <mat-chip-list>
+              <mat-chip color="primary" selected>{{ item.type }}</mat-chip>
+              <mat-chip color="primary" selected>{{ item.name }}</mat-chip>
+              <mat-chip color="accent" selected>{{ item.number }}</mat-chip>
+              <mat-chip>{{ item.amount }}</mat-chip>
+              <mat-chip>{{ item.date | date:'shortDate' }}</mat-chip>
+            </mat-chip-list>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

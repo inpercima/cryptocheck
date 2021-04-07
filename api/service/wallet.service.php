@@ -135,6 +135,8 @@ class WalletService {
     FROM `transaction_asset` AS `t1`
     JOIN `transaction_asset` AS `t2`
     ON `t1`.`ref_transaction_id` = `t2`.`transaction_id`
+    AND `t1`.`status` = 'finished'
+    AND `t2`.`status` = 'finished'
     GROUP BY `sell`");
     return json_encode($result, JSON_NUMERIC_CHECK);
   }
@@ -147,7 +149,31 @@ class WalletService {
     JOIN `transaction_asset` AS `t2`
     ON `t1`.`ref_transaction_id` = `t2`.`transaction_id`
     WHERE (t2.`date` BETWEEN :date_begin AND :date_end)
+    AND `t1`.`status` = 'finished'
+    AND `t2`.`status` = 'finished'
     GROUP BY `sell`", ['date_begin' => date('Y-m-01'), 'date_end' => date('Y-m-t')]);
+    return json_encode($result, JSON_NUMERIC_CHECK);
+  }
+
+  function getUncheckedTransactions() {
+    $result = $this->mysqlService->queryAll("
+    SELECT * FROM
+      (SELECT `transaction_id`, `type_asset`.`name`, `amount`, `number`, `type`, `date`
+        FROM `transaction_asset`
+        JOIN `type_asset` ON `type_asset`.`id` = `transaction_asset`.`type_asset_id`
+        WHERE `status` = 'finished'
+        AND `type` = 'buy'
+        AND `type_asset_id` != 33
+        AND `ref_transaction_id` IS NULL
+      UNION ALL
+      SELECT `transaction_id`, `type_asset`.`name`, `amount`, `number`, `type`, `date`
+        FROM `transaction_asset` AS `t1`
+        JOIN `type_asset` ON `type_asset`.`id` = `t1`.`type_asset_id`
+        WHERE NOT EXISTS (SELECT 1 FROM `transaction_asset` AS `t2` WHERE `t1`.`transaction_id` = `t2`.ref_transaction_id)
+        AND `status` = 'finished'
+        AND `type` = 'sell'
+        AND `type_asset_id` != 33) AS `all`
+      ORDER BY `name`, `date`, `type`");
     return json_encode($result, JSON_NUMERIC_CHECK);
   }
 }
