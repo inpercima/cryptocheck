@@ -141,17 +141,20 @@ class WalletService {
     return json_encode($result, JSON_NUMERIC_CHECK);
   }
 
-  function getProfitLossPerTradeCurrentMonth() {
+  function getProfitLossPerTradeCurrentMonth($month) {
+    $m =  $month + 1;
     $result = $this->mysqlService->queryAll("
-    SELECT `t1`.`type_asset_id`, `t1`.`date` AS `begin`, `t2`.`date` AS `end`, `t1`.`amount` AS `buy`, `t2`.`amount` AS `sell`, `t1`.`number`,
+    SELECT `type_asset`.`name`, `t1`.`date` AS `begin`, `t2`.`date` AS `end`, ROUND(SUM(`t1`.`amount`), 2) AS `buy`, `t2`.`amount` AS `sell`, `t1`.`number`,
     ROUND(`t2`.`amount` - SUM(`t1`.`amount`), 2) AS `total`
     FROM `transaction_asset` AS `t1`
     JOIN `transaction_asset` AS `t2`
     ON `t1`.`ref_transaction_id` = `t2`.`transaction_id`
+    JOIN `type_asset`
+    ON `t1`.`type_asset_id` = `type_asset`.`id`
     WHERE (t2.`date` BETWEEN :date_begin AND :date_end)
     AND `t1`.`status` = 'finished'
     AND `t2`.`status` = 'finished'
-    GROUP BY `sell`", ['date_begin' => date('Y-m-01'), 'date_end' => date('Y-m-t')]);
+    GROUP BY `sell`", ['date_begin' => date('Y-' . $m . '-01'), 'date_end' => date('Y-' . $m . '-t')]);
     return json_encode($result, JSON_NUMERIC_CHECK);
   }
 

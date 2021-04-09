@@ -83,4 +83,11 @@ export class AssetService {
   getUncheckedTransactions(): Observable<any[]> {
     return this.http.get<any[]>(environment.api + 'wallet.php/transactions/unchecked');
   }
+
+  getProfiLossOnTradesPerMonth(month: number): Observable<any[]> {
+    const params = new HttpParams();
+    return this.http.get<any[]>(environment.api + 'wallet.php/profitloss/trades/month', {
+      params: params.append('month', month.toString())
+    });
+  }
 }

@@ -1,1 +1,20 @@
-<p>profit-loss works!</p>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="60" fxLayout="column">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>price_change</mat-icon>
+        </div>
+        <mat-card-title>Profit/Loss per Month</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-select placeholder="Month" [(value)]="month" (selectionChange)="getProfitLossOnTradesPerMonth()">
+            <mat-option *ngFor="let month of months" [value]="month.id">{{ month.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        {{ profitLossOnTradesPerMonth }}
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

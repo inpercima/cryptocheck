@@ -21,7 +21,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     } else if ($coreService->pathInfo('profitloss/trades')) {
       echo $walletService->getProfitLossPerTrade();
     } else if ($coreService->pathInfo('profitloss/trades/month')) {
-      echo $walletService->getProfitLossPerTradeCurrentMonth();
+      echo $walletService->getProfitLossPerTradeCurrentMonth($coreService->getParam('month'));
     } else {
       echo $walletService->getWallets();
     }
