@@ -8,7 +8,7 @@ class CoreService {
   public function __construct() {}
 
   public function requireConfig() {
-    $mode = strpos($_SERVER['SERVER_NAME'], 'localhost') === false ? 'prod' : 'dev';
+    $mode = getenv('PROFILE') ?: 'dev';
     return "../config/config.${mode}.php";
   }
 

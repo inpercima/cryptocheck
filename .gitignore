@@ -3,6 +3,7 @@
 environment.dev.ts
 environment.prod.ts
 config.dev.php
+config.docker.php
 config.prod.php
 
 # ignore all in '.vscode' b/c some vsc config files contain user specific content

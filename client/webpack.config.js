@@ -4,12 +4,16 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // explanation: https://github.com/meltedspark/angular-builders/issues/235#issuecomment-464393504
 // workaround: https://github.com/meltedspark/angular-builders/issues/235#issuecomment-471323007
 module.exports = (config, options) => {
-  const invertedMode = process.env.NODE_ENV === 'prod' ? 'dev' : 'prod';
+  const ignoreList = ['config.default.php', 'README.md'];
+  ['dev', 'prod', 'docker'].forEach(function(profile) {
+    if (profile !== process.env.PROFILE)
+    ignoreList.push(`config.${profile}.php`);
+  });
   config.plugins.push(
     new CopyWebpackPlugin([{
       from: '../api',
       to: './api',
-      ignore: ['config.default.php', `config.${invertedMode}.php`, 'README.md'],
+      ignore: ignoreList,
     }])
   );
   return config;

@@ -57,10 +57,11 @@
   "private": true,
   "repository": "https://github.com/inpercima/cryptocheck",
   "scripts": {
-    "build:dev": "export NODE_ENV='dev' && ng lint && ng build --configuration=dev",
+    "build:dev": "export PROFILE='dev' && ng lint && ng build --configuration=dev",
     "serve:dev": "ng serve -o --configuration=dev",
-    "watch:dev": "export NODE_ENV='dev' && ng build --watch --configuration=dev",
-    "build:prod": "export NODE_ENV='prod' && ng lint && ng build --prod"
+    "watch:dev": "export PROFILE='dev' && ng build --watch --configuration=dev",
+    "build:prod": "export PROFILE='prod' && ng lint && ng build --prod",
+    "build:docker": "export PROFILE='docker' && ng lint && ng build --prod"
   },
   "version": "1.0.0-SNAPSHOT"
 }
