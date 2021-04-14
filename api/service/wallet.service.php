@@ -48,7 +48,7 @@ class WalletService {
    * buy        - from fiat to asset
    * sell       - from asset to fiat
    * deposit    - from another wallet to bitpanda wallet
-   * withdrawal - fee to bitpanda
+   * withdrawal - fee to bitpanda (check flag is_bfc) or transfer to an external wallet
    * transfer   - rewards from bitpanda
    * refund     -
    * ico        -
@@ -69,36 +69,40 @@ class WalletService {
     foreach ($response->data as $key => $value) {
       $attributes = $value->attributes;
       $type = $attributes->type;
-      $bfc = $attributes->best_fee_collection;
-      $bfcBuySell = $attributes->trade->attributes->best_fee_collection;
+      $isBfc = $attributes->is_bfc;
+      $bfc = isset($attributes->best_fee_collection) ? $attributes->best_fee_collection : NULL;
+      $bfcBuySell = isset($attributes->trade) && isset($attributes->trade->attributes->best_fee_collection) ? $attributes->trade->attributes->best_fee_collection : NULL;
       array_push($transactions, (object) [
         // eines der Typen buy, sell, deposit, withdrawal, transfer, refund, ico
         'type' => $type,
         // die ID des Asset-Typs (bspw. BTC = 1)
         'type_asset_id' => intVal($attributes->cryptocoin_id),
         // Betrag
-        // amount_eur (sell, buy, deposit, transfer as reward for BEST) OR best_fee_collection->attributes->bfc_market_value_eur (withdrawal)
-        'amount' => $type == 'withdrawal' ? $bfc->attributes->bfc_market_value_eur : floatVal($attributes->amount_eur),
+        // amount_eur (sell, buy, deposit, transfer as reward for BEST, withdrawal as transfer)
+        // OR best_fee_collection->attributes->bfc_market_value_eur (withdrawal as bfc)
+        'amount' => $type == 'withdrawal' && $isBfc ? $bfc->attributes->bfc_market_value_eur : floatVal($attributes->amount_eur),
         // Anzahl der gehandelten assets
-        // 0 (withdrawal) OR amount_asset (sell, buy, deposit, transfer as reward for BEST)
-        'number' => $type == 'withdrawal' ? 0 : floatVal($attributes->amount),
+        // 0 (withdrawal as bfc) OR amount (sell, buy, deposit, transfer as reward for BEST, withdrawal as transfer)
+        'number' => $type == 'withdrawal' && $isBfc ? 0 : floatVal($attributes->amount),
         // mögliche Gebühr bspw. bei einer Einzahlung
-        // 0 (sell, buy, transfer as reward for BEST) OR fee (deposit as assets, withdrawal as fiat)
+        // 0 (sell, buy, transfer as reward for BEST) OR fee (deposit in assets, withdrawal in asset)
         'fee' => $type == 'deposit' || $type == 'withdrawal' ? floatVal($attributes->fee) : 0,
         // Datum
         'date' => substr($attributes->time->date_iso8601, 0, 10),
         // eines der Typen pending, processing, unconfirmed_transaction_out, open_invitation, finished, canceled
         'status' => $attributes->status,
         // Preis zu dem ein Asset gehandelt wurde
-        // 0 (deposit, transfer as reward for BEST) OR trade->attributes->price (sell, buy) OR best_fee_collection->attributes->best_current_price_eur (withdrawal)
-        'price' => $type == 'deposit' || $type == 'transfer' ? 0 : $type == 'withdrawal' ? $bfc->attributes->best_current_price_eur : floatVal($attributes->trade->attributes->price),
+        // 0 (deposit, transfer as reward for BEST, withdrawal as transfer) OR trade->attributes->price (sell, buy)
+        // OR best_fee_collection->attributes->best_current_price_eur (withdrawal as bfc)
+        'price' => $type == 'deposit' || $type == 'transfer' || ($type == 'withdrawal' && !$isBfc) ? 0 : ($type == 'withdrawal' && $isBfc ? $bfc->attributes->best_current_price_eur : floatVal($attributes->trade->attributes->price)),
         // eindeutige Nummer der Transaktion
         'transaction_id' => $value->id,
         // ref_transaction_id, wird nicht gefüllt und ist default NULL
         // NULL (deposit, transfer as reward for BEST, withdrawal) OR trade->id (sell, buy)
         'trade_id' => $type == 'buy' || $type == 'sell' ? $attributes->trade->id : NULL,
-        // NULL (deposit, transfer as reward for BEST, sell, buy) OR best_fee_collection->attributes->related_trade->id (withdrawal)
-        'ref_trade_id' => $type == 'withdrawal' ? $attributes->best_fee_collection->attributes->related_trade->id : NULL
+        // NULL (deposit, transfer as reward for BEST, sell, buy, withdrawal as transfer)
+        // OR best_fee_collection->attributes->related_trade->id (withdrawal as bfc)
+        'ref_trade_id' => $type == 'withdrawal' && $isBfc ? $attributes->best_fee_collection->attributes->related_trade->id : NULL
       ]);
     }
     return json_encode($transactions, JSON_NUMERIC_CHECK);

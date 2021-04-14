@@ -40,7 +40,7 @@ class SynchronizeService {
           'type_fiat_id' => $value->type_fiat_id, 'date' => $value->date, 'amount' => $value->amount,
           'fee' => $value->fee, 'type' => $value->type, 'status' => $value->status, 'transaction_id' => $value->transaction_id
         ];
-        $count += $this->mysqlService->insert('transaction_fiat', $columns, $values, $insertArgs);
+        $count += $this->mysqlService->insert('transaction_fiat', $columns, $values, $insertArgs)->rowCount();
       }
     }
     return $count;
@@ -74,7 +74,7 @@ class SynchronizeService {
           'fee' => $value->fee, 'type' => $value->type, 'status' => $value->status,
           'transaction_id' => $value->transaction_id, 'trade_id' => $value->trade_id, 'ref_trade_id' => $value->ref_trade_id
         ];
-        $count += $this->mysqlService->insert('transaction_asset', $columns, $values, $insertArgs);
+        $count += $this->mysqlService->insert('transaction_asset', $columns, $values, $insertArgs)->rowCount();
 
         // Wie oben erläutert, wird durch die Drehung erst ein Kauf gespeichert, erst danach wird ein Verkauf verarbeitet.
         // Besteht ein Kauf mit gleicher Wallet-ID und gleicher Anzahl zum Verkauf, dann referenziert der Kauf auf den Verkauf.
@@ -100,12 +100,12 @@ class SynchronizeService {
 
   function checkTrades($transactions) {
     $buyList = [];
-    $buy = (object) [
-      'name' => $value->name,
-      'number' => $value->number,
-      'transactionId' => $value->transaction_id,
-    ];
     foreach ($transactions as $key => $value) {
+      $buy = (object) [
+        'name' => $value->name,
+        'number' => $value->number,
+        'transactionId' => $value->transaction_id,
+      ];
       if ($value->type == 'buy' && (empty($buyList) || (!empty($buyList) && $buyList[0]->name == $value->name))) {
         array_push($buyList, $buy);
       } else if ($value->type == 'sell' && $buyList[0]->name == $value->name) {

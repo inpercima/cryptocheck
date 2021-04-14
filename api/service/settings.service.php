@@ -16,7 +16,7 @@ class SettingsService {
    * Get all settings.
    */
   function getAll() {
-    return json_encode($this->mysqlService->findOne('*', 'settings', '`id` = 1'), JSON_NUMERIC_CHECK);
+    return json_encode($this->mysqlService->findOne('*', 'settings', '`id` = 0'), JSON_NUMERIC_CHECK);
   }
 
   /**
