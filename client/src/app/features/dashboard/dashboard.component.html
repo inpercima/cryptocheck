@@ -30,7 +30,7 @@
         <cc-asset-price fxFlex [price]="prices.FAV4" [trend]=prices.FAV4.trend></cc-asset-price>
       </mat-card-content>
     </mat-card>
-    <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="space-between">
+    <div fxFlex="60" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="space-between">
       <mat-card fxFlex="49" *ngFor="let fiatWallet of fiatWallets">
         <mat-card-header>
           <div mat-card-avatar>
