@@ -119,6 +119,7 @@ class WalletService {
             WHERE `type_asset_id` = :type_asset_id AND `type` IN ('buy', 'transfer')
             AND `transaction_id` IS NOT NULL
             AND `ref_transaction_id` IS NULL
+            AND `status` = 'finished'
           ), 2
         ) AS `internal`,
         ROUND(
