@@ -78,12 +78,20 @@ class SynchronizeService {
 
         // Wie oben erläutert, wird durch die Drehung erst ein Kauf gespeichert, erst danach wird ein Verkauf verarbeitet.
         // Besteht ein Kauf mit gleicher Wallet-ID und gleicher Anzahl zum Verkauf, dann referenziert der Kauf auf den Verkauf.
-        if ($value->type == 'sell') {
+        if ($value->type == 'sell' && $value->status = 'finished') {
           $whereSell = "`type` = 'buy' AND `type_asset_id` = :type_asset_id AND `number` = :number";
           $updateSellArgs = [
-            'ref_transaction_id' => $value->transaction_id, 'type_asset_id' => $value->type_asset_id, 'number' => $value->number
+            'type_asset_id' => $value->type_asset_id, 'number' => $value->number, 'identifier' => $this->generateUuid()
           ];
-          $this->mysqlService->update('transaction_asset', "`ref_transaction_id` = :ref_transaction_id", $whereSell, $updateSellArgs);
+          if ($this->mysqlService->count('*', 'transaction_asset', $whereSell, [
+            'type_asset_id' => $value->type_asset_id, 'number' => $value->number
+          ]) == 1) {
+            $this->mysqlService->queryAll("
+            INSERT INTO `transaction_match` (type_asset_id, date, amount, number, type, transaction_id, identifier)
+            SELECT type_asset_id, date, amount, number, type, transaction_id, :identifier
+            FROM `transaction_asset` WHERE type in ('buy', 'sell') AND type_asset_id = :type_asset_id AND `number` = :number
+            AND `status` = 'finished'", $updateSellArgs);
+          }
         }
       }
     }
@@ -113,9 +121,17 @@ class SynchronizeService {
         // number_format to avoid round problems
         if (number_format($value->number, 8) - number_format(array_sum($numbers), 8) == 0) {
           $ids = "'" . implode("','", array_map(array($this, 'getIds'), $buyList)) . "'";
-          $whereBuy = "`transaction_id` IN (" . $ids . ")";
-          $updateBuyArgs = ['ref_transaction_id' => $value->transaction_id];
-          $this->mysqlService->update('transaction_asset', "`ref_transaction_id` = :ref_transaction_id", $whereBuy, $updateBuyArgs);
+          // $whereBuy = "`transaction_id` IN (" . $ids . ")";
+          // $updateBuyArgs = ['ref_transaction_id' => $value->transaction_id];
+          // $this->mysqlService->update('transaction_asset', "`ref_transaction_id` = :ref_transaction_id", $whereBuy, $updateBuyArgs);
+
+          $updateSellArgs = [
+            'identifier' => $this->generateUuid()
+          ];
+          $this->mysqlService->queryAll("
+          INSERT INTO `transaction_match` (type_asset_id, date, amount, number, type, transaction_id, identifier)
+          SELECT type_asset_id, date, amount, number, type, transaction_id, :identifier
+          FROM `transaction_asset` WHERE `transaction_id` IN (" . $ids . ", '" . $value->transaction_id . "')", $updateSellArgs);
         }
         $buyList = [];
       } else {
@@ -123,6 +139,28 @@ class SynchronizeService {
         array_push($buyList, $buy);
       }
     }
+  }
+
+  function generateUuid() {
+    return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+      // 32 bits for "time_low"
+      mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+
+      // 16 bits for "time_mid"
+      mt_rand(0, 0xffff),
+
+      // 16 bits for "time_hi_and_version",
+      // four most significant bits holds version number 4
+      mt_rand(0, 0x0fff) | 0x4000,
+
+      // 16 bits, 8 bits for "clk_seq_hi_res",
+      // 8 bits for "clk_seq_low",
+      // two most significant bits holds zero and one for variant DCE1.1
+      mt_rand(0, 0x3fff) | 0x8000,
+
+      // 48 bits for "node"
+      mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+    );
   }
 }
 ?>
