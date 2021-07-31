@@ -10,7 +10,7 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Angular CLI
 
-* `angular-cli 12.1.1` or higher
+* `angular-cli 12.1.4` or higher
 
 ### Java
 
@@ -28,7 +28,7 @@ Some libraries could not be updated b/c of peer dependencies or knowing issues.
 
 | library    | current version | last version | reason |
 | ---------- | --------------- | ------------ | ------ |
-| rxjs       | 6.6.0           | 7.2.0        | "@angular/common@12.1.1" has incorrect peer dependency "rxjs@^6.5.3" |
+| rxjs       | 6.6.0           | 7.3.0        | "@angular/common@12.1.4" has incorrect peer dependency "rxjs@^6.5.3" |
 
 ## Getting started
 
