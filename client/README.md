@@ -79,7 +79,7 @@ Change for prodMode the option `production` to `true`.
 
 Defines the URL to the backend.
 
-* default: `./`
+* default: `http://localhost:8080/`
 * type: `string`
 
 ### `appname`

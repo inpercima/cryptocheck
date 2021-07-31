@@ -34,7 +34,7 @@
   },
   "general": {
     "author": "Marcel Jänicke",
-    "description": "Simple additional app for bitanda to see further details such as profit/loss.",
+    "description": "Simple additional app for bitanda and other exchanges or services to see further details such as profit/loss and tax.",
     "modRewriteIndex": true,
     "name": "cryptocheck",
     "title": "cryptocheck",
@@ -44,10 +44,10 @@
     "useSecurity": false
   },
   "server": {
-    "backend": "php",
+    "backend": "java",
     "javaKt": {
-      "management": "",
-      "packagePath": ""
+      "management": "maven",
+      "packagePath": "net.inpercima.cryptocheck"
     },
     "php": {
       "modRewritePhpExtension": true,

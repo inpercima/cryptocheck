@@ -1,0 +1,12 @@
+#
+# APPLICATION CONFIG
+#
+
+logging:
+  file:
+     name: logs/application.log
+
+# enable gz compression
+server:
+  compression:
+    enabled: true
