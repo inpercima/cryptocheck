@@ -40,8 +40,16 @@ cd cryptocheck
 
 ## Usage
 
+### General
+
+This repository includes two backend possibilities.
+You can run this program with php or java.
+Per default java is selected and recommended.
+
 ### Modules
 
 For the client check [cryptocheck - client](./client).
 
-For the server check [cryptocheck - server](./server).
+For the java server check [cryptocheck - server](./server).
+
+For the php api check [cryptocheck - api](./api).
