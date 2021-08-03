@@ -1,0 +1,15 @@
+#
+# APPLICATION CONFIG DEV
+#
+
+app:
+  bitpanda:
+    apikey:
+
+spring:
+  datasource:
+    url: jdbc:mysql://<SERVER>[:HOST]/<DATABASE>?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: <USERNAME>
+    password: <PASSWORD>
+  main:
+    banner-mode: "off"

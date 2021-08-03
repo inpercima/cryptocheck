@@ -10,8 +10,8 @@ cd server
 Create environment files for `devMode` and `prodMode`.
 
 ```bash
-cp src/main/resources/application.yml src/main/resources/application-dev.yml
-cp src/main/resources/application.yml src/main/resources/application-prod.yml
+cp src/main/resources/application-dev.default.yml src/main/resources/application-dev.yml
+cp src/main/resources/application-dev.default.yml src/main/resources/application-prod.yml
 ```
 
 **Note**: These files will not be under version control but listed in .gitignore.
