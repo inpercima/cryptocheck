@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription, timer } from 'rxjs';
 
-import { Settings } from '../settings/settings.model';
-import { SettingsService } from '../settings/settings.service';
+import { Setting } from '../setting/setting.model';
+import { SettingService } from '../setting/setting.service';
 import { AssetService } from 'src/app/core/asset.service';
 import { CurrencyPipe } from '@angular/common';
 
@@ -19,48 +19,52 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   prices: any;
 
-  settings!: Settings;
+  setting!: Setting;
 
   subscription!: Subscription;
 
-  constructor(public assetService: AssetService, private settingsService: SettingsService) { }
+  constructor(public assetService: AssetService, private settingService: SettingService) { }
 
   ngOnInit(): void {
-    this.settingsService.get().subscribe(settings => {
-      this.settings = settings;
-      const intervalValue = settings.ticker === 'CCMP' ? 2500 : 10000;
-      this.subscription = timer(0, intervalValue).subscribe(() => this.updatePrices());
-      this.assetService.getFiatWallets().subscribe(fiatWallets => {
-        this.assetService.getFiatInvestment().subscribe(fiatInvestments => {
-          fiatWallets.forEach((value, index) => {
-            fiatWallets[index].internal = fiatInvestments[value.id].internal;
-            fiatWallets[index].external = fiatInvestments[value.id].external;
+    this.settingService.get().subscribe(setting => {
+      console.log(setting);
+      this.setting = setting;
+      if (setting && setting.id !== null) {
+        const intervalValue = setting.ticker === 'CCMP' ? 2500 : 10000;
+        this.subscription = timer(0, intervalValue).subscribe(() => this.updatePrices());
+        this.assetService.getFiatWallets().subscribe(fiatWallets => {
+          this.assetService.getFiatInvestment().subscribe(fiatInvestments => {
+            fiatWallets.forEach((value, index) => {
+              fiatWallets[index].internal = fiatInvestments[value.id].internal;
+              fiatWallets[index].external = fiatInvestments[value.id].external;
+            });
+            this.fiatWallets = fiatWallets;
           });
-          this.fiatWallets = fiatWallets;
         });
-      });
-      this.assetService.getCryptoWallets().subscribe(cryptoWallets => {
-        this.assetService.getCryptoInvestment(cryptoWallets.map(elem => elem.id)).subscribe(cryptoInvestments => {
-          cryptoWallets.forEach((value, index) => {
-            cryptoWallets[index].internal = cryptoInvestments[value.id].internal;
-            cryptoWallets[index].external = cryptoInvestments[value.id].external;
+        this.assetService.getCryptoWallets().subscribe(cryptoWallets => {
+          this.assetService.getCryptoInvestment(cryptoWallets.map(elem => elem.id)).subscribe(cryptoInvestments => {
+            cryptoWallets.forEach((value, index) => {
+              cryptoWallets[index].internal = cryptoInvestments[value.id].internal;
+              cryptoWallets[index].external = cryptoInvestments[value.id].external;
+            });
+            this.cryptoWallets = cryptoWallets;
           });
-          this.cryptoWallets = cryptoWallets;
         });
-      });
+      }
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // may be undefined if no settings on load will be found so the check with ? is need
+    this.subscription?.unsubscribe();
   }
 
   updatePrices(): void {
-    this.assetService.getPrices(this.settings).subscribe(prices => this.prices = prices);
+    this.assetService.getPrices(this.setting).subscribe(prices => this.prices = prices);
   }
 
   transformCurrency(value: number): string {
-    const currency = this.settings.currency;
+    const currency = this.setting.currency;
     return new CurrencyPipe(this.assetService.locale(currency)).transform(value, currency, 'symbol') ?? '';
   }
 

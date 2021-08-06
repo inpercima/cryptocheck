@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExternalImportComponent } from './external-import/external-import.component';
 import { ProfitLossComponent } from './profit-loss/profit-loss.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingComponent } from './setting/setting.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { TradeManagerComponent } from './trade-manager/trade-manager.component';
 
@@ -25,7 +25,7 @@ const routes: Routes = [{
   component: ExternalImportComponent,
   path: 'external-import',
 }, {
-  component: SettingsComponent,
+  component: SettingComponent,
   path: 'settings',
 }];
 

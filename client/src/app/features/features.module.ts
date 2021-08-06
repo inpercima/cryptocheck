@@ -10,7 +10,7 @@ import { ExternalImportComponent } from './external-import/external-import.compo
 import { FeaturesRoutingModule } from './features-routing.module';
 import { MaterialModule } from '../shared/material/material.module';
 import { ProfitLossComponent } from './profit-loss/profit-loss.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingComponent } from './setting/setting.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { TradeManagerComponent } from './trade-manager/trade-manager.component';
 
@@ -20,7 +20,7 @@ import { TradeManagerComponent } from './trade-manager/trade-manager.component';
     DashboardComponent,
     ExternalImportComponent,
     ProfitLossComponent,
-    SettingsComponent,
+    SettingComponent,
     StatisticsComponent,
     TradeManagerComponent,
   ],

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Settings } from '../features/settings/settings.model';
+import { Setting } from '../features/setting/setting.model';
 import { AssetPrice } from '../features/asset-price/asset-price.model';
 import { Asset } from './asset.model';
 import { Constants } from './constants';
@@ -17,30 +17,30 @@ export class AssetService {
 
   assetPrices: any;
 
-  assets: string[] = [];
+  assets: Asset[] = [];
 
   constructor(private http: HttpClient) {
     this.getAssets().subscribe(response => this.assets = response);
   }
 
-  getAssets(): Observable<string[]> {
-    return this.http.get<string[]>(environment.api + 'asset');
+  getAssets(): Observable<Asset[]> {
+    return this.http.get<Asset[]>(environment.api + 'asset');
   }
 
-  getPrices(settings: Settings): Observable<any> {
-    const ccmpFavs = `${settings.fav1},${settings.fav2},${settings.fav3},${settings.fav4}`;
-    const ccmpApi = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${ccmpFavs}&tsyms=${settings.currency}`;
-    const tickerApi = settings.ticker === 'CCMP' ? ccmpApi : 'https://api.bitpanda.com/v1/ticker';
+  getPrices(setting: Setting): Observable<any> {
+    const ccmpFavs = `${setting.fav1},${setting.fav2},${setting.fav3},${setting.fav4}`;
+    const ccmpApi = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${ccmpFavs}&tsyms=${setting.currency}`;
+    const tickerApi = setting.ticker === 'CCMP' ? ccmpApi : 'https://api.bitpanda.com/v1/ticker';
     return this.http.get<any>(tickerApi).pipe(map(response => {
       const prices: { [key: string]: any } = {
-        FAV1: this.createPrice(response, settings.fav1, settings.currency),
-        FAV2: this.createPrice(response, settings.fav2, settings.currency),
-        FAV3: this.createPrice(response, settings.fav3, settings.currency),
-        FAV4: this.createPrice(response, settings.fav4, settings.currency),
+        FAV1: this.createPrice(response, setting.fav1, setting.currency),
+        FAV2: this.createPrice(response, setting.fav2, setting.currency),
+        FAV3: this.createPrice(response, setting.fav3, setting.currency),
+        FAV4: this.createPrice(response, setting.fav4, setting.currency),
       };
 
       this.assets.forEach(asset => {
-        prices[asset] = this.createPrice(response, asset, settings.currency);
+        prices[asset.name] = this.createPrice(response, asset.name, setting.currency);
       });
 
       this.assetPrices = response;

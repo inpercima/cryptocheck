@@ -1,4 +1,6 @@
-export interface Settings {
+export interface Setting {
+
+  id: number;
 
   currency: string;
 

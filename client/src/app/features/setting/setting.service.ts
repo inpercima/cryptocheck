@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { Settings } from './settings.model';
+import { Setting } from './setting.model';
 import { environment } from 'src/environments/environment';
 
 interface Item {
@@ -16,7 +16,7 @@ interface Item {
 @Injectable({
   providedIn: 'root'
 })
-export class SettingsService {
+export class SettingService {
 
   currencies: Item[] = [
     { key: 'USD', name: '$ USD' },
@@ -30,11 +30,11 @@ export class SettingsService {
 
   constructor(private http: HttpClient) { }
 
-  get(): Observable<Settings> {
-    return this.http.get<Settings>(environment.api + 'settings');
+  get(): Observable<Setting> {
+    return this.http.get<Setting>(environment.api + 'setting');
   }
 
   save(settings: any): Observable<boolean> {
-    return this.http.post<boolean>(environment.api + 'settings', settings);
+    return this.http.put<boolean>(environment.api + 'setting', settings);
   }
 }

@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxFlex="60" fxLayout="column">
-    <mat-card *ngIf="!settings">
+    <mat-card *ngIf="setting && setting.id == null">
       <mat-card-header>
         <div mat-card-avatar>
           <mat-icon>settings</mat-icon>
@@ -11,12 +11,12 @@
         There are currently no settings yet available. Please update your settings under <a routerLink="/settings">settings</a>.
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="settings && !prices">
+    <mat-card *ngIf="setting && setting.id != null && !prices">
       <mat-card-content>
         <mat-progress-bar color="primary" mode="indeterminate" value="50"></mat-progress-bar>
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="settings && prices">
+    <mat-card *ngIf="setting && setting.id != null && prices">
       <mat-card-header>
         <div mat-card-avatar>
           <mat-icon>trending_up</mat-icon>
@@ -65,7 +65,7 @@
         </mat-card-header>
         <mat-card-content>
           <div class="mat-h1" style="text-align: right;">
-            {{ cryptoWallet.balance | number:'1.2-8':assetService.locale(settings.currency) }} {{ cryptoWallet.symbol }}
+            {{ cryptoWallet.balance | number:'1.2-8':assetService.locale(setting.currency) }} {{ cryptoWallet.symbol }}
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>{{ cryptoWallet.external === 0 ? 'Bitpanda' : '' }} Investment:</div>
