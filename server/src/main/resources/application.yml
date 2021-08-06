@@ -18,10 +18,6 @@ server:
     enabled: true
 
 spring:
-  datasource:
-    initialization-mode: always
   jpa:
-    hibernate:
-      ddl-auto: create
     open-in-view: false
     show-sql: true

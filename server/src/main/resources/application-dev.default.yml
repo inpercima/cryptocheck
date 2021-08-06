@@ -8,8 +8,12 @@ app:
 
 spring:
   datasource:
+    initialization-mode: always
+    password: <PASSWORD>
     url: jdbc:mysql://<SERVER>[:HOST]/<DATABASE>?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: <USERNAME>
-    password: <PASSWORD>
+  jpa:
+    hibernate:
+      ddl-auto: create
   main:
     banner-mode: "off"

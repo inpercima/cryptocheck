@@ -66,12 +66,25 @@ INSERT INTO `type_asset` (`id`, `name`) VALUES (59, 'KNC');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (60, 'BAND');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (61, 'REN');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (63, 'UMA');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (65, 'THETA');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (66, 'OCEAN');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (67, 'AVAX');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (68, 'ALGO');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (69, 'ANT');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (70, 'BTT');
 INSERT INTO `type_asset` (`id`, `name`) VALUES (71, 'DGB');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (129, '1INCH');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (130, 'EGLD');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (132, 'IOST');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (133, 'LUNA');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (134, 'MATIC');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (135, 'SOL');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (136, 'ICP');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (138, 'MANA');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (139, 'CAKE');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (140, 'KSM');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (141, 'SUSHI');
+INSERT INTO `type_asset` (`id`, `name`) VALUES (142, 'KLAY');
 
 -- --------------------------------------------------------
 
