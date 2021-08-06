@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.settingService.get().subscribe(setting => {
-      console.log(setting);
       this.setting = setting;
       if (setting && setting.id !== null) {
         const intervalValue = setting.ticker === 'CCMP' ? 2500 : 10000;
