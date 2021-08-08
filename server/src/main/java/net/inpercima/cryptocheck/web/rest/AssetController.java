@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import net.inpercima.cryptocheck.entity.TypeAsset;
+import net.inpercima.cryptocheck.entity.AssetType;
 import net.inpercima.cryptocheck.repository.TypeAssetRepository;
 
 @RestController
@@ -18,7 +18,7 @@ public class AssetController {
     private final TypeAssetRepository typeAssetRepository;
 
     @GetMapping
-    public List<TypeAsset> findAll() {
+    public List<AssetType> findAll() {
         return typeAssetRepository.findAll();
     }
 }

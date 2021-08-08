@@ -1,0 +1,43 @@
+package net.inpercima.cryptocheck.entity;
+
+import java.math.BigDecimal;
+
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+public class AssetTransaction extends Transaction {
+
+    /**
+     * type of asset
+     * <p>
+     * api response: {@code cryptocoin_id}
+     * <p>
+     * example: BTC = 1, ETH = 5
+     */
+    @ManyToOne
+    private AssetType assetType;
+
+    /**
+     * number of traded assets
+     * <p>
+     * api response: {@code amount}
+     * <p>
+     * example: 77.41533576
+     */
+    private BigDecimal number;
+
+    /**
+     * price in eur of traded assets
+     * <p>
+     * api response: {@code price}
+     * <br>
+     * example: 0.08330000
+     */
+    private BigDecimal price;
+}

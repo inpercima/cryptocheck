@@ -23,3 +23,4 @@ public class WalletController {
         return restService.getEntity("https://api.bitpanda.com/v1/wallets", bitpandaApiKey, Object.class);
     }
 }
+//https://api.bitpanda.com/v1/fiatwallets/transactions?page_size=500

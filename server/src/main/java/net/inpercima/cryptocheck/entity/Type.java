@@ -1,17 +1,17 @@
 package net.inpercima.cryptocheck.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-public class TypeAsset {
-    
+@MappedSuperclass
+public class Type {
+
     @Id
     private Integer id;
 
