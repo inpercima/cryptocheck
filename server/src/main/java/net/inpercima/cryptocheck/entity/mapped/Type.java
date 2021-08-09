@@ -1,4 +1,4 @@
-package net.inpercima.cryptocheck.entity;
+package net.inpercima.cryptocheck.entity.mapped;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

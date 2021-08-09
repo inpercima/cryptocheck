@@ -1,4 +1,4 @@
-package net.inpercima.cryptocheck.entity;
+package net.inpercima.cryptocheck.entity.mapped;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.inpercima.cryptocheck.entity.Origin;
 
 @Getter
 @Setter
@@ -79,7 +80,7 @@ public class Transaction {
      * <p>
      * example: finished
      */
-    private BigDecimal status;
+    private String status;
 
     /**
      * id of transaction
@@ -88,7 +89,7 @@ public class Transaction {
      * <p>
      * example: 1bb2862a-8b15-4208-d7aa-a236a04e0ad0
      */
-    private BigDecimal transaction_id;
+    private String transaction_id;
 
     @ManyToOne
     private Origin origin;

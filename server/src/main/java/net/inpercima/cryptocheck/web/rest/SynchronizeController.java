@@ -5,17 +5,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import net.inpercima.cryptocheck.service.RestService;
+import net.inpercima.cryptocheck.service.SynchronizeService;
 
-@RestController
 @RequiredArgsConstructor
-@RequestMapping("/wallets")
-public class WalletController {
+@RestController
+@RequestMapping("/synchronize")
+public class SynchronizeController {
 
-    private final RestService restService;
+    private final SynchronizeService synchronizeService;
 
     @GetMapping
-    public Object listAll() {
-        return restService.getData("/wallets", Object.class);
+    public Object synchronize() {
+        return synchronizeService.synchronize();
     }
 }

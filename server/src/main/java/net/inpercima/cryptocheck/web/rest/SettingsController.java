@@ -10,10 +10,10 @@ import lombok.RequiredArgsConstructor;
 import net.inpercima.cryptocheck.entity.Setting;
 import net.inpercima.cryptocheck.repository.SettingRepository;
 
-@RestController
 @RequiredArgsConstructor
-@RequestMapping("/setting")
-public class SettingController {
+@RestController
+@RequestMapping("/settings")
+public class SettingsController {
 
     private final SettingRepository settingRepository;
 
