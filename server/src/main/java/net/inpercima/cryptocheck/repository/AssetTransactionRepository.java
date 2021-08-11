@@ -2,9 +2,9 @@ package net.inpercima.cryptocheck.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import net.inpercima.cryptocheck.entity.FiatTransaction;
+import net.inpercima.cryptocheck.entity.AssetTransaction;
 
-public interface FiatTransactionRepository extends JpaRepository<FiatTransaction, Long> {
+public interface AssetTransactionRepository extends JpaRepository<AssetTransaction, Long> {
 
     public boolean existsByTransactionId(final String transactionId);
 }

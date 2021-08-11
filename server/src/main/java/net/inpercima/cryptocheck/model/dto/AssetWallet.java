@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FiatWallet {
+public class AssetWallet {
 
     private String symbol;
 

@@ -1,5 +1,6 @@
 package net.inpercima.cryptocheck.service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +26,8 @@ public class RestService {
 
     public RestService() {
         restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
     }
 
     public <T> ResponseEntity<T> getData(final String url, final Class<T> clazz) {

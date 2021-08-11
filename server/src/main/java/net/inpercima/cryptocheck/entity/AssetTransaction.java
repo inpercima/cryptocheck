@@ -2,6 +2,7 @@ package net.inpercima.cryptocheck.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -31,6 +32,7 @@ public class AssetTransaction extends Transaction {
      * <p>
      * example: 77.41533576
      */
+    @Column(precision = 15, scale = 8)
     private BigDecimal number;
 
     /**
@@ -40,5 +42,6 @@ public class AssetTransaction extends Transaction {
      * <br>
      * example: 0.08330000
      */
+    @Column(precision = 15, scale = 8)
     private BigDecimal price;
 }

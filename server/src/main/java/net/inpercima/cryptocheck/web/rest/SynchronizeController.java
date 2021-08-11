@@ -15,7 +15,7 @@ public class SynchronizeController {
     private final SynchronizeService synchronizeService;
 
     @GetMapping
-    public Object synchronize() {
-        return synchronizeService.synchronize();
+    public void synchronize() {
+        synchronizeService.synchronize();
     }
 }

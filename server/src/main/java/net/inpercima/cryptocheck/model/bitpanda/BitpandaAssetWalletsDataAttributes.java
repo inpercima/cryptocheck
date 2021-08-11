@@ -9,10 +9,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BitpandaFiatWalletsDataAttributes {
+public class BitpandaAssetWalletsDataAttributes {
 
-    @JsonProperty("fiat_symbol")
-    private String fiatSymbol;
+    @JsonProperty("cryptocoin_symbol")
+    private String CryptocoinSymbol;
 
     private BigDecimal balance;
 

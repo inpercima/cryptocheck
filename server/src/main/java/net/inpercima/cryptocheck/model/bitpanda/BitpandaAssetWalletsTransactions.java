@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BitpandaFiatWalletsTransactions {
+public class BitpandaAssetWalletsTransactions {
 
-     private BitpandaFiatWalletsTransactionsData[] data;
+     private BitpandaAssetWalletsTransactionsData[] data;
 
      private Object meta;
 

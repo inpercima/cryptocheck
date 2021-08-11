@@ -48,6 +48,7 @@ public class Transaction {
      * <p>
      * example: 100.00
      */
+    @Column(precision = 15, scale = 8)
     private BigDecimal amount;
 
     /**
@@ -57,6 +58,7 @@ public class Transaction {
      * <p>
      * example: 2.00
      */
+    @Column(precision = 15, scale = 8)
     private BigDecimal fee;
 
     /**
@@ -85,11 +87,12 @@ public class Transaction {
     /**
      * id of transaction
      * <p>
-     * api response: {@code transaction_id}
+     * api response: {@code id}
      * <p>
      * example: 1bb2862a-8b15-4208-d7aa-a236a04e0ad0
      */
-    private String transaction_id;
+    @Column(length = 36)
+    private String transactionId;
 
     @ManyToOne
     private Origin origin;
