@@ -1,7 +1,5 @@
 package net.inpercima.cryptocheck.model.bitpanda;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -9,12 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BitpandaFiatWalletsDataAttributes {
+public class BitpandaFiatWalletsDataAttributes extends BitpandaWalletsDataAttributes {
 
     @JsonProperty("fiat_symbol")
     private String fiatSymbol;
-
-    private BigDecimal balance;
-
-    private String name;
 }

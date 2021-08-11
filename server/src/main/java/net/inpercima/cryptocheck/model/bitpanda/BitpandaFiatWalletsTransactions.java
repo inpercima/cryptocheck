@@ -5,11 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BitpandaFiatWalletsTransactions {
-
-     private BitpandaFiatWalletsTransactionsData[] data;
-
-     private Object meta;
-
-     private BitpandaLinks links;
+public class BitpandaFiatWalletsTransactions
+          extends BitpandaWalletsTransactions<BitpandaFiatWalletsTransactionsDataAttributes> {
 }

@@ -5,11 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BitpandaFiatWalletsTransactionsData {
+public class BitpandaWalletsTransactionsData<T> {
 
     private String id;
 
     private String type;
 
-    private BitpandaFiatWalletsTransactionsDataAttributes attributes;
+    private T attributes;
 }

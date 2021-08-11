@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BitpandaAssetWalletsData {
+public class BitpandaWalletsData<T> {
 
     private String type;
 
-    private BitpandaAssetWalletsDataAttributes attributes;
+    private T attributes;
 }

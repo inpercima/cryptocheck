@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class BitpandaAssetWallets {
 
-    private BitpandaAssetWalletsData[] data;
+    private BitpandaWalletsData<BitpandaAssetWalletsDataAttributes>[] data;
 }
