@@ -24,7 +24,7 @@ export class AssetService {
   }
 
   getAssets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(environment.api + 'asset');
+    return this.http.get<Asset[]>(environment.api + 'assets');
   }
 
   getPrices(setting: Setting): Observable<any> {
@@ -64,11 +64,11 @@ export class AssetService {
   }
 
   getFiatWallets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(environment.api + 'fiatwallet.php/used');
+    return this.http.get<Asset[]>(environment.api + 'wallets/fiat');
   }
 
   getCryptoWallets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(environment.api + 'wallet.php/used');
+    return this.http.get<Asset[]>(environment.api + 'wallets/asset');
   }
 
   getFiatInvestment(): Observable<any[]> {

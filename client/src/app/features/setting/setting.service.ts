@@ -31,10 +31,10 @@ export class SettingService {
   constructor(private http: HttpClient) { }
 
   get(): Observable<Setting> {
-    return this.http.get<Setting>(environment.api + 'setting');
+    return this.http.get<Setting>(environment.api + 'settings');
   }
 
   save(settings: any): Observable<boolean> {
-    return this.http.put<boolean>(environment.api + 'setting', settings);
+    return this.http.put<boolean>(environment.api + 'settings', settings);
   }
 }
