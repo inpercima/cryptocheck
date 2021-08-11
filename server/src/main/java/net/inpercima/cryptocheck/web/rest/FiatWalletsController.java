@@ -1,5 +1,6 @@
 package net.inpercima.cryptocheck.web.rest;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,8 @@ public class FiatWalletsController {
     @GetMapping
     public List<FiatWallet> getAllWallets() {
         return Arrays.asList(restService.getData("/fiatwallets", BitpandaFiatWallets.class).getBody().getData())
-                .stream().map(data -> data.getAttributes()).map(a -> convertToDto(a)).collect(Collectors.toList());
+                .stream().map(data -> data.getAttributes()).map(a -> convertToDto(a))
+                .filter(a -> a.getBalance().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
     }
 
     private FiatWallet convertToDto(BitpandaFiatWalletsDataAttributes object) {
