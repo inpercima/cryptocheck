@@ -37,4 +37,22 @@ public class BitpandaAssetWalletsTransactionsDataAttributes extends BitpandaWall
      * api response: {@code trade} as object
      */
     private BitpandaTrade trade;
+
+    /**
+     * is best fee collection
+     * <p>
+     * api response: {@code is_bfc}
+     * <p>
+     * example: true, false
+     */
+    @JsonProperty("is_bfc")
+    private boolean isBfc;
+
+    /**
+     * more best fee collection information of transaction
+     * <p>
+     * api response: {@code best_fee_collection} as object
+     */
+    @JsonProperty("best_fee_collection")
+    private BitpandaBfc bestFeeCollection;
 }

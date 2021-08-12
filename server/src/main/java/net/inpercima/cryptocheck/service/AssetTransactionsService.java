@@ -50,17 +50,27 @@ public class AssetTransactionsService {
 
         assetTransactions.stream().forEach(bwt -> Arrays.asList(bwt.getData()).stream().forEach(data -> {
             if (!assetTransactionRepository.existsByTransactionId(data.getId())) {
-                final AssetTransaction assetTransaction = convertToEntity(data.getAttributes());
+                final BitpandaAssetWalletsTransactionsDataAttributes attributes = data.getAttributes();
+                final AssetTransaction assetTransaction = convertToEntity(attributes);
                 final AssetType assetType = new AssetType();
-                assetType.setId(data.getAttributes().getCryptocoinId());
+                assetType.setId(attributes.getCryptocoinId());
                 assetTransaction.setAssetType(assetType);
                 assetTransaction.setTransactionId(data.getId());
                 assetTransaction.setOrigin(originRepository.getByName("Bitpanda"));
-                assetTransaction.setDate(data.getAttributes().getTime().getDateIso8601());
-                if (data.getAttributes().getTrade() != null) {
-                    assetTransaction.setPrice(data.getAttributes().getTrade().getAttributes().getPrice());
+                assetTransaction.setDate(attributes.getTime().getDateIso8601());
+                // reset amount b/c amount is set as number by the mapper
+                if (attributes.isBfc()) {
+                    assetTransaction
+                            .setAmount(attributes.getBestFeeCollection().getAttributes().getBfcMarketValueEur());
+                    assetTransaction
+                            .setPrice(attributes.getBestFeeCollection().getAttributes().getBestCurrentPriceEur());
+                } else {
+                    assetTransaction.setAmount(attributes.getAmountEur());
+                    if (attributes.getTrade() != null) {
+                        assetTransaction.setPrice(attributes.getTrade().getAttributes().getPrice());
+                    }
                 }
-                assetTransaction.setNumber(data.getAttributes().getAmount());
+                assetTransaction.setNumber(attributes.getAmount());
                 assetTransactionRepository.save(assetTransaction);
             }
         }));
