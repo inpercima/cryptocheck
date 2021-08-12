@@ -23,74 +23,19 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    /**
-     * type of transaction
-     * <p>
-     * api response: {@code type}
-     * <p>
-     * asset: buy, sell, deposit, withdrawal, transfer, refund, ico
-     * <p>
-     * fiat: deposit, withdrawal, transfer, refund <br>
-     * example: deposit
-     */
     @Column(length = 10)
     private String type;
 
-    /**
-     * amount in eur of transaction
-     * <p>
-     * api response:
-     * <p>
-     * asset: {@code amount_eur} or if best fee collection
-     * {@code bfc_market_value_eur}
-     * <p>
-     * fiat: {@code amount}
-     * <p>
-     * example: 100.00
-     */
     @Column(precision = 15, scale = 8)
     private BigDecimal amount;
 
-    /**
-     * fee of a transaction
-     * <p>
-     * api response: {@code fee}
-     * <p>
-     * example: 2.00
-     */
     @Column(precision = 15, scale = 8)
     private BigDecimal fee;
 
-    /**
-     * date of transaction
-     * <p>
-     * api response: {@code date}
-     * <p>
-     * example: 2021-06-06 16:01:12
-     */
     private LocalDateTime date;
 
-    /**
-     * status of transaction
-     * <p>
-     * api response: {@code status}
-     * <p>
-     * asset: pending, processing, unconfirmed_transaction_out, open_invitation,
-     * finished, canceled
-     * <p>
-     * fiat: pending, processing, finished, canceled
-     * <p>
-     * example: finished
-     */
     private String status;
 
-    /**
-     * id of transaction
-     * <p>
-     * api response: {@code id}
-     * <p>
-     * example: 1bb2862a-8b15-4208-d7aa-a236a04e0ad0
-     */
     @Column(length = 36)
     private String transactionId;
 

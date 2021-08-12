@@ -12,6 +12,13 @@ import lombok.Setter;
 @Setter
 public class BitpandaTime {
 
+    /**
+     * date of transaction
+     * <p>
+     * api response: {@code date}
+     * <p>
+     * example: 2019-02-21T16:36:01+01:00
+     */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     @JsonProperty("date_iso8601")
     private LocalDateTime dateIso8601;

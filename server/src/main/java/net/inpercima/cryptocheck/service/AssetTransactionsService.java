@@ -57,6 +57,10 @@ public class AssetTransactionsService {
                 assetTransaction.setTransactionId(data.getId());
                 assetTransaction.setOrigin(originRepository.getByName("Bitpanda"));
                 assetTransaction.setDate(data.getAttributes().getTime().getDateIso8601());
+                if (data.getAttributes().getTrade() != null) {
+                    assetTransaction.setPrice(data.getAttributes().getTrade().getAttributes().getPrice());
+                }
+                assetTransaction.setNumber(data.getAttributes().getAmount());
                 assetTransactionRepository.save(assetTransaction);
             }
         }));
