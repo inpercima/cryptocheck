@@ -9,6 +9,13 @@ import lombok.Setter;
 @Setter
 public class BitpandaFiatWalletsTransactionsDataAttributes extends BitpandaWalletsTransactionsDataAttributes {
 
+    /**
+     * type of fiat
+     * <p>
+     * api response: {@code fiat_id}
+     * <p>
+     * example: EUR = 1
+     */
     @JsonProperty("fiat_id")
     private Integer fiatId;
 }

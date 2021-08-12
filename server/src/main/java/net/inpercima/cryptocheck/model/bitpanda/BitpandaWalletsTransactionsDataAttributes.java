@@ -10,13 +10,13 @@ import lombok.Setter;
 public class BitpandaWalletsTransactionsDataAttributes {
 
     /**
-     * amount in euro for fiat
-     * <p>
      * api response: {@code amount}
      * <p>
+     * <pre>
      * asset: amount of cryptocoins
+     * fiat: amount in euro of this transaction
+     * </pre>
      * <p>
-     * fiat: amount in eur of this transaction
      * <p>
      * example: 100.00
      */

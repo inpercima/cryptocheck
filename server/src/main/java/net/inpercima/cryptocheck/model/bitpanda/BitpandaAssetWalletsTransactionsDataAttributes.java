@@ -12,11 +12,11 @@ import lombok.Setter;
 public class BitpandaAssetWalletsTransactionsDataAttributes extends BitpandaWalletsTransactionsDataAttributes {
 
     /**
-     * id of cryptocoin
+     * type of asset
      * <p>
      * api response: {@code cryptocoin_id}
      * <p>
-     * example: 1
+     * example: BTC = 1, ETH = 5
      */
     @JsonProperty("cryptocoin_id")
     private Integer cryptocoinId;

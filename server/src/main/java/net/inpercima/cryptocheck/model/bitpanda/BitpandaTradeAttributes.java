@@ -10,11 +10,11 @@ import lombok.Setter;
 public class BitpandaTradeAttributes {
 
     /**
-     * price of cryptocoin at transaction time
+     * price in euro of traded asset
      * <p>
      * api response: {@code price}
      * <p>
-     * example: 307.20
+     * example: 0.08330000
      */
     private BigDecimal price;
 }
