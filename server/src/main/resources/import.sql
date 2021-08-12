@@ -104,10 +104,11 @@ INSERT INTO `fiat_type` (`id`, `name`) VALUES (8, 'TRY');
 -- Daten für Tabelle `origin`
 --
 
-INSERT INTO `origin` (`id`, `name`) VALUES (1, 'Bitpanda');
-INSERT INTO `origin` (`id`, `name`) VALUES (2, 'Bitcoin.de');
-INSERT INTO `origin` (`id`, `name`) VALUES (3, 'Binance');
-INSERT INTO `origin` (`id`, `name`) VALUES (4, 'Kucoin');
+INSERT INTO `origin` (`id`, `name`) VALUES (1, 'Unknown');
+INSERT INTO `origin` (`id`, `name`) VALUES (2, 'Bitpanda');
+INSERT INTO `origin` (`id`, `name`) VALUES (3, 'Bitcoin.de');
+INSERT INTO `origin` (`id`, `name`) VALUES (4, 'Binance');
+INSERT INTO `origin` (`id`, `name`) VALUES (5, 'Kucoin');
 
 -- --------------------------------------------------------
 
