@@ -24,7 +24,9 @@ export class AssetService {
   }
 
   getAssets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(environment.api + 'assets');
+    return this.http.get<Asset[]>(environment.api + 'assets').pipe(
+      map(asset => asset.sort((a, b) => a.name.localeCompare(b.name)))
+    );
   }
 
   getPrices(setting: Setting): Observable<any> {
