@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class SynchronizeService {
+public class SynchronizationService {
 
     private final AssetTransactionsService assetTransactionsService;
 

@@ -5,17 +5,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import net.inpercima.cryptocheck.service.SynchronizeService;
+import net.inpercima.cryptocheck.service.SynchronizationService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/synchronize")
-public class SynchronizeController {
+@RequestMapping("/synchronization")
+public class SynchronizationController {
 
-    private final SynchronizeService synchronizeService;
+    private final SynchronizationService synchronizationService;
 
     @GetMapping
     public void synchronize() {
-        synchronizeService.synchronize();
+        synchronizationService.synchronize();
     }
 }
