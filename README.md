@@ -46,6 +46,8 @@ This repository includes two backend possibilities.
 You can run this program with php or java.
 Per default java is selected and recommended.
 
+At the moment it is not possible to work with php b/c of breaking changes made with java.
+
 ### Modules
 
 For the client check [cryptocheck - client](./client).

@@ -30,4 +30,12 @@ public class BitpandaBfcAttributes {
      */
     @JsonProperty("best_current_price_eur")
     private BigDecimal bestCurrentPriceEur;
+
+    /**
+     * more trade information of best fee collection
+     * <p>
+     * api response: {@code related_trade} as object
+     */
+    @JsonProperty("related_trade")
+    public BitpandaTrade relatedTrade;
 }

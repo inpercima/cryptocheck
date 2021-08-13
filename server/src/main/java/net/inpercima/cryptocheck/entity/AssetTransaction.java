@@ -23,4 +23,10 @@ public class AssetTransaction extends Transaction {
 
     @Column(precision = 15, scale = 8)
     private BigDecimal price;
+
+    @Column(length = 36)
+    private String tradeId;
+
+    @Column(length = 36)
+    private String refTradeId;
 }

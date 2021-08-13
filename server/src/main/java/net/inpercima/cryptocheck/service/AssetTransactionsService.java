@@ -13,6 +13,9 @@ import net.inpercima.cryptocheck.entity.AssetTransaction;
 import net.inpercima.cryptocheck.entity.AssetType;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsTransactions;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsTransactionsDataAttributes;
+import net.inpercima.cryptocheck.model.bitpanda.BitpandaBfcAttributes;
+import net.inpercima.cryptocheck.model.bitpanda.BitpandaTrade;
+import net.inpercima.cryptocheck.model.bitpanda.BitpandaTradeAttributes;
 import net.inpercima.cryptocheck.repository.AssetTransactionRepository;
 import net.inpercima.cryptocheck.repository.OriginRepository;
 
@@ -60,14 +63,17 @@ public class AssetTransactionsService {
                 assetTransaction.setDate(attributes.getTime().getDateIso8601());
                 // reset amount b/c amount is set as number by the mapper
                 if (attributes.isBfc()) {
-                    assetTransaction
-                            .setAmount(attributes.getBestFeeCollection().getAttributes().getBfcMarketValueEur());
-                    assetTransaction
-                            .setPrice(attributes.getBestFeeCollection().getAttributes().getBestCurrentPriceEur());
+                    final BitpandaBfcAttributes bfcAttributes = attributes.getBestFeeCollection().getAttributes();
+                    assetTransaction.setAmount(bfcAttributes.getBfcMarketValueEur());
+                    assetTransaction.setPrice(bfcAttributes.getBestCurrentPriceEur());
+                    assetTransaction.setRefTradeId(bfcAttributes.getRelatedTrade().getId());
                 } else {
                     assetTransaction.setAmount(attributes.getAmountEur());
-                    if (attributes.getTrade() != null) {
-                        assetTransaction.setPrice(attributes.getTrade().getAttributes().getPrice());
+                    final BitpandaTrade trade = attributes.getTrade();
+                    if (trade != null) {
+                        final BitpandaTradeAttributes tradeAttributes = trade.getAttributes();
+                        assetTransaction.setTradeId(trade.getId());
+                        assetTransaction.setPrice(tradeAttributes.getPrice());
                     }
                 }
                 assetTransaction.setNumber(attributes.getAmount());
