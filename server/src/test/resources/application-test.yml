@@ -1,0 +1,15 @@
+#
+# APPLICATION CONFIG TEST
+#
+
+spring:
+  datasource:
+    initialization-mode: never
+    password: cryptocheck
+    url: jdbc:mysql://localhost/cryptocheck?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: cryptocheck
+  jpa:
+    hibernate:
+      ddl-auto: update
+  main:
+    banner-mode: "off"

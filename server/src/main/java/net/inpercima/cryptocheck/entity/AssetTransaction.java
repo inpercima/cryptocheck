@@ -29,4 +29,7 @@ public class AssetTransaction extends Transaction {
 
     @Column(length = 36)
     private String refTradeId;
+
+    @Column(length = 36)
+    private String matchId;
 }

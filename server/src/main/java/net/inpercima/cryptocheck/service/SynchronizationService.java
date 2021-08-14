@@ -12,8 +12,11 @@ public class SynchronizationService {
 
     private final FiatTransactionsService fiatTransactionsService;
 
+    private final AnalyzationService analyzationService;
+
     public void synchronize() {
         assetTransactionsService.synchronize();
         fiatTransactionsService.synchronize();
+        analyzationService.analyse();
     }
 }

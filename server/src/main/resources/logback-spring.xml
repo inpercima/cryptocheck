@@ -13,13 +13,13 @@
             <appender-ref ref="FILE" />
             <appender-ref ref="CONSOLE" />
         </root>
-        <logger name="net.inpercima.cryptocheck" level="info" />
+        <logger name="net.inpercima.cryptocheck" level="INFO" />
     </springProfile>
 
     <springProfile name="dev">
         <root level="warn">
             <appender-ref ref="CONSOLE" />
         </root>
-        <logger name="net.inpercima.cryptocheck" level="debug" />
+        <logger name="net.inpercima.cryptocheck" level="DEBUG" />
     </springProfile>
 </configuration>
