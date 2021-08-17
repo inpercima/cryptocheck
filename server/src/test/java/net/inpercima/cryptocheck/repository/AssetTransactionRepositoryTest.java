@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import net.inpercima.cryptocheck.entity.AssetTransaction;
+import net.inpercima.cryptocheck.entity.TransactionAsset;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -21,24 +21,24 @@ import net.inpercima.cryptocheck.entity.AssetTransaction;
 public class AssetTransactionRepositoryTest {
 
     @Inject
-    private AssetTransactionRepository assetTransactionRepository;
+    private TransactionAssetRepository assetTransactionRepository;
 
     @Test
     void findAllFinishedSells() {
-        List<AssetTransaction> transactions = assetTransactionRepository.findAllFinishedSells();
+        List<TransactionAsset> transactions = assetTransactionRepository.findAllFinishedSells();
         assertThat(transactions).isNotEmpty();
     }
 
     @Test
     void findAllBuysMatchingSells() {
-        AssetTransaction transaction = assetTransactionRepository.findBuyMatchingSell("LINK",
+        TransactionAsset transaction = assetTransactionRepository.findRelatedTransactions("LINK",
                 BigDecimal.valueOf(77.41533576));
         assertThat(transaction).isNotNull();
     }
 
     @Test
     void findAllByAssetTypeOrderByDateDesc() {
-        List<AssetTransaction> transactions = assetTransactionRepository.findAllUnmatchedTransactionsByAssetType("BTC");
+        List<TransactionAsset> transactions = assetTransactionRepository.findAllUnmatchedTransactionsByTypeAsset("BTC");
         assertThat(transactions).isNotEmpty();
     }
 }

@@ -9,4 +9,4 @@ import net.inpercima.cryptocheck.entity.mapped.Type;
 @Entity
 @Getter
 @Setter
-public class AssetType extends Type { }
+public class TypeFiat extends Type { }

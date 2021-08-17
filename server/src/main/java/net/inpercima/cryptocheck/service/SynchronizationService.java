@@ -8,15 +8,15 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class SynchronizationService {
 
-    private final AssetTransactionsService assetTransactionsService;
+    private final TransactionAssetService transactionAssetService;
 
-    private final FiatTransactionsService fiatTransactionsService;
+    private final TransactionFiatService transactionFiatService;
 
     private final AnalyzationService analyzationService;
 
     public void synchronize() {
-        assetTransactionsService.synchronize();
-        fiatTransactionsService.synchronize();
+        transactionAssetService.synchronize();
+        transactionFiatService.synchronize();
         analyzationService.analyse();
     }
 }

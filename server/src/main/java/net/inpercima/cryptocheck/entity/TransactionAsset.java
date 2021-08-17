@@ -13,10 +13,10 @@ import net.inpercima.cryptocheck.entity.mapped.Transaction;
 @Entity
 @Getter
 @Setter
-public class AssetTransaction extends Transaction {
+public class TransactionAsset extends Transaction {
 
     @ManyToOne
-    private AssetType assetType;
+    private TypeAsset typeAsset;
 
     @Column(precision = 15, scale = 8)
     private BigDecimal number;
@@ -31,5 +31,5 @@ public class AssetTransaction extends Transaction {
     private String refTradeId;
 
     @Column(length = 36)
-    private String matchId;
+    private String relationId;
 }

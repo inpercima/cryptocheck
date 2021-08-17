@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import net.inpercima.cryptocheck.entity.AssetTransaction;
+import net.inpercima.cryptocheck.entity.TransactionAsset;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWallets;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsDataAttributes;
 import net.inpercima.cryptocheck.model.dto.AssetWallet;
-import net.inpercima.cryptocheck.repository.AssetTransactionRepository;
+import net.inpercima.cryptocheck.repository.TransactionAssetRepository;
 import net.inpercima.cryptocheck.service.RestService;
 
 @RestController
@@ -24,7 +24,7 @@ import net.inpercima.cryptocheck.service.RestService;
 @RequestMapping("/wallets/asset")
 public class AssetWalletsController {
 
-    private final AssetTransactionRepository assetTransactionRepository;
+    private final TransactionAssetRepository assetTransactionRepository;
 
     private final RestService restService;
 
@@ -41,7 +41,7 @@ public class AssetWalletsController {
     }
 
     @GetMapping("/transactions/unmatched")
-    public List<AssetTransaction> findAllUnmatchedTransactionsByAssetType(@RequestParam final String assetType) {
-        return assetTransactionRepository.findAllUnmatchedTransactionsByAssetType(assetType);
+    public List<TransactionAsset> findAllUnmatchedTransactionsByAssetType(@RequestParam final String assetType) {
+        return assetTransactionRepository.findAllUnmatchedTransactionsByTypeAsset(assetType);
     }
 }

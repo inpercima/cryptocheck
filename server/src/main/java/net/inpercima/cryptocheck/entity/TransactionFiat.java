@@ -10,8 +10,8 @@ import net.inpercima.cryptocheck.entity.mapped.Transaction;
 @Entity
 @Getter
 @Setter
-public class FiatTransaction extends Transaction {
+public class TransactionFiat extends Transaction {
 
     @ManyToOne
-    private FiatType fiatType;
+    private TypeFiat typeFiat;
 }

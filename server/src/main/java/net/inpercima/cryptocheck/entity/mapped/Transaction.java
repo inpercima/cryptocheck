@@ -17,7 +17,7 @@ import net.inpercima.cryptocheck.entity.Origin;
 @Getter
 @Setter
 @MappedSuperclass
-public class Transaction {
+public class Transaction extends DefaultId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -36,9 +36,9 @@ public class Transaction {
 
     private String status;
 
-    @Column(length = 36)
-    private String transactionId;
-
     @ManyToOne
     private Origin origin;
+
+    @Column(length = 36)
+    private String transactionId;
 }
