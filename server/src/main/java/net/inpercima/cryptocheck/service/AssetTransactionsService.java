@@ -87,4 +87,8 @@ public class AssetTransactionsService {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper.map(object, AssetTransaction.class);
     }
+
+    public List<AssetTransaction> findUnrelatedTransactions(final String assetType) {
+        return assetTransactionRepository.findAllUnmatchedTransactionsByAssetType(assetType);
+    }
 }

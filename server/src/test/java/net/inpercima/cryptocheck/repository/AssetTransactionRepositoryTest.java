@@ -35,4 +35,10 @@ public class AssetTransactionRepositoryTest {
                 BigDecimal.valueOf(77.41533576));
         assertThat(transaction).isNotNull();
     }
+
+    @Test
+    void findAllByAssetTypeOrderByDateDesc() {
+        List<AssetTransaction> transactions = assetTransactionRepository.findAllUnmatchedTransactionsByAssetType("BTC");
+        assertThat(transactions).isNotEmpty();
+    }
 }

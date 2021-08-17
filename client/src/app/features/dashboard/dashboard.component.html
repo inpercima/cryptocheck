@@ -69,7 +69,7 @@
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>{{ cryptoWallet.external === 0 ? 'Bitpanda' : '' }} Investment:</div>
-            <div>{{ transformCurrency(determineInvestment(cryptoWallet)) }}</div>
+            <div>{{ transformCurrency(cryptoWallet.investment) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Current Value:</div>

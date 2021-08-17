@@ -15,4 +15,7 @@ public interface AssetTransactionRepository extends TransactionRepository<AssetT
     @Query("SELECT t FROM AssetTransaction t LEFT JOIN t.assetType at "
             + "WHERE t.type = 'buy' AND t.status = 'finished' AND t.matchId IS NULL AND at.name = ?1 AND t.number = ?2")
     public AssetTransaction findBuyMatchingSell(final String assetType, final BigDecimal number);
+
+    @Query("SELECT t FROM AssetTransaction t LEFT JOIN t.assetType at WHERE at.name = ?1 AND t.matchId IS NULL ORDER BY t.date DESC")
+    public List<AssetTransaction> findAllUnmatchedTransactionsByAssetType(final String assetType);
 }

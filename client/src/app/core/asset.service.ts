@@ -69,17 +69,17 @@ export class AssetService {
     return this.http.get<Asset[]>(environment.api + 'wallets/fiat');
   }
 
-  getCryptoWallets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(environment.api + 'wallets/asset');
+  getCryptoWallets(): Observable<any[]> {
+    return this.http.get<any[]>(environment.api + 'wallets/asset');
   }
 
   getFiatInvestment(): Observable<any[]> {
     return this.http.get<any[]>(environment.api + 'fiatwallet.php/investments');
   }
 
-  getCryptoInvestment(cryptoIds: number[]): Observable<any[]> {
+  getCryptoInvestment(assetType: string): Observable<any[]> {
     const params = new HttpParams();
-    return this.http.get<any[]>(environment.api + 'wallet.php/investments', { params: params.append('cryptoIds', cryptoIds.join(', ')) });
+    return this.http.get<any[]>(environment.api + 'wallets/asset/transactions/unmatched', { params: params.append('assetType', assetType) });
   }
 
   getUncheckedTransactions(): Observable<any[]> {

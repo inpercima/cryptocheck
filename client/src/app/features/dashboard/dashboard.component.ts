@@ -32,22 +32,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
         const intervalValue = setting.ticker === 'CCMP' ? 2500 : 10000;
         this.subscription = timer(0, intervalValue).subscribe(() => this.updatePrices());
         this.assetService.getFiatWallets().subscribe(fiatWallets => {
-          this.assetService.getFiatInvestment().subscribe(fiatInvestments => {
-            fiatWallets.forEach((value, index) => {
-              fiatWallets[index].internal = fiatInvestments[value.id].internal;
-              fiatWallets[index].external = fiatInvestments[value.id].external;
-            });
-            this.fiatWallets = fiatWallets;
-          });
+          // this.assetService.getFiatInvestment().subscribe(fiatInvestments => {
+          //   fiatWallets.forEach((value, index) => {
+          //     fiatWallets[index].internal = fiatInvestments[value.id].internal;
+          //     fiatWallets[index].external = fiatInvestments[value.id].external;
+          //   });
+          this.fiatWallets = fiatWallets;
         });
+        // });
         this.assetService.getCryptoWallets().subscribe(cryptoWallets => {
-          this.assetService.getCryptoInvestment(cryptoWallets.map(elem => elem.id)).subscribe(cryptoInvestments => {
-            cryptoWallets.forEach((value, index) => {
-              cryptoWallets[index].internal = cryptoInvestments[value.id].internal;
-              cryptoWallets[index].external = cryptoInvestments[value.id].external;
+          cryptoWallets.forEach((wallet, index) => {
+            this.assetService.getCryptoInvestment(wallet.symbol).subscribe(ts => {
+              let amount = 0;
+              let balance = 0;
+              for (const t of ts) {
+                if (balance >= wallet.balance) {
+                  break;
+                }
+                amount = t.type === 'buy' ? amount + t.amount : amount - t.amount;
+                balance = wallet.balance;
+              }
+              wallet.investment = amount;
             });
-            this.cryptoWallets = cryptoWallets;
           });
+          this.cryptoWallets = cryptoWallets;
         });
       }
     });
@@ -72,10 +80,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   determineInvestment(asset: any): number {
-    return asset.internal + asset.external;
+    // return asset.internal + asset.external;
+    return 0;
+
   }
 
   calculateCurrentProfitLoss(asset: any): string {
-    return this.transformCurrency(this.calculateCurrentValue(asset) - asset.internal - asset.external);
+    return this.transformCurrency(this.calculateCurrentValue(asset) - asset.investment);
   }
 }
