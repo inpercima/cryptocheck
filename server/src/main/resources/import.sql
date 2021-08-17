@@ -92,11 +92,11 @@ INSERT INTO `type_asset` (`id`, `name`) VALUES (142, 'KLAY');
 -- Daten für Tabelle `type_fiat`
 --
 
-INSERT INTO `type_fiat` (`id`, `name`) VALUES (143, 'EUR');
-INSERT INTO `type_fiat` (`id`, `name`) VALUES (144, 'USD');
-INSERT INTO `type_fiat` (`id`, `name`) VALUES (145, 'CHF');
-INSERT INTO `type_fiat` (`id`, `name`) VALUES (146, 'GBP');
-INSERT INTO `type_fiat` (`id`, `name`) VALUES (147, 'TRY');
+INSERT INTO `type_fiat` (`id`, `name`) VALUES (1, 'EUR');
+INSERT INTO `type_fiat` (`id`, `name`) VALUES (2, 'USD');
+INSERT INTO `type_fiat` (`id`, `name`) VALUES (3, 'CHF');
+INSERT INTO `type_fiat` (`id`, `name`) VALUES (4, 'GBP');
+INSERT INTO `type_fiat` (`id`, `name`) VALUES (5, 'TRY');
 
 -- --------------------------------------------------------
 
@@ -104,11 +104,11 @@ INSERT INTO `type_fiat` (`id`, `name`) VALUES (147, 'TRY');
 -- Daten für Tabelle `origin`
 --
 
-INSERT INTO `origin` (`id`, `name`) VALUES (148, 'Unknown');
-INSERT INTO `origin` (`id`, `name`) VALUES (149, 'Bitpanda');
-INSERT INTO `origin` (`id`, `name`) VALUES (150, 'Bitcoin.de');
-INSERT INTO `origin` (`id`, `name`) VALUES (151, 'Binance');
-INSERT INTO `origin` (`id`, `name`) VALUES (152, 'Kucoin');
+INSERT INTO `origin` (`id`, `name`) VALUES (1, 'Unknown');
+INSERT INTO `origin` (`id`, `name`) VALUES (2, 'Bitpanda');
+INSERT INTO `origin` (`id`, `name`) VALUES (3, 'Bitcoin.de');
+INSERT INTO `origin` (`id`, `name`) VALUES (4, 'Binance');
+INSERT INTO `origin` (`id`, `name`) VALUES (5, 'Kucoin');
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,7 @@ INSERT INTO `origin` (`id`, `name`) VALUES (152, 'Kucoin');
 -- Daten für Tabelle `hibernate_sequence`
 --
 
-UPDATE`hibernate_sequence` SET `next_val` = 153;
+UPDATE`hibernate_sequence` SET `next_val` = 6;
 
 COMMIT;
 
