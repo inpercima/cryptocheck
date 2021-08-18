@@ -31,14 +31,14 @@ public class AssetTransactionRepositoryTest {
 
     @Test
     void findAllBuysMatchingSells() {
-        TransactionAsset transaction = assetTransactionRepository.findRelatedTransactions("LINK",
+        TransactionAsset transaction = assetTransactionRepository.findRelatedBuyTransaction("LINK",
                 BigDecimal.valueOf(77.41533576));
         assertThat(transaction).isNotNull();
     }
 
     @Test
     void findAllByAssetTypeOrderByDateDesc() {
-        List<TransactionAsset> transactions = assetTransactionRepository.findAllUnmatchedTransactionsByTypeAsset("BTC");
+        List<TransactionAsset> transactions = assetTransactionRepository.findAllUnrelatedTransactions("BTC");
         assertThat(transactions).isNotEmpty();
     }
 }

@@ -14,9 +14,9 @@ public class AnalyzationService {
 
     private final TransactionAssetRepository transactionAssetRepository;
 
-    public void analyse() {
+    public void findRelatedTransactions() {
         transactionAssetRepository.findAllFinishedSells().stream().forEach(sell -> {
-            final TransactionAsset buy = transactionAssetRepository.findRelatedTransactions(sell.getTypeAsset().getName(),
+            final TransactionAsset buy = transactionAssetRepository.findRelatedBuyTransaction(sell.getTypeAsset().getName(),
                     sell.getNumber());
             if (buy != null) {
                 final String uuid = UUID.randomUUID().toString();

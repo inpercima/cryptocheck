@@ -14,8 +14,8 @@ public interface TransactionAssetRepository extends TransactionRepository<Transa
 
     @Query("SELECT t FROM TransactionAsset t LEFT JOIN t.typeAsset ta "
             + "WHERE t.type = 'buy' AND t.status = 'finished' AND ta.name = ?1 AND t.number = ?2")
-    public TransactionAsset findRelatedTransactions(final String assetName, final BigDecimal number);
+    public TransactionAsset findRelatedBuyTransaction(final String assetSymbol, final BigDecimal number);
 
     @Query("SELECT t FROM TransactionAsset t LEFT JOIN t.typeAsset ta WHERE ta.name = ?1 ORDER BY t.date DESC")
-    public List<TransactionAsset> findAllUnmatchedTransactionsByTypeAsset(final String assetName);
+    public List<TransactionAsset> findAllUnrelatedTransactions(final String assetSymbol);
 }

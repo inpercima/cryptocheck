@@ -17,6 +17,6 @@ public class SynchronizationService {
     public void synchronize() {
         transactionAssetService.synchronize();
         transactionFiatService.synchronize();
-        analyzationService.analyse();
+        analyzationService.findRelatedTransactions();
     }
 }

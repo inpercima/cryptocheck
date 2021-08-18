@@ -16,8 +16,8 @@ import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsTransactions
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaBfcAttributes;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaTrade;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaTradeAttributes;
-import net.inpercima.cryptocheck.repository.TransactionAssetRepository;
 import net.inpercima.cryptocheck.repository.OriginRepository;
+import net.inpercima.cryptocheck.repository.TransactionAssetRepository;
 
 @RequiredArgsConstructor
 @Service
@@ -88,7 +88,7 @@ public class TransactionAssetService {
         return modelMapper.map(object, TransactionAsset.class);
     }
 
-    public List<TransactionAsset> findUnrelatedTransactions(final String assetType) {
-        return transactionAssetRepository.findAllUnmatchedTransactionsByTypeAsset(assetType);
+    public List<TransactionAsset> findAllUnrelatedTransactions(final String assetSymbol) {
+        return transactionAssetRepository.findAllUnrelatedTransactions(assetSymbol);
     }
 }
