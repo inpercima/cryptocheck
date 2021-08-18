@@ -16,6 +16,7 @@ import net.inpercima.cryptocheck.entity.TransactionAsset;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWallets;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsDataAttributes;
 import net.inpercima.cryptocheck.model.dto.AssetWallet;
+import net.inpercima.cryptocheck.model.dto.TransactionDto;
 import net.inpercima.cryptocheck.repository.TransactionAssetRepository;
 import net.inpercima.cryptocheck.service.RestService;
 
@@ -24,24 +25,36 @@ import net.inpercima.cryptocheck.service.RestService;
 @RequestMapping("/wallets/asset")
 public class AssetWalletsController {
 
-    private final TransactionAssetRepository assetTransactionRepository;
+    private final TransactionAssetRepository transactionAssetRepository;
 
     private final RestService restService;
 
     @GetMapping
     public List<AssetWallet> getAllWallets() {
         return Arrays.asList(restService.getData("/wallets", BitpandaAssetWallets.class).getBody().getData()).stream()
-                .map(data -> data.getAttributes()).map(a -> convertToDto(a))
+                .map(data -> data.getAttributes()).map(a -> convertToAssetWallet(a))
                 .filter(a -> a.getBalance().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
     }
 
-    private AssetWallet convertToDto(BitpandaAssetWalletsDataAttributes object) {
+    private AssetWallet convertToAssetWallet(final BitpandaAssetWalletsDataAttributes object) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(object, AssetWallet.class);
     }
 
-    @GetMapping("/transactions/unmatched")
-    public List<TransactionAsset> findAllUnmatchedTransactionsByAssetType(@RequestParam final String assetType) {
-        return assetTransactionRepository.findAllUnmatchedTransactionsByTypeAsset(assetType);
+    @GetMapping("/transactions/relations/none")
+    public List<TransactionDto> findAllUnrelatedTransactions(@RequestParam final String assetSymbol) {
+        return transactionAssetRepository.findAllUnrelatedTransactions(assetSymbol).stream()
+                .map(t -> convertToTransactionDto(t)).collect(Collectors.toList());
+    }
+
+    private TransactionDto convertToTransactionDto(final TransactionAsset object) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(object, TransactionDto.class);
     }
 }
+
+// SELECT t1.*
+// FROM `asset_transaction` AS `t1`
+// JOIN `asset_transaction` AS `t2`
+// ON `t1`.`match_id` = `t2`.`match_id` AND `t1`.`id` != `t2`.`id`
+// ORDER BY t1.match_id DESC, t1.type ASC;

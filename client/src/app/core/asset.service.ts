@@ -69,17 +69,39 @@ export class AssetService {
     return this.http.get<Asset[]>(environment.api + 'wallets/fiat');
   }
 
-  getCryptoWallets(): Observable<any[]> {
-    return this.http.get<any[]>(environment.api + 'wallets/asset');
+  getWalletsAsset(): Observable<Asset[]> {
+    return this.http.get<Asset[]>(environment.api + 'wallets/asset');
   }
 
   getFiatInvestment(): Observable<any[]> {
     return this.http.get<any[]>(environment.api + 'fiatwallet.php/investments');
   }
 
-  getCryptoInvestment(assetType: string): Observable<any[]> {
+  getUnrelatedTransactions(assetSymbol: string): Observable<any[]> {
     const params = new HttpParams();
-    return this.http.get<any[]>(environment.api + 'wallets/asset/transactions/unmatched', { params: params.append('assetType', assetType) });
+    return this.http.get<any[]>(environment.api + 'wallets/asset/transactions/relations/none', {
+      params: params.append('assetSymbol', assetSymbol),
+    });
+  }
+
+  getAssetWallets(): Observable<Asset[]> {
+    return this.getWalletsAsset().pipe(map(cryptoWallets => {
+      cryptoWallets.forEach((wallet, index) => {
+        this.getUnrelatedTransactions(wallet.symbol).subscribe(transactions => {
+          let amount = 0;
+          let balance = 0;
+          for (const transaction of transactions) {
+            if (balance >= wallet.balance) {
+              break;
+            }
+            amount = transaction.type === 'buy' ? amount + transaction.amount : amount - transaction.amount;
+            balance = wallet.balance;
+          }
+          wallet.investment = amount;
+        });
+      });
+      return cryptoWallets;
+    }));
   }
 
   getUncheckedTransactions(): Observable<any[]> {

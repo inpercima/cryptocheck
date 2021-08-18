@@ -40,23 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.fiatWallets = fiatWallets;
         });
         // });
-        this.assetService.getCryptoWallets().subscribe(cryptoWallets => {
-          cryptoWallets.forEach((wallet, index) => {
-            this.assetService.getCryptoInvestment(wallet.symbol).subscribe(ts => {
-              let amount = 0;
-              let balance = 0;
-              for (const t of ts) {
-                if (balance >= wallet.balance) {
-                  break;
-                }
-                amount = t.type === 'buy' ? amount + t.amount : amount - t.amount;
-                balance = wallet.balance;
-              }
-              wallet.investment = amount;
-            });
-          });
-          this.cryptoWallets = cryptoWallets;
-        });
+        this.assetService.getAssetWallets().subscribe(cryptoWallets => this.cryptoWallets = cryptoWallets);
       }
     });
   }
