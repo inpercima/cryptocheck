@@ -1,7 +1,6 @@
 package net.inpercima.cryptocheck.entity.mapped;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -11,9 +10,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class DefaultId {
+public class SuperType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
+
+    @Column(length = 10)
+    private String name;
 }

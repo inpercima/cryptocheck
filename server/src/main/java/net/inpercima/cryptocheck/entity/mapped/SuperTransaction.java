@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
@@ -17,11 +14,7 @@ import net.inpercima.cryptocheck.entity.Origin;
 @Getter
 @Setter
 @MappedSuperclass
-public class Transaction extends DefaultId {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+public class SuperTransaction extends SuperId {
 
     @Column(length = 10)
     private String type;

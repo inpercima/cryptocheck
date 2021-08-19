@@ -16,7 +16,7 @@ import net.inpercima.cryptocheck.entity.TransactionAsset;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWallets;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsDataAttributes;
 import net.inpercima.cryptocheck.model.dto.AssetWallet;
-import net.inpercima.cryptocheck.model.dto.TransactionDto;
+import net.inpercima.cryptocheck.model.dto.Transaction;
 import net.inpercima.cryptocheck.repository.TransactionAssetRepository;
 import net.inpercima.cryptocheck.service.RestService;
 
@@ -42,14 +42,14 @@ public class AssetWalletsController {
     }
 
     @GetMapping("/transactions/relations/none")
-    public List<TransactionDto> findAllUnrelatedTransactions(@RequestParam final String assetSymbol) {
+    public List<Transaction> findAllUnrelatedTransactions(@RequestParam final String assetSymbol) {
         return transactionAssetRepository.findAllUnrelatedTransactions(assetSymbol).stream()
                 .map(t -> convertToTransactionDto(t)).collect(Collectors.toList());
     }
 
-    private TransactionDto convertToTransactionDto(final TransactionAsset object) {
+    private Transaction convertToTransactionDto(final TransactionAsset object) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(object, TransactionDto.class);
+        return modelMapper.map(object, Transaction.class);
     }
 }
 

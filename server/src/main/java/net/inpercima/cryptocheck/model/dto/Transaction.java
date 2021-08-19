@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TransactionDto {
+public class Transaction {
 
     private String type;
 
