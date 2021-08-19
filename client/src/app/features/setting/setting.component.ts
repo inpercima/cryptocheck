@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SettingService } from './setting.service';
-import { AssetService } from 'src/app/core/asset.service';
 import { Asset } from 'src/app/core/asset.model';
+import { AssetService } from 'src/app/core/asset.service';
 
 @Component({
   selector: 'cc-setting',

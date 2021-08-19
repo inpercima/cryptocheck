@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
-import { AssetService } from 'src/app/core/asset.service';
+import { WalletService } from 'src/app/core/wallet.service';
 
 @Component({
   selector: 'cc-trade-manager',
@@ -16,10 +16,10 @@ export class TradeManagerComponent implements OnInit {
   asset: string[] = [];
   number = 0;
 
-  constructor(private assetService: AssetService) { }
+  constructor(private walletService: WalletService) { }
 
   ngOnInit(): void {
-    this.assetService.getUncheckedTransactions().subscribe(buySells => this.buySells = buySells);
+    this.walletService.getUnrelatedTransactions('BTC').subscribe(buySells => this.buySells = buySells);
   }
 
   drop(event: CdkDragDrop<string[]>): void {

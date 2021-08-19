@@ -44,11 +44,11 @@
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Bitpanda Investment:</div>
-            <div>{{ transformCurrency(fiatWallet.internal) }}</div>
+            <div>{{ transformCurrency(fiatWallet.investment) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>External Investment:</div>
-            <div>{{ transformCurrency(fiatWallet.external) }}</div>
+            <div>{{ transformCurrency(fiatWallet.investment) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Total Investment:</div>
@@ -56,28 +56,28 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <mat-card fxFlex="49" *ngFor="let cryptoWallet of cryptoWallets">
+      <mat-card fxFlex="49" *ngFor="let assetWallet of assetWallets">
         <mat-card-header>
           <div mat-card-avatar>
             <mat-icon>payment</mat-icon>
           </div>
-          <mat-card-title>{{ cryptoWallet.name }}</mat-card-title>
+          <mat-card-title>{{ assetWallet.name }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div class="mat-h1" style="text-align: right;">
-            {{ cryptoWallet.balance | number:'1.2-8':assetService.locale(setting.currency) }} {{ cryptoWallet.symbol }}
+            {{ assetWallet.balance | number:'1.2-8':assetService.locale(setting.currency) }} {{ assetWallet.symbol }}
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
-            <div fxFlex>{{ cryptoWallet.external === 0 ? 'Bitpanda' : '' }} Investment:</div>
-            <div>{{ transformCurrency(cryptoWallet.investment) }}</div>
+            <div fxFlex>{{ assetWallet.investment === 0 ? 'Bitpanda' : '' }} Investment:</div>
+            <div>{{ transformCurrency(assetWallet.investment) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Current Value:</div>
-            <div>{{ transformCurrency(calculateCurrentValue(cryptoWallet)) }}</div>
+            <div>{{ transformCurrency(calculateCurrentValue(assetWallet)) }}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="end">
             <div fxFlex>Virtual Profit/Loss:</div>
-            <div>{{ calculateCurrentProfitLoss(cryptoWallet) }}</div>
+            <div>{{ calculateCurrentProfitLoss(assetWallet) }}</div>
           </div>
         </mat-card-content>
       </mat-card>

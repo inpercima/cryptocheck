@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription, timer } from 'rxjs';
@@ -5,7 +6,8 @@ import { Subscription, timer } from 'rxjs';
 import { Setting } from '../setting/setting.model';
 import { SettingService } from '../setting/setting.service';
 import { AssetService } from 'src/app/core/asset.service';
-import { CurrencyPipe } from '@angular/common';
+import { Wallet } from 'src/app/core/wallet.model';
+import { WalletService } from 'src/app/core/wallet.service';
 
 @Component({
   selector: 'cc-dashboard',
@@ -14,8 +16,8 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  fiatWallets!: any[];
-  cryptoWallets!: any[];
+  fiatWallets!: Wallet[];
+  assetWallets!: Wallet[];
 
   prices: any;
 
@@ -23,7 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  constructor(public assetService: AssetService, private settingService: SettingService) { }
+  constructor(public assetService: AssetService, public walletService: WalletService, private settingService: SettingService) { }
 
   ngOnInit(): void {
     this.settingService.get().subscribe(setting => {
@@ -31,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (setting && setting.id !== null) {
         const intervalValue = setting.ticker === 'CCMP' ? 2500 : 10000;
         this.subscription = timer(0, intervalValue).subscribe(() => this.updatePrices());
-        this.assetService.getFiatWallets().subscribe(fiatWallets => {
+        this.walletService.getFiatWallets().subscribe(fiatWallets => {
           // this.assetService.getFiatInvestment().subscribe(fiatInvestments => {
           //   fiatWallets.forEach((value, index) => {
           //     fiatWallets[index].internal = fiatInvestments[value.id].internal;
@@ -40,7 +42,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.fiatWallets = fiatWallets;
         });
         // });
-        this.assetService.getAssetWallets().subscribe(cryptoWallets => this.cryptoWallets = cryptoWallets);
+        this.walletService.getAssetWallets().subscribe(assetWallets => this.assetWallets = assetWallets);
       }
     });
   }

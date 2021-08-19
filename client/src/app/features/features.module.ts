@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { AssetPriceComponent } from './asset-price/asset-price.component';
+import { AssetPriceComponent } from './dashboard/asset-price/asset-price.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExternalImportComponent } from './external-import/external-import.component';
 import { FeaturesRoutingModule } from './features-routing.module';

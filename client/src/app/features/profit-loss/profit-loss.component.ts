@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AssetService } from 'src/app/core/asset.service';
-import { map, reduce } from 'rxjs/operators';
 import { CurrencyPipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+
+import { map } from 'rxjs/operators';
+
+import { AssetService } from 'src/app/core/asset.service';
 
 @Component({
   selector: 'cc-profit-loss',
@@ -36,9 +38,8 @@ export class ProfitLossComponent implements OnInit {
   }
 
   getProfitLossOnTradesPerMonth(): void {
-    this.assetService.getProfiLossOnTradesPerMonth(this.month).pipe(
-      map(response => response.reduce((acc, entry) => acc + entry.total, 0))
-    ).subscribe(response => this.profitLossOnTradesPerMonth = new CurrencyPipe(this.assetService.locale('EUR')).transform(response, 'EUR', 'symbol') ?? '');
-
+    // this.assetService.getProfiLossOnTradesPerMonth(this.month).pipe(
+    //   map(response => response.reduce((acc, entry) => acc + entry.total, 0))
+    // ).subscribe(response => this.profitLossOnTradesPerMonth = new CurrencyPipe(this.assetService.locale('EUR')).transform(response, 'EUR', 'symbol') ?? '');
   }
 }
