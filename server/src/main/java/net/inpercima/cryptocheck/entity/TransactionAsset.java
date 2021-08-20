@@ -32,4 +32,10 @@ public class TransactionAsset extends SuperTransaction {
 
     @Column(length = 36)
     private String relationId;
+
+    @ManyToOne
+    private TypeFiat typeFiat;
+
+    @Column(precision = 15, scale = 8)
+    private BigDecimal exchangeRate;
 }

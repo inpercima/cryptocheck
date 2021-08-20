@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import net.inpercima.cryptocheck.entity.TransactionAsset;
 import net.inpercima.cryptocheck.entity.TypeAsset;
+import net.inpercima.cryptocheck.entity.TypeFiat;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsTransactions;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaAssetWalletsTransactionsDataAttributes;
 import net.inpercima.cryptocheck.model.bitpanda.BitpandaBfcAttributes;
@@ -74,6 +75,11 @@ public class TransactionAssetService {
                         final BitpandaTradeAttributes tradeAttributes = trade.getAttributes();
                         transaction.setTradeId(trade.getId());
                         transaction.setPrice(tradeAttributes.getPrice());
+                        transaction.setExchangeRate(tradeAttributes.getFiatToEurRate());
+
+                        final TypeFiat typeFiat = new TypeFiat();
+                        typeFiat.setId(tradeAttributes.getFiatId());
+                        transaction.setTypeFiat(typeFiat);
                     }
                 }
                 transaction.setNumber(attributes.getAmount());
