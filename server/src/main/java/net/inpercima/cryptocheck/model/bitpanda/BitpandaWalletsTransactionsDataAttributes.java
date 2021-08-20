@@ -38,17 +38,20 @@ public class BitpandaWalletsTransactionsDataAttributes {
      * <p>
      * asset: buy, sell, deposit, withdrawal, transfer, refund, ico
      * <p>
-     * fiat: deposit, withdrawal, transfer, refund <br>
+     * fiat: deposit, withdrawal, transfer, refund
+     * <p>
      * example: deposit
      */
     private String type;
 
     /**
-     * date of transaction
+     * status of transaction
      * <p>
-     * api response: {@code date}
+     * api response: {@code status}
      * <p>
-     * example: 2021-06-06 16:01:12
+     * one of: pending, processing, unconfirmed_transaction_out, open_invitation, finished, canceled
+     * <p>
+     * example: finished
      */
     private String status;
 
