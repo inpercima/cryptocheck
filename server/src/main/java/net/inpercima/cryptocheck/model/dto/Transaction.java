@@ -12,4 +12,6 @@ public class Transaction {
     private String type;
 
     private BigDecimal amount;
+
+    private BigDecimal number;
 }

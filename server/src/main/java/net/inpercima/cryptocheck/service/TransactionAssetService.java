@@ -62,9 +62,9 @@ public class TransactionAssetService {
                 transaction.setTransactionId(data.getId());
                 transaction.setOrigin(originRepository.getByName("Bitpanda"));
                 transaction.setDate(attributes.getTime().getDateIso8601());
-                // reset amount b/c amount is set as number by the mapper
                 if (attributes.isBfc()) {
                     final BitpandaBfcAttributes bfcAttributes = attributes.getBestFeeCollection().getAttributes();
+                    // reset amount b/c amount is set as number by the mapper
                     transaction.setAmount(bfcAttributes.getBfcMarketValueEur());
                     transaction.setPrice(bfcAttributes.getBestCurrentPriceEur());
                     transaction.setRefTradeId(bfcAttributes.getRelatedTrade().getId());
@@ -81,6 +81,11 @@ public class TransactionAssetService {
                         typeFiat.setId(tradeAttributes.getFiatId());
                         transaction.setTypeFiat(typeFiat);
                     }
+                }
+                // if the transaction is a BEST Reward, type transfer will be renamed to reward
+                if ("transfer".equals(attributes.getType()) && attributes.getFrom() != null
+                        && "Bitpanda".equals(attributes.getFrom())) {
+                    transaction.setType("reward");
                 }
                 transaction.setNumber(attributes.getAmount());
                 transactionAssetRepository.save(transaction);

@@ -61,4 +61,13 @@ public class BitpandaWalletsTransactionsDataAttributes {
      * api response: {@code time} as object
      */
     private BitpandaTime time;
+
+    /**
+     * sender of transaction
+     * <p>
+     * api response: {@code from}
+     * <p>
+     * example: Bitpanda
+     */
+    private String from;
 }
