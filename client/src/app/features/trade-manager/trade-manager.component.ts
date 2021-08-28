@@ -19,7 +19,7 @@ export class TradeManagerComponent implements OnInit {
   constructor(private walletService: WalletService) { }
 
   ngOnInit(): void {
-    this.walletService.getUnrelatedTransactions('BTC').subscribe(buySells => this.buySells = buySells);
+    this.walletService.getUnrelatedTransactions().subscribe(buySells => this.buySells = buySells);
   }
 
   drop(event: CdkDragDrop<string[]>): void {

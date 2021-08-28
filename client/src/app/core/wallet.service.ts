@@ -17,21 +17,41 @@ export class WalletService {
   getAssetWallets(): Observable<Wallet[]> {
     return this.http.get<Wallet[]>(environment.api + 'wallets/asset').pipe(map(assetWallets => {
       assetWallets.forEach((wallet, index) => {
-        this.getUnrelatedTransactions(wallet.symbol).subscribe(transactions => {
-          let amount = 0;
-          let balance = 0;
-          for (const transaction of transactions) {
-            if (balance >= wallet.balance) {
-              break;
-            }
-            amount = transaction.type === 'buy' ? amount + transaction.amount : amount - transaction.amount;
-            balance = wallet.balance;
+        this.getUnrelatedTransactionsByAsset(wallet.symbol).subscribe(transactions => {
+          const values = {
+            amount: 0,
+            balance: 0,
           }
-          wallet.investment = amount;
+          for (const transaction of transactions) {
+            this.calculateAmount(transaction, values);
+          }
+          wallet.investment = values.amount;
         });
       });
       return assetWallets;
     }));
+  }
+
+  private calculateAmount(transaction: any, values: any): void {
+    const type = transaction.type;
+    switch (type) {
+      case 'buy':
+        values.balance += transaction.number;
+        values.amount += transaction.amount;
+        break;
+      case 'deposit':
+        values.balance += transaction.number;
+        values.amount += transaction.amount;
+        break;
+      case 'sell':
+        values.balance -= transaction.number;
+        values.amount -= transaction.amount;
+        break;
+      default:
+        break;
+    }
+    values.balance = Number(values.balance.toFixed(8));
+    values.amount = values.balance === 0 ? 0 : values.amount
   }
 
   getFiatWallets(): Observable<Wallet[]> {
@@ -42,11 +62,12 @@ export class WalletService {
     return this.http.get<Wallet[]>(environment.api + 'fiatwallet.php/investments');
   }
 
-  getUnrelatedTransactions(assetSymbol: string): Observable<any[]> {
-    const params = new HttpParams();
-    return this.http.get<any[]>(environment.api + 'wallets/asset/transactions/relations/none', {
-      params: params.append('assetSymbol', assetSymbol),
-    });
+  getUnrelatedTransactions(): Observable<any[]> {
+    return this.http.get<any[]>(environment.api + 'wallets/asset/transactions/relations/none');
+  }
+
+  getUnrelatedTransactionsByAsset(assetSymbol: string): Observable<any[]> {
+    return this.http.get<any[]>(environment.api + `wallets/asset/transactions/relations/none/${assetSymbol}`);
   }
 
   getProfiLossOnTradesPerMonth(month: number): Observable<any[]> {
