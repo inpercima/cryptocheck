@@ -1,5 +1,6 @@
 package net.inpercima.cryptocheck.service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -99,7 +100,11 @@ public class TransactionAssetService {
         return modelMapper.map(object, TransactionAsset.class);
     }
 
-    public List<TransactionAsset> findAllUnrelatedTransactions(final String assetSymbol) {
-        return transactionAssetRepository.findAllUnrelatedTransactions(assetSymbol);
+    public List<TransactionAsset> findAllRelatedTransactions(final int year) {
+        return transactionAssetRepository.findAllRelatedTransactions(dateTime(year), dateTime(year + 1));
+    }
+
+    private LocalDateTime dateTime(final int year) {
+        return LocalDateTime.of(year, 1, 1, 0, 0, 0);
     }
 }

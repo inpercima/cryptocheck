@@ -38,7 +38,7 @@ public class AssetTransactionRepositoryTest {
 
     @Test
     void findAllByAssetTypeOrderByDateDesc() {
-        List<TransactionAsset> transactions = assetTransactionRepository.findAllUnrelatedTransactions("BTC");
+        List<TransactionAsset> transactions = assetTransactionRepository.findAllUnrelatedTransactions();
         assertThat(transactions).isNotEmpty();
     }
 }
