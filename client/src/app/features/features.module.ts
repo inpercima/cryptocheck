@@ -13,6 +13,7 @@ import { ProfitLossComponent } from './profit-loss/profit-loss.component';
 import { SettingComponent } from './setting/setting.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { TradeManagerComponent } from './trade-manager/trade-manager.component';
+import { TaxComponent } from './tax/tax.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TradeManagerComponent } from './trade-manager/trade-manager.component';
     SettingComponent,
     StatisticsComponent,
     TradeManagerComponent,
+    TaxComponent,
   ],
   imports: [
     CommonModule,

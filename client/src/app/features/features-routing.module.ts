@@ -7,6 +7,7 @@ import { ExternalImportComponent } from './external-import/external-import.compo
 import { ProfitLossComponent } from './profit-loss/profit-loss.component';
 import { SettingComponent } from './setting/setting.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { TaxComponent } from './tax/tax.component';
 import { TradeManagerComponent } from './trade-manager/trade-manager.component';
 
 const routes: Routes = [{
@@ -27,6 +28,9 @@ const routes: Routes = [{
 }, {
   component: SettingComponent,
   path: 'settings',
+}, {
+  component: TaxComponent,
+  path: 'tax',
 }];
 
 @NgModule({
