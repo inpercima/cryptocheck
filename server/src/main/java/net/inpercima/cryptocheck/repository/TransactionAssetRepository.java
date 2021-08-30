@@ -10,20 +10,22 @@ import net.inpercima.cryptocheck.entity.TransactionAsset;
 
 public interface TransactionAssetRepository extends TransactionRepository<TransactionAsset> {
 
-    @Query("SELECT t FROM TransactionAsset t WHERE t.type = 'sell' AND t.status = 'finished'")
-    public List<TransactionAsset> findAllFinishedSells();
+    @Query("SELECT t FROM TransactionAsset t WHERE t.status = 'finished' AND t.relationId IS NULL AND t.type = 'sell'")
+    public List<TransactionAsset> findAllUnrelatedFinishedSellTransactions();
 
     @Query("SELECT t FROM TransactionAsset t LEFT JOIN t.typeAsset ta "
-            + "WHERE t.type = 'buy' AND t.status = 'finished' AND ta.name = :assetSymbol AND t.number = :number")
-    public TransactionAsset findRelatedBuyTransaction(final String assetSymbol, final BigDecimal number);
+            + "WHERE t.status = 'finished' AND t.relationId IS NULL "
+            + "AND ta.name = :assetSymbol AND t.number = :number AND t.type = 'buy' AND t.date <= :date")
+    public TransactionAsset findFinishedBuyTransaction(final String assetSymbol, final BigDecimal number,
+            final LocalDateTime date);
 
     @Query("SELECT t FROM TransactionAsset t LEFT JOIN t.typeAsset ta "
-            + "WHERE t.relationId IS NULL AND t.status = 'finished' "
+            + "WHERE t.status = 'finished' AND t.relationId IS NULL "
             + "AND ta.name = :assetSymbol AND t.type IN ('buy', 'sell') ORDER BY ta.name, t.date, t.type")
     public List<TransactionAsset> findAllUnrelatedTransactions(final String assetSymbol);
 
     @Query("SELECT t FROM TransactionAsset t LEFT JOIN t.typeAsset ta "
-            + "WHERE t.relationId IS NULL AND t.status = 'finished' ORDER BY ta.name, t.date, t.type")
+            + "WHERE t.status = 'finished' AND t.relationId IS NULL ORDER BY ta.name, t.date, t.type")
     public List<TransactionAsset> findAllUnrelatedTransactions();
 
     @Query("SELECT t FROM TransactionAsset t "
