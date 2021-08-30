@@ -3,6 +3,7 @@ package net.inpercima.cryptocheck.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,14 +26,14 @@ public class AssetTransactionRepositoryTest {
 
     @Test
     void findAllFinishedSells() {
-        List<TransactionAsset> transactions = assetTransactionRepository.findAllFinishedSells();
+        List<TransactionAsset> transactions = assetTransactionRepository.findAllUnrelatedFinishedSellTransactions();
         assertThat(transactions).isNotEmpty();
     }
 
     @Test
     void findAllBuysMatchingSells() {
-        TransactionAsset transaction = assetTransactionRepository.findRelatedBuyTransaction("LINK",
-                BigDecimal.valueOf(77.41533576));
+        TransactionAsset transaction = assetTransactionRepository.findFinishedBuyTransaction("LINK",
+                BigDecimal.valueOf(77.41533576), LocalDateTime.of(2020, 1, 1, 0, 0, 0));
         assertThat(transaction).isNotNull();
     }
 
