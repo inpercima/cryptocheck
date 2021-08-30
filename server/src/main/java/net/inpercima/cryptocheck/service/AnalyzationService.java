@@ -17,6 +17,10 @@ public class AnalyzationService {
 
     private final TransactionAssetRepository transactionAssetRepository;
 
+    public void analyze() {
+        findSingleBuyAndSellRelatedTransactions();
+        findComplexRelatedTransactions();
+    }
     public void findSingleBuyAndSellRelatedTransactions() {
         transactionAssetRepository.findAllFinishedSells().stream().forEach(sell -> {
             final TransactionAsset buy = transactionAssetRepository
