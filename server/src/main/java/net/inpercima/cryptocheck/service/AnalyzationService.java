@@ -21,10 +21,22 @@ public class AnalyzationService {
         findSingleBuyAndSellRelatedTransactions();
         findComplexRelatedTransactions();
     }
+
+    /**
+     * Finds a sell and buy by same asset and same number and relate them if the
+     * date of the buy is before the date of the sell and both are finished and not
+     * in a relation.
+     * <p>
+     * Example:
+     * <p>
+     * Buy on 2021-01-01 1.234 BTC
+     * <p>
+     * Sell on 2021-03.04 1.234 BTC
+     */
     public void findSingleBuyAndSellRelatedTransactions() {
-        transactionAssetRepository.findAllFinishedSells().stream().forEach(sell -> {
+        transactionAssetRepository.findAllUnrelatedFinishedSellTransactions().stream().forEach(sell -> {
             final TransactionAsset buy = transactionAssetRepository
-                    .findRelatedBuyTransaction(sell.getTypeAsset().getName(), sell.getNumber());
+                    .findFinishedBuyTransaction(sell.getTypeAsset().getName(), sell.getNumber(), sell.getDate());
             if (buy != null) {
                 final String uuid = UUID.randomUUID().toString();
                 buy.setRelationId(uuid);
@@ -35,45 +47,58 @@ public class AnalyzationService {
         });
     }
 
-    public void findComplexBuyAndSellRelatedTransactions() {
+    /**
+     * Finds transactions by same asset and in combination same number and relate
+     * them if all are finished and not in a relation.
+     */
+    public void findComplexRelatedTransactions() {
         BigDecimal compensation = BigDecimal.ZERO;
-        final List<TransactionAsset> buyList = new ArrayList<>();
-        final List<TransactionAsset> wdList = new ArrayList<>();
+        final List<TransactionAsset> possibleRelations = new ArrayList<>();
         List<TransactionAsset> transactions = transactionAssetRepository.findAllUnrelatedTransactions();
         for (TransactionAsset transaction : transactions) {
-            final String transactionSymbol = transaction.getTypeAsset().getName();
-            final String buySymbol = !buyList.isEmpty() ? buyList.get(0).getTypeAsset().getName() : "";
-            if ("buy".equals(transaction.getType())
-                    && (buyList.isEmpty() || (!buyList.isEmpty() && transactionSymbol.equals(buySymbol)))) {
-                buyList.add(transaction);
-            } else if ("sell".equals(transaction.getType()) && !buyList.isEmpty()
-                    && transactionSymbol.equals(buySymbol)) {
-                final BigDecimal numbers = buyList.stream().map(t -> t.getNumber())
-                        .reduce(BigDecimal.ZERO, BigDecimal::add).subtract(compensation);
+            if (isTypeAndSameAsset("buy", possibleRelations, transaction)) {
+                possibleRelations.add(transaction);
+            } else if (isTypeAndSameAsset("sell", possibleRelations, transaction)) {
+                // possibleRelations can also include withdrawal and deposit. Numbers includes
+                // buys only, the rest will be substracted.
+                final BigDecimal numbers = possibleRelations.stream().filter(t -> "buy".equals(t.getType()))
+                        .map(t -> t.getNumber()).reduce(BigDecimal.ZERO, BigDecimal::add).subtract(compensation);
                 if (transaction.getNumber().subtract(numbers).compareTo(BigDecimal.ZERO) == 0) {
                     final String uuid = UUID.randomUUID().toString();
-                    buyList.forEach(buy -> {
-                        buy.setRelationId(uuid);
-                        transactionAssetRepository.save(buy);
-                    });
-                    wdList.forEach(wd -> {
-                        wd.setRelationId(uuid);
-                        transactionAssetRepository.save(wd);
+                    // all possible relations will be related
+                    possibleRelations.forEach(t -> {
+                        t.setRelationId(uuid);
+                        transactionAssetRepository.save(t);
                     });
                     transaction.setRelationId(uuid);
                     transactionAssetRepository.save(transaction);
-                    buyList.clear();
+                    possibleRelations.clear();
                     compensation = BigDecimal.ZERO;
                 }
-            } else if (("withdrawal".equals(transaction.getType()) || "deposit".equals(transaction.getType()))
-                    && !buyList.isEmpty()) {
-                wdList.add(transaction);
+            } else if ((isType("withdrawal", transaction) || isType("deposit", transaction))
+                    && isSameAsset(possibleRelations, transaction)) {
+                possibleRelations.add(transaction);
                 compensation = compensation.add(transaction.getFee());
             } else {
-                buyList.clear();
-                buyList.add(transaction);
+                possibleRelations.clear();
+                possibleRelations.add(transaction);
                 compensation = BigDecimal.ZERO;
             }
         }
+    }
+
+    private boolean isTypeAndSameAsset(final String type, final List<TransactionAsset> possibleRelations,
+            final TransactionAsset transactionAsset) {
+        return isType(type, transactionAsset) && isSameAsset(possibleRelations, transactionAsset);
+    }
+
+    private boolean isType(final String type, final TransactionAsset transactionAsset) {
+        return type.equals(transactionAsset.getType());
+    }
+
+    private boolean isSameAsset(final List<TransactionAsset> possibleRelations,
+            final TransactionAsset transactionAsset) {
+        final String symbol = !possibleRelations.isEmpty() ? possibleRelations.get(0).getTypeAsset().getName() : "";
+        return !possibleRelations.isEmpty() && transactionAsset.getTypeAsset().getName().equals(symbol);
     }
 }
