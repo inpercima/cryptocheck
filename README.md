@@ -22,6 +22,12 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
   * `npm 8.1.0` or higher or
   * `yarn 1.22.11` or higher, used in this repository
 
+### Bitpanda registration and api-key
+
+This app assumes that an account has already been created and data has been exchanged.
+Therefore use this account to generate an api-key with it.
+[Here you get the information how it works.](https://support.bitpanda.com/hc/en-us/articles/360000727459-Bitpanda-API-Key-and-price-ticker-API)
+
 ## Getting started
 
 ```bash
