@@ -10,7 +10,7 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Angular CLI
 
-* `angular-cli 12.2.10` or higher
+* `angular-cli 13.0.2` or higher
 
 ### Java
 
@@ -18,19 +18,9 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Node, npm or yarn
 
-* `node 14.16.1` or higher in combination with
-  * `npm 6.14.12` or higher or
-  * `yarn 1.22.5` or higher, used in this repository
-
-## Dependency check
-
-Some libraries could not be updated b/c of peer dependencies or knowing issues.
-
-No entry.
-
-| library    | current version | last version | reason |
-| ---------- | --------------- | ------------ | ------ |
-|            |                 |              |        |
+* `node 16.13.0` or higher in combination with
+  * `npm 8.1.0` or higher or
+  * `yarn 1.22.11` or higher, used in this repository
 
 ## Getting started
 
