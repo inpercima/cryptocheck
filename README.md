@@ -10,11 +10,11 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Angular CLI
 
-* `angular-cli 13.0.2` or higher
+* `angular-cli 13.1.2` or higher
 
 ### Java
 
-* `jdk 16` or higher
+* `jdk 17` or higher
 
 ### Node, npm or yarn
 
