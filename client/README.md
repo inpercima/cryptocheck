@@ -1,8 +1,5 @@
 # cryptocheck - client
 
-[![dependencies Status](https://status.david-dm.org/gh/inpercima/cryptocheck.svg?path=client)](https://david-dm.org/inpercima/cryptocheck?path=client)
-[![devDependencies Status](https://status.david-dm.org/gh/inpercima/cryptocheck.svg?path=client&type=dev)](https://david-dm.org/inpercima/cryptocheck?path=client&type=dev)
-
 ## Getting started
 
 ```bash

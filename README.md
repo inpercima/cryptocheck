@@ -10,7 +10,7 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Angular CLI
 
-* `angular-cli 13.2.1` or higher
+* `angular-cli 13.2.5` or higher
 
 ### Java
 
@@ -20,7 +20,7 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 * `node 16.13.0` or higher in combination with
   * `npm 8.1.0` or higher or
-  * `yarn 1.22.11` or higher, used in this repository
+  * `yarn 1.22.17` or higher, used in this repository
 
 ### Bitpanda registration and api-key
 
