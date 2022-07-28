@@ -4,13 +4,13 @@
 
 Simple additional app for bitanda and other exchanges or services to see further details such as profit/loss and tax.
 
-This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 2.3.1.
+This project was generated with [swaaplate](https://github.com/inpercima/swaaplate) version 2.3.7.
 
 ## Prerequisites
 
 ### Angular CLI
 
-* `angular-cli 13.3.2` or higher
+* `angular-cli 14.1.0` or higher
 
 ### Java
 
@@ -18,9 +18,9 @@ This project was generated with [swaaplate](https://github.com/inpercima/swaapla
 
 ### Node, npm or yarn
 
-* `node 16.13.0` or higher in combination with
-  * `npm 8.1.0` or higher or
-  * `yarn 1.22.17` or higher, used in this repository
+* `node 16.16.0` or higher in combination with
+  * `npm 8.12.2` or higher or
+  * `yarn 1.22.19` or higher, used in this repository
 
 ### Bitpanda registration and api-key
 
